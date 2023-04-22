@@ -1,10 +1,10 @@
 <div class="container">
   <div class="row mt-5">
-    <div class="col-6 mx-auto card p-4 shadow">
-      <h2 class="text-center">Register Application</h2>
+    <div class="col-4 mx-auto card p-4 shadow">
+      <h2 class="text-center card-title mb-5">Register Application</h2>
       <form [formGroup]="reactiveForm"(ngSubmit)="onSubmit()">
         <div class="form-group row">
-          <label for="name" class="p-0">Enter Full Name:</label>
+          <label for="name" class="p-0 mb-2">Enter Full Name:</label>
           <input
             class="form-control mb-3"
             type="text"
@@ -18,7 +18,7 @@
             Name is Required !
         </span>
         <div class="form-group row">
-            <label for="name" class="p-0">Company Name:</label>
+            <label for="name" class="p-0 mb-2">Company Name:</label>
             <input
               class="form-control mb-3"
               type="text"
@@ -32,7 +32,7 @@
             Company name is Required !
         </span>
           <div class="form-group row">
-            <label for="name" class="p-0">Enter Role:</label>
+            <label for="name" class="p-0 mb-2">Enter Role:</label>
             <input
               class="form-control mb-3"
               type="text"
@@ -46,7 +46,7 @@
           Role is Required !
             </span>
         <div class="form-group row">
-          <label for="email" class="p-0">Enter Email:</label>
+          <label for="email" class="p-0 mb-2">Enter Email:</label>
           <input
             class="form-control mb-3"
             type="email"
@@ -60,7 +60,7 @@
         Email is Required !
     </span>
         <div class="form-group row">
-          <label for="password" class="p-0">Enter Password:</label>
+          <label for="password" class="p-0 mb-2">Enter Password:</label>
           <input
             class="form-control mb-3"
             type="password"
@@ -73,7 +73,7 @@
             reactiveForm.get('password')?.touched">
             Password is Required !
         </span>
-        <div class="form-group row">
+        <div class="form-group row my-3">
           <button class="btn btn-primary"[disabled]="!reactiveForm.valid">Register</button>
         </div>
         

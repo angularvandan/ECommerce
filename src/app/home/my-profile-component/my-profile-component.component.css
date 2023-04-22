@@ -2,3 +2,7 @@ span{
     position:absolute;
     left:90%;
 }
+input{
+    border: none;
+    margin-bottom: 20px;
+}
