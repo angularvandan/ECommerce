@@ -1,0 +1,29 @@
+<div class="container">
+    <span>
+        <button class="btn btn-primary"(click)="onLogOut()">Logout</button>
+    </span>
+    <div class="row mt-3">
+        <div class="col-8 mx-auto">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">User Name</th>
+                        <th scope="col">Company Name</th>
+                        <th scope="col">Role</th>
+                        <th scope="col">Email</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>1.</td>
+                        <td>{{specificUser?.name}}</td>
+                        <td>{{specificUser?.cName}}</td>
+                        <td>{{specificUser?.role}}</td>
+                        <td>{{specificUser?.email}}</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
