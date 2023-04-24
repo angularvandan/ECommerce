@@ -35,7 +35,7 @@ export class LoginComponentComponent implements OnInit{
     this.checkUser(email,password);
   }
   checkUser(email:string,password:string){
-    let data=JSON.parse(localStorage.getItem('RegisterData') || '[]');
+    let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
     // console.log(data);
     this.allUserData=[];
     for(let user of data){

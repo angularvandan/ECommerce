@@ -24,7 +24,7 @@ export class MyProfileComponentComponent{
       }
     }
     // console.log('Logout Works')
-    //below line if for stop canActivate router
+    //below line , for stop canActivate router
     this.userService.specificUser=undefined;
     localStorage.setItem('RegisterData',JSON.stringify(this.logOutUser));
     this.router.navigate(['auth/login']);

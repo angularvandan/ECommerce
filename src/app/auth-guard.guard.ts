@@ -9,14 +9,11 @@ export class AuthGuardGuard implements CanActivate {
   constructor(private router:Router){}
   //never miss behave with canActivate
   //because it calls many time after first call
-  canActivate(
-    route: ActivatedRouteSnapshot,
+  canActivate(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-      let arr = localStorage.getItem('RegisterData') || '[]';
-      let userArr = JSON.parse(arr);
+      let arrUser = JSON.parse(localStorage.getItem('RegisterData') || '[]');
       let loginStatus=false;
-
-      for(let user of userArr){
+      for(let user of arrUser){
         if(user.isLogin){
           console.log('From True Called')
           loginStatus=true;
@@ -30,7 +27,6 @@ export class AuthGuardGuard implements CanActivate {
         //this.router.navigate(['auth/login']);
       }
       return false;
-
   }
   
 }

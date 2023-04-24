@@ -46,7 +46,7 @@ export class RegistrationComponentComponent implements OnInit{
     this.onNavigateLogin()
   }
   onNavigateLogin(){
-    console.log('Auth/login')
+    // console.log('Auth/login')
     this.router.navigate(['auth/login']);
   }
   pushLocalStorage(data:object){

@@ -1,57 +1,31 @@
 
-<div class="container mt-5"style="width:500px">
-    <span>
+<div class="container mt-5">
+    <div class="d-flex justify-content-end">
         <button class="btn btn-primary"(click)="onLogOut()">Logout</button>
-    </span>
-    <div class=" card justify-content-center">
-        <div class="col-3 card-img d-flex justify-content-center">
-            <img src="../../../assets/user.png"width="200px" alt="logo">
-        </div>
-        <div class="mt-5 card-body">
-            <div class="row">
-                <div class="col-6 form-group">
-                    <label for="name"><b>Full Name:</b></label>
-                    <input class="form-control my-3"type="text"value="{{specificUser?.name}}"disabled>
-                    <label for="name"><b>Email:</b></label>
-                    <input class="form-control"type="email"value="{{specificUser?.email}}"disabled>
+    </div>
+    <div class="row mt-2">
+        <div class=" card mx-auto">
+            <div class="col">
+                <div class="col-3 card-img-top d-flex justify-content-center">
+                    <img src="../../../assets/user.png"width="200px" alt="logo">
                 </div>
-                <div class="col-6 form-group">
-                    <label for="name"><b>Company Name:</b></label>
-                    <input class="form-control my-3"type="text"value="{{specificUser?.cName}}"disabled>
-                    <label for="name"><b>Role:</b></label>
-                    <input class="form-control"type="email"value="{{specificUser?.role}}"disabled>
+                <div class="mt-5 card-body">
+                    <div class="row">
+                        <div class="col-md-6 form-group">
+                            <label for="name"><b>Full Name:</b></label>
+                            <input class="form-control my-3"type="text"value="{{specificUser?.name}}"disabled>
+                            <label for="name"><b>Email:</b></label>
+                            <input class="form-control"type="email"value="{{specificUser?.email}}"disabled>
+                        </div>
+                        <div class="col-md-6 form-group">
+                            <label for="name"><b>Company Name:</b></label>
+                            <input class="form-control my-3"type="text"value="{{specificUser?.cName}}"disabled>
+                            <label for="name"><b>Role:</b></label>
+                            <input class="form-control"type="email"value="{{specificUser?.role}}"disabled>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<!-- <div class="container">
-    <span>
-        <button class="btn btn-primary"(click)="onLogOut()">Logout</button>
-    </span>
-    <div class="row mt-3">
-        <div class="col-8 mx-auto">
-            <table class="table">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">User Name</th>
-                        <th scope="col">Company Name</th>
-                        <th scope="col">Role</th>
-                        <th scope="col">Email</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>1.</td>
-                        <td>{{specificUser?.name}}</td>
-                        <td>{{specificUser?.cName}}</td>
-                        <td>{{specificUser?.role}}</td>
-                        <td>{{specificUser?.email}}</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div> -->

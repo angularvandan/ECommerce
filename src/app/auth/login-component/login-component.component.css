@@ -7,3 +7,6 @@ input.ng-invalid.ng-touched{
 span{
     color: red;
 }
+.card{
+    width:400px
+}

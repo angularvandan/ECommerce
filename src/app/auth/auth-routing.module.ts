@@ -6,12 +6,12 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 const routes: Routes = [
   {path:'',redirectTo:'auth/login',pathMatch:'full'},
   {path:"auth",children:
-  [
-    {path:'',redirectTo:'login',pathMatch:'full'},
-    {path:'register',component:RegistrationComponentComponent},
-    {path:'login',component:LoginComponentComponent},
-    {path:'**',redirectTo:'auth/login',pathMatch:'full'}
-  ]},
+    [
+      {path:'',redirectTo:'login',pathMatch:'full'},
+      {path:'register',component:RegistrationComponentComponent},
+      {path:'login',component:LoginComponentComponent},
+      {path:'**',redirectTo:'auth/login',pathMatch:'full'}
+    ]},
   {path :'**',redirectTo:'auth/login',pathMatch:'full'}
 ];
 
