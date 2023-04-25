@@ -1,5 +1,6 @@
 import { Component, Injectable, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
+import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
 @Component({
@@ -9,24 +10,39 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class MyProfileComponentComponent{
   specificUser!:any;
+  specificUserByUrl:any;
+  dataComingStatus:boolean=false;
   logOutUser:{}[]=[];
-  constructor(private userService:UserService,private router:Router){
-    this.specificUser=userService.specificUser;
+  constructor(private userService:UserService,private router:Router
+    ,httpService:HttpService,private activatedRouter:ActivatedRoute){
+    // this.specificUser=userService.specificUser;
+    httpService.fetchUserDetails().subscribe((response:any)=>{
+      console.log(response);
+      this.specificUserByUrl=response;
+      this.dataComingStatus=true;
+    },err=>{
+      httpService.error.next(err.error.message);
+    });
   }
+
   onLogOut(){
-    let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
-    for(let userData of data){
-      if(userData.isLogin!=true){
-        this.logOutUser.push(userData);
-      }
-      else{
-        this.logOutUser.push({...this.specificUser,isLogin:false});
-      }
-    }
+    // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
+    // for(let userData of data){
+    //   if(userData.isLogin!=true){
+    //     this.logOutUser.push(userData);
+    //   }
+    //   else{
+    //     this.logOutUser.push({...this.specificUser,isLogin:false});
+    //   }
+    // }
     // console.log('Logout Works')
     //below line , for stop canActivate router
-    this.userService.specificUser=undefined;
-    localStorage.setItem('RegisterData',JSON.stringify(this.logOutUser));
+    // this.userService.specificUser=undefined;
+    // localStorage.setItem('RegisterData',JSON.stringify(this.logOutUser));
+    // this.router.navigate(['auth/login']);
+
+    localStorage.removeItem('token1');
     this.router.navigate(['auth/login']);
+
   }
 }

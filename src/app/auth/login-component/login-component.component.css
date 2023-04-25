@@ -4,7 +4,7 @@ a{
 input.ng-invalid.ng-touched{
     border:2px solid red;
 }
-span{
+span,.errMessage{
     color: red;
 }
 .card{

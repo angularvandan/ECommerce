@@ -3,5 +3,13 @@ input{
     margin-bottom: 20px;
 }
 .card{
-    width: 500px;
+    width: fit-content;
+}
+.loading{
+    position:absolute;
+    border-width: 10px;
+    top:10%;
+    left: 50%;
+    width: 60px;
+    height: 60px;
 }
