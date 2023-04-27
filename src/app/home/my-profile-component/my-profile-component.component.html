@@ -7,6 +7,7 @@
         </div>
         <div class="row mt-2">
             <div class=" card mx-auto ">
+                <h2 class="message text-center">{{successMessage}}</h2>
                 <div class="col">
                     <div class="col-3 card-img-top d-flex justify-content-center">
                         <img src="../../../assets/user.png"width="200px" alt="logo">
@@ -17,14 +18,18 @@
                                 <label for="name"><b>Full Name:</b></label>
                                 <input class="form-control my-3"type="text"value="{{specificUserByUrl?.name}}"disabled>
                                 <label for="name"><b>Email:</b></label>
-                                <input class="form-control"type="email"value="{{specificUserByUrl?.email}}"disabled>
+                                <input class="form-control"type="email" #emailValue value="{{specificUserByUrl?.email}}"disabled>
                             </div>
                             <div class="col-md-6 form-group">
                                 <label for="name"><b>Company Name:</b></label>
-                                <input class="form-control my-3"type="text"value="{{specificUserByUrl?._org.name}}"disabled>
+                                <input class="form-control my-3"type="text"#textFocus  value="{{specificUserByUrl?._org.name}}"disabled>
                                 <label for="name"><b>Role:</b></label>
                                 <input class="form-control"type="email"value="{{specificUserByUrl?.role}}"disabled>
                             </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <button type="button"class="btn btn-secondary form-control mb-3"(click)="onUsersDetails()">Users Details</button>
+                            <button type="button"class="btn btn-secondary form-control"(click)="onEditUsersDetails()">EditCompanyName</button>
                         </div>
                     </div>
                 </div>

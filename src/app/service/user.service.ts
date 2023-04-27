@@ -5,7 +5,11 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 specificUser!:{}[]|undefined;
-
+//below three line of code for update company name
+userEmail!:string;
+userCompanyName!:string;
+successMessage!:string;
+//this below code for update users
   constructor() { 
     // console.log(this.specificUser);
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
@@ -14,7 +18,5 @@ specificUser!:{}[]|undefined;
     //     this.specificUser=userData;
     //   }
     // }
-
-    
   }
 }

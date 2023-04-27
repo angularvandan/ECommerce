@@ -1,0 +1,47 @@
+
+<div class="container py-3">
+    <nav class="navbar navbar-expand-sm navbar-light bg-light my-4">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="#"></a>
+          <div class=" " id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item"routerLinkActive="active">
+                <button type="button"class=" btn btn-primary" routerLink="../userList">User List</button>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+
+    <div class="row mt-1">
+        <div class="card mx-auto">
+            <div class="col mt-3 py-3">
+                <h2 class="card-title text-center">Create User</h2>
+                <h2 class="message text-center">{{successMessage}}</h2>
+                <div class="card-body">
+                    <form [formGroup]="reactiveForm"(ngSubmit)="onCreateUser()">
+                        <div class="form-group mb-4">
+                            <label for="name">Enter name:</label>
+                            <input type="name" formControlName="name"class="form-control">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="email">Enter email:</label>
+                            <input type="email"formControlName="email" class="form-control">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="password">Enter password</label>
+                            <input type="password" formControlName="password"class="form-control">
+                        </div>
+                        <div class="form-group mb-4">
+                            <label for="role">Enter role:</label>
+                            <input type="text"formControlName="role" class="form-control">
+                        </div>
+                        <div class="form-group mt-3">
+                            <button class="btn btn-primary form-control">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

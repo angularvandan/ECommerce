@@ -15,4 +15,8 @@ import { MyProfileComponentComponent } from './my-profile-component/my-profile-c
   ],
   exports:[]
 })
-export class HomeModule { }
+export class HomeModule {
+  constructor(){
+    console.log('home Module Loaded')
+  }
+ }

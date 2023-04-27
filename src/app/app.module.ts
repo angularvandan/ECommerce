@@ -14,9 +14,10 @@ import {HttpClientModule } from '@angular/common/http'
     BrowserModule,
     NgbModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule { 
+}

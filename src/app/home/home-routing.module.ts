@@ -5,12 +5,12 @@ import { AuthGuardGuard } from '../auth-guard.guard';
 
 
 const routes: Routes = [
-  {path:'my-profile',component:MyProfileComponentComponent,canActivate:[AuthGuardGuard]}
+  {path:'',component:MyProfileComponentComponent,canActivate:[AuthGuardGuard]}
 ];
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
 export class HomeRoutingModule {
-  constructor(){}
+
  }

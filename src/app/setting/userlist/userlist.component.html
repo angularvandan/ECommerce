@@ -1,0 +1,103 @@
+<div class="spinner-border text-warning loading" role="status"*ngIf="!dataComingStatus">
+    <span class="visually-hidden">Loading...</span>
+</div>
+<div *ngIf="dataComingStatus">
+    <div class="container"*ngIf="!containerStatus">
+        <div class="row mt-4">
+            <div class="col mt-4">
+                <h4 class="text-center mb-4">User Details</h4>
+                <!-- pagination  -->
+                <div class="short">
+                    <div class="row">
+                    <div class="col mb-3">
+                    <div class="data-length">
+                        <select [(ngModel)]="limit" (change)="onchange()" id="data-length"class="text-center float-start">
+                            <option value="3">{{limit}}</option>
+                            <option value="4">4</option>
+                            <option value="6">6</option>
+                            <option value="10">10</option>
+                        </select>
+                    </div>
+                    </div>
+                    <div class="col mb-3">
+                    <nav aria-label="Page navigation example">
+                        <ul class="pagination  justify-content-end">
+                            <li class="page-item">
+                                <a class="page-link"(click)="onPrevious()">Previous</a>
+                            </li>
+                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize-2)">{{pageSize-2}}</a></li>
+                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize-1)">{{pageSize-1}}</a></li>
+                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize)">{{pageSize}}</a></li>
+                            <li class="page-item">
+                                <a class="page-link"(click)="onNext()">Next</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    </div>
+                    </div>
+                </div>
+                <h2 class="message text-center">{{successMessage}}</h2>
+                <div class="scrollbar">
+                <table class="table table-secondary table-striped table-hover mt-4">
+                    <thead>
+                        <tr class="align-top">
+                            <th scope="col">#</th>
+                            <th scope="col">Name</th>
+                            <th scope="col">Email</th>
+                            <th scope="col">Role</th>
+                            <th scope="col">Edit User</th>
+                            <th scope="col">Edit Role</th>
+                            <th scope="col">Delete</th>
+                        </tr>
+                    </thead>
+                    <tbody >
+                        <tr class="align-middle" *ngFor="let user of userDetails;let i=index">
+                            <td scope="col">{{i+1}}</td>
+                            <td>{{user['name']}}</td>
+                            <td>{{user['email']}}</td>
+                            <td>{{user['role']}}</td>
+                            <td><button (click)="editUser(user)" class="btn btn-secondary"type="button">Edit User</button></td>
+                            <td><button (click)="editRole(user)"class="btn btn-secondary"type="button">Edit Role</button></td>
+                            <td><button class="btn btn-danger"type="button"(click)="onDeleteUser(user['_id'])">Delete</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container"*ngIf="containerStatus">
+        <div class="row mt-4">
+            <div class="card mx-auto">
+                <div class="col mt-3 py-3">
+                    <h2 class="card-title text-center"*ngIf="editUserStatus">Update User</h2>
+                    <h2 class="card-title text-center"*ngIf="editRoleStatus">Update Role</h2>
+                    <h2 class="message text-center">{{successMessage}}</h2>
+                    <div class="card-body">
+                        <form [formGroup]="reactiveForm"(ngSubmit)="onUpdateUser()">
+                            <div class="form-group mb-4">
+                                <label for="name">Enter name:</label>
+                                <input type="name" formControlName="name"class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="email">Enter email:</label>
+                                <input type="email"formControlName="email" class="form-control">
+                            </div>
+                            <div class="form-group mb-4"*ngIf="editUserStatus">
+                                <label for="password">Enter password</label>
+                                <input type="password" formControlName="password"class="form-control">
+                            </div>
+                            <div class="form-group mb-4">
+                                <label for="role">Enter role:</label>
+                                <input type="text"formControlName="role" class="form-control">
+                            </div>
+                            <div class="form-group mt-3">
+                                <button class="btn btn-primary form-control">Update</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

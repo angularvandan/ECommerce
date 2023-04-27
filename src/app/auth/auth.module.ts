@@ -18,5 +18,7 @@ import { ReactiveFormsModule } from '@angular/forms';
   ]
 })
 export class AuthModule {
-  
+  constructor(){
+    console.log('Auth Module Loaded')
+  }
  }

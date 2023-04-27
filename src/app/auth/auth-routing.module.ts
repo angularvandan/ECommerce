@@ -4,19 +4,14 @@ import { RegistrationComponentComponent } from './registration-component/registr
 import { LoginComponentComponent } from './login-component/login-component.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'auth/login',pathMatch:'full'},
-  {path:"auth",children:
-    [
-      {path:'',redirectTo:'login',pathMatch:'full'},
-      {path:'register',component:RegistrationComponentComponent},
-      {path:'login',component:LoginComponentComponent},
-      {path:'**',redirectTo:'auth/login',pathMatch:'full'}
-    ]},
-  {path :'**',redirectTo:'auth/login',pathMatch:'full'}
+    {path:'register',component:RegistrationComponentComponent},
+    {path:'login',component:LoginComponentComponent},
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class AuthRoutingModule { }
+export class AuthRoutingModule {
+
+ }
