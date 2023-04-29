@@ -33,6 +33,7 @@ export class MyProfileComponentComponent{
     });
     this.successMessage=userService.successMessage;
     setTimeout(()=>{
+      userService.successMessage='';
       this.successMessage='';
     },3000);
   }

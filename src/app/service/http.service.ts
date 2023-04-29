@@ -4,6 +4,7 @@ import { Register } from '../auth/Model/register';
 import { computeStyles } from '@popperjs/core';
 import { Login } from '../auth/Model/login';
 import { Subject, catchError, throwError } from 'rxjs';
+import { userType } from '../setting/userlist/userlist.component';
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,6 @@ export class HttpService {
     this.token=JSON.parse(<string>localStorage.getItem('token1'));
     this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
   }
-
   createRegister(register:Register){
     return this.http.post('https://shop-api.ngminds.com/auth/register?captcha=false',register);
   }
@@ -42,7 +42,7 @@ export class HttpService {
       return throwError(err);
     }));
   }
-  getUsers(user:{limit:string}){
+  getUsers(user:{}){
     return this.http.get('https://shop-api.ngminds.com/users',{headers:this.headers,params:user});
   }
   deleteUser(userId:string){

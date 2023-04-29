@@ -30,8 +30,8 @@ export class CompanyComponent implements OnInit{
     this.httpService.updateUserCompanyDetails({email:this.eValue,name:this.cName})
     .subscribe(response=>{
       console.log(response);
-      this.router.navigate(['my-profile']);
       this.userService.successMessage="Company name has changed"
+      this.router.navigate(['my-profile']);
 
     },err=>{
       this.httpService.error.next(err.error.message);

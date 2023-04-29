@@ -5,6 +5,13 @@ import { toArray } from 'rxjs';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
+export interface userType{
+  limit?:any,
+  page:any,
+  sortBy?:any,
+  name?:any;
+}
+
 @Component({
   selector: 'app-userlist',
   templateUrl: './userlist.component.html',
@@ -20,13 +27,23 @@ export class UserlistComponent implements OnInit{
   editUserStatus:boolean=false;
   editRoleStatus:boolean=false;
   containerStatus:boolean=false;
+
   specificUser!:any;
   pageCount:any=1;
-  pageSize:any=3;
+  pageSize:any=10;
   limit:any=3;
+  sortBy:any='';
+  name:any='';
+
+  user:userType={
+    limit:this.limit,
+    page: this.pageCount,
+  }
+ 
 
 
-  constructor(private httpService:HttpService,private router:Router){}
+  constructor(private httpService:HttpService,private router:Router){
+  }
   ngOnInit() {
     this.onchange();
     this.reactiveForm=new FormGroup({
@@ -36,7 +53,7 @@ export class UserlistComponent implements OnInit{
       role:new FormControl(null,[ Validators.required])
     });
   }
-  onGetUsers(user:{limit:string}){
+  onGetUsers(user:userType){
     this.httpService.getUsers(user).subscribe((response:any)=>{
       console.log(response.results);
       this.userDetails=response.results;
@@ -51,6 +68,7 @@ export class UserlistComponent implements OnInit{
       this.successMessage="Deleted successfully"
       setTimeout(()=>{
         this.successMessage=''
+        this.router.navigate(['my-profile']);
       },3000);
     },err=>{
       this.httpService.error.next(err.error.message);
@@ -86,7 +104,7 @@ export class UserlistComponent implements OnInit{
   }
   onUpdateUser(){
     let id=this.specificUser._id;
-    let name=<string>this.specificUser.name;
+    let name=this.reactiveForm.controls['name'].value;
     let email=this.reactiveForm.controls['email'].value;
     let role=this.reactiveForm.controls['role'].value;
     let password=this.reactiveForm.controls['password'].value;
@@ -119,22 +137,40 @@ export class UserlistComponent implements OnInit{
   }
   // pegination 
   onPrevious(){
-      this.pageCount=this.pageSize-1;
+    if(this.pageCount>1){
+      this.pageCount=this.pageCount-1;
+    }
   }
   onNext(){
-      this.pageCount=this.pageSize+1;
+    if(this.pageCount+2<this.pageSize){
+      this.pageCount=this.pageCount+1;
+    }
   }
-  onPage(pageSize:any){
-    console.log(pageSize);
-    this.pageCount=pageSize;
+  onPage(pageCount:any){
+    console.log(pageCount);
+    this.user={
+      limit:this.limit,
+      page:pageCount,
+    }
     this.onchange();
   }
+  onChangeSortBy(){
+    this.user.sortBy=this.sortBy;
+    this.onchange();
+  }
+  onChangeRecord(){
+    this.user.limit=this.limit;
+    this.onchange();
+  }
+  onChangeName(){
+    this.user.name=this.name;
+    this.name='';
+    this.onchange();
+    delete this.user.name;
+  }
   onchange(){
-    let user={
-      limit:this.limit,
-      page:this.pageCount
-    }
-    this.onGetUsers(user);
-    console.log(user);
+    this.dataComingStatus=false;
+    this.onGetUsers(this.user);
+    console.log(this.user);
   }
 }

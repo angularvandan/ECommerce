@@ -13,7 +13,10 @@ export class UserComponent implements OnInit {
   reactiveForm!:FormGroup;
   successMessage!:string;
   isCollapsed:boolean=false;
-  constructor(private httpService:HttpService,private router:Router){
+  role:string='user';
+
+  constructor(private httpService:HttpService,private router:Router
+    ,private userService:UserService){
 
   }
 
@@ -29,6 +32,7 @@ export class UserComponent implements OnInit {
     console.log(this.reactiveForm);
     this.httpService.createUser(this.reactiveForm.value).subscribe(response=>{
       console.log(response);
+      this.userService.successMessage="User has changed"
       this.router.navigate(['my-profile']);
     },(err)=>{
       this.httpService.error.next(err.error.message);

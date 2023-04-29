@@ -9,31 +9,44 @@
                 <!-- pagination  -->
                 <div class="short">
                     <div class="row">
-                    <div class="col mb-3">
-                    <div class="data-length">
-                        <select [(ngModel)]="limit" (change)="onchange()" id="data-length"class="text-center float-start">
-                            <option value="3">{{limit}}</option>
-                            <option value="4">4</option>
-                            <option value="6">6</option>
-                            <option value="10">10</option>
-                        </select>
+                        <div class="col mb-3">
+                            <h5>User Limits</h5>
+                            <div class="data-length">
+                                <select [(ngModel)]="limit" (change)="onChangeRecord()" id="data-length"class="text-center float-start">
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="6">6</option>
+                                    <option value="10">10</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col mb-3">
+                            <nav aria-label="Page navigation example">
+                                <ul class="pagination  justify-content-end">
+                                    <li class="page-item">
+                                        <a class="page-link"(click)="onPrevious()">Previous</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount)">{{pageCount}}</a></li>
+                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount+1)">{{pageCount+1}}</a></li>
+                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount+2)">{{pageCount+2}}</a></li>
+                                    <li class="page-item">
+                                        <a class="page-link"(click)="onNext()">Next</a>
+                                    </li>
+                                </ul>
+                            </nav>
+                        </div>
                     </div>
-                    </div>
-                    <div class="col mb-3">
-                    <nav aria-label="Page navigation example">
-                        <ul class="pagination  justify-content-end">
-                            <li class="page-item">
-                                <a class="page-link"(click)="onPrevious()">Previous</a>
-                            </li>
-                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize-2)">{{pageSize-2}}</a></li>
-                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize-1)">{{pageSize-1}}</a></li>
-                            <li class="page-item"><a class="page-link"(click)="onPage(pageSize)">{{pageSize}}</a></li>
-                            <li class="page-item">
-                                <a class="page-link"(click)="onNext()">Next</a>
-                            </li>
-                        </ul>
-                    </nav>
-                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <select [(ngModel)]="sortBy"class="form-select"(change)="onChangeSortBy()">
+                                <option value="">--Sort--</option>
+                                <option value="role">Role</option>
+                                <option value="name">Name</option>
+                                <option value="email">Email</option>
+                            </select>
+                            <input class="form-control my-3"[(ngModel)]="name" type="text"placeholder="Enter Name">
+                            <button type="button" (click)="onChangeName()"class="btn btn-primary form-control">Find</button>
+                        </div>
                     </div>
                 </div>
                 <h2 class="message text-center">{{successMessage}}</h2>
@@ -88,8 +101,12 @@
                                 <input type="password" formControlName="password"class="form-control">
                             </div>
                             <div class="form-group mb-4">
-                                <label for="role">Enter role:</label>
-                                <input type="text"formControlName="role" class="form-control">
+                                <!-- <label for="role">Enter role:</label>
+                                <input type="text"formControlName="role" class="form-control"> -->
+                                <select formControlName="role" class="form-select">
+                                    <option value="user">User</option>
+                                    <option value="admin">Admin</option>
+                                </select>
                             </div>
                             <div class="form-group mt-3">
                                 <button class="btn btn-primary form-control">Update</button>
