@@ -155,18 +155,25 @@ export class UserlistComponent implements OnInit{
     this.onchange();
   }
   onChangeSortBy(){
-    this.user.sortBy=this.sortBy;
-    this.onchange();
+    if(this.sortBy!=''){
+      this.user.sortBy=this.sortBy;
+      this.onchange();
+    }else{
+      this.onchange();
+    }
   }
   onChangeRecord(){
     this.user.limit=this.limit;
     this.onchange();
   }
   onChangeName(){
-    this.user.name=this.name;
-    this.name='';
-    this.onchange();
-    delete this.user.name;
+    if(this.name!=''){
+      this.user.name=this.name;
+      delete this.user.page;
+      this.name='';
+      this.onchange();
+      delete this.user.name;
+    }
   }
   onchange(){
     this.dataComingStatus=false;

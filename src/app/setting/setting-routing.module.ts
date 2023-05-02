@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './company/company.component';
 import { UserComponent } from './user/user.component';
 import { UserlistComponent } from './userlist/userlist.component';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 const routes: Routes = [
   {path:'company',component:CompanyComponent},
@@ -12,7 +11,7 @@ const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [RouterModule.forChild(routes),NgxPaginationModule],
-  exports: [RouterModule,NgxPaginationModule]
+  imports: [RouterModule.forChild(routes)],
+  exports: [RouterModule]
 })
 export class SettingRoutingModule { }

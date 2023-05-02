@@ -18,8 +18,9 @@ export class CompanyComponent implements OnInit{
 
   ngOnInit():void{
     this.reactiveForm=new FormGroup({
-      email:new FormControl(this.userService.userEmail,[ Validators.required,Validators.email]),
-      cName:new FormControl(this.userService.userCompanyName,[Validators.required])
+      email:new FormControl(this.userService.userEmail),
+      cName:new FormControl(this.userService.userCompanyName,[Validators.required,
+        Validators.pattern('[a-zA-z]*[ a-zA-Z]+([a-zA-Z]){2}')])
     });
     this.reactiveForm.controls['email'].disable();
   }

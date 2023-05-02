@@ -10,7 +10,7 @@ import { UserService } from 'src/app/service/user.service';
 })
 export class MyProfileComponentComponent{
   specificUser!:any;
-  specificUserByUrl:any;
+  specificUserByUrl!:any;
   dataComingStatus:boolean=false;
   logOutUser:{}[]=[];
   successMessage!:string;

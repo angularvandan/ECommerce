@@ -14,13 +14,14 @@ export class RegistrationComponentComponent implements OnInit{
   reactiveForm!:FormGroup;
   registerData:{}[]=[];
   registerDataByUrl!:Register;
-  tokenValue:string[]=[];  
+  tokenValue:string[]=[];
+  errMessage!:string;
 
   constructor(private router:Router,userService:UserService,private httpService:HttpService){
     // fetch data from local storage every timeInterval
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
     // this.registerData=data;
-    //below code is for redirect on my-profile
+    // below code is for redirect on my-profile
     // if(userService.specificUser!=undefined){
     //   router.navigate(['my-profile']);
     // }
@@ -41,6 +42,14 @@ export class RegistrationComponentComponent implements OnInit{
       password:new FormControl(null,[Validators.required]),
       isLogin:new FormControl(false)
     });
+
+    this.httpService.error.subscribe(err=>{
+      this.errMessage=err;
+      setTimeout(()=>{
+        this.errMessage='';
+      },3000);
+    });
+
   }
   onSubmit(){
     // console.log(this.reactiveForm);
@@ -58,8 +67,9 @@ export class RegistrationComponentComponent implements OnInit{
       localStorage.setItem('token',JSON.stringify(this.tokenValue));
       this.onNavigateLogin()
     },err=>{
-      this.httpService.error.next(err.message);
+      this.httpService.error.next(err.error.message);
     });
+    
     this.registerData.push(this.reactiveForm.value);
     // this.pushLocalStorage(this.registerData);
     this.reactiveForm.reset();

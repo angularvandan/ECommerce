@@ -3,6 +3,7 @@
     <div class="card mx-auto">
       <div class="col p-4">
         <h2 class=" card-title text-center mb-5">Register Application</h2>
+          <h4 class="errMessage">{{errMessage}}</h4>
           <div class="card-body">
           <form [formGroup]="reactiveForm"(ngSubmit)="onSubmit()">
             <div class="form-group row">

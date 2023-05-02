@@ -11,6 +11,7 @@ import { Login } from '../Model/login';
   styleUrls: ['./login-component.component.css']
 })
 export class LoginComponentComponent implements OnInit{
+
   reactiveForm!:FormGroup;
   validUser:boolean=false;
   specificUser:{}[]=[];
@@ -40,6 +41,9 @@ export class LoginComponentComponent implements OnInit{
     });
     this.httpService.error.subscribe(err=>{
       this.errMessage=err;
+      setTimeout(()=>{
+        this.errMessage='';
+      },3000);
     });
   }
   onSubmit(){

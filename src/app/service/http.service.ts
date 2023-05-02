@@ -1,10 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Register } from '../auth/Model/register';
-import { computeStyles } from '@popperjs/core';
 import { Login } from '../auth/Model/login';
 import { Subject, catchError, throwError } from 'rxjs';
-import { userType } from '../setting/userlist/userlist.component';
 
 @Injectable({
   providedIn: 'root'
