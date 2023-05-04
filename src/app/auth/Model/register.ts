@@ -3,4 +3,5 @@ export class Register{
     email!:string;
     password!:string;
     company!:string;
+    captcha!:string;
 }

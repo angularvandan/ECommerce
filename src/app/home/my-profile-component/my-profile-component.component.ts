@@ -8,7 +8,7 @@ import { UserService } from 'src/app/service/user.service';
   templateUrl: './my-profile-component.component.html',
   styleUrls: ['./my-profile-component.component.css']
 })
-export class MyProfileComponentComponent{
+export class MyProfileComponentComponent implements OnInit{
   specificUser!:any;
   specificUserByUrl!:any;
   dataComingStatus:boolean=false;
@@ -24,16 +24,30 @@ export class MyProfileComponentComponent{
   constructor(private userService:UserService,private router:Router
     ,private httpService:HttpService,private activatedRouter:ActivatedRoute){
     // this.specificUser=userService.specificUser;
-    httpService.fetchUserDetails().subscribe((response:any)=>{
+    // httpService.fetchUserDetails().subscribe((response:any)=>{
+    //   // console.log(response);
+    //   this.specificUserByUrl=response;
+    //   this.dataComingStatus=true;
+    // },err=>{
+    //   httpService.error.next(err.error.message);
+    // });
+    // this.successMessage=userService.successMessage;
+    // setTimeout(()=>{
+    //   userService.successMessage='';
+    //   this.successMessage='';
+    // },3000);
+  }
+  ngOnInit(): void {
+    this.httpService.fetchUserDetails().subscribe((response:any)=>{
       // console.log(response);
       this.specificUserByUrl=response;
       this.dataComingStatus=true;
     },err=>{
-      httpService.error.next(err.error.message);
+      this.httpService.error.next(err.error.message);
     });
-    this.successMessage=userService.successMessage;
+    this.successMessage=this.userService.successMessage;
     setTimeout(()=>{
-      userService.successMessage='';
+      this.userService.successMessage='';
       this.successMessage='';
     },3000);
   }
@@ -55,6 +69,7 @@ export class MyProfileComponentComponent{
     // this.router.navigate(['auth/login']);
 
     localStorage.removeItem('token1');
+    // this.router.navigate(['auth']);
     this.router.navigate(['auth/login']);
   }
   onEditUsersDetails(){

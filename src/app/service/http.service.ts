@@ -12,21 +12,26 @@ export class HttpService {
   error=new Subject<string>();
   token!:any;
   headers!:any;
+
   constructor(private http:HttpClient) {
     this.token=JSON.parse(<string>localStorage.getItem('token1'));
     this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
   }
+
   createRegister(register:Register){
-    return this.http.post('https://shop-api.ngminds.com/auth/register?captcha=false',register);
+    return this.http.post('https://shop-api.ngminds.com/auth/register',register);
   }
   createLogin(login:Login){
-    return this.http.post('https://shop-api.ngminds.com/auth/login?captcha=false',login)
+    return this.http.post('https://shop-api.ngminds.com/auth/login',login)
     .pipe(catchError((err)=>{
       return throwError(err);
     }));
   }
   fetchUserDetails(){
-    return this.http.get('https://shop-api.ngminds.com/auth/self',{headers:this.headers});
+    return this.http.get('https://shop-api.ngminds.com/auth/self',{headers:this.headers})
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }));
   }
   updateUserCompanyDetails(user:{email:string,name:string}){
     return this.http.patch('https://shop-api.ngminds.com/users/org',user,{headers:this.headers})

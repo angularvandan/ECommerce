@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 import { Register } from '../Model/register';
+import { CaptchaService } from 'src/app/service/captcha.service';
 
 @Component({
   selector: 'app-registration-component',
@@ -16,8 +17,10 @@ export class RegistrationComponentComponent implements OnInit{
   registerDataByUrl!:Register;
   tokenValue:string[]=[];
   errMessage!:string;
+  captcha!:string;
 
-  constructor(private router:Router,userService:UserService,private httpService:HttpService){
+  constructor(private router:Router,userService:UserService,
+    private httpService:HttpService,private captchaService:CaptchaService){
     // fetch data from local storage every timeInterval
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
     // this.registerData=data;
@@ -25,6 +28,7 @@ export class RegistrationComponentComponent implements OnInit{
     // if(userService.specificUser!=undefined){
     //   router.navigate(['my-profile']);
     // }
+
     let token= localStorage.getItem('token1');
     if(token!=null){
       this.router.navigate(['my-profile']);
@@ -50,7 +54,13 @@ export class RegistrationComponentComponent implements OnInit{
       },3000);
     });
 
+    this.executeCaptchaService();
   }
+
+  async executeCaptchaService(){
+    this.captcha=await this.captchaService.execute('REGISTER');
+  }
+
   onSubmit(){
     // console.log(this.reactiveForm);
     // push the data into out Property
@@ -58,17 +68,28 @@ export class RegistrationComponentComponent implements OnInit{
       email:this.reactiveForm.value.email,
       password:this.reactiveForm.value.password,
       name:this.reactiveForm.value.name,
-      company:this.reactiveForm.value.cName
+      company:this.reactiveForm.value.cName,
+      captcha:this.captcha
     }
 
-    this.httpService.createRegister(this.registerDataByUrl).subscribe((response:any)=>{
+    this.httpService.createRegister(this.registerDataByUrl).subscribe({
+      next:(response:any)=>{
       console.log(response.token);
       this.tokenValue.push(response.token);
       localStorage.setItem('token',JSON.stringify(this.tokenValue));
-      this.onNavigateLogin()
-    },err=>{
+      this.executeCaptchaService();
+      this.onNavigateLogin();
+
+    },
+    error:err=>{
       this.httpService.error.next(err.error.message);
-    });
+      setTimeout(()=>{
+        this.router.navigate(['auth']);
+      },2000);
+      this.executeCaptchaService();
+
+    }
+  });
     
     this.registerData.push(this.reactiveForm.value);
     // this.pushLocalStorage(this.registerData);

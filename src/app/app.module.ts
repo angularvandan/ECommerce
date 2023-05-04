@@ -4,7 +4,9 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing-module';
-import {HttpClientModule } from '@angular/common/http'
+import {HttpClientModule } from '@angular/common/http';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
+import environment from 'src/environment/environment';
 
 @NgModule({
   declarations: [
@@ -15,8 +17,11 @@ import {HttpClientModule } from '@angular/common/http'
     NgbModule,
     AppRoutingModule,
     HttpClientModule,
+    ],
+  providers: [
+    ReCaptchaV3Service,
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue:environment.reCaptchaKey }
   ],
-  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { 

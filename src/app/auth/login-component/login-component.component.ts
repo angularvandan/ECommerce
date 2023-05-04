@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 import { Login } from '../Model/login';
+import { CaptchaService } from 'src/app/service/captcha.service';
 
 @Component({
   selector: 'app-login-component',
@@ -19,16 +20,16 @@ export class LoginComponentComponent implements OnInit{
   loginUserByUrl!:Login;
   tokenValue:string='';
   errMessage!:string;
+  captcha!:string;
 
 
   constructor(private router:Router,private userService:UserService,
-    private httpService:HttpService) {
+    private httpService:HttpService,private captchaService:CaptchaService) {
     //below code is for redirect on my-profile
     // if(userService.specificUser!=undefined){
     //   router.navigate(['my-profile']);
     // }
-
-    let token= localStorage.getItem('token1');
+    let token=JSON.parse(<string>localStorage.getItem('token1'));
     if(token!=null){
       this.router.navigate(['my-profile']);
     }
@@ -45,6 +46,10 @@ export class LoginComponentComponent implements OnInit{
         this.errMessage='';
       },3000);
     });
+    this.executeCaptchaService();
+  }
+  async executeCaptchaService(){
+    this.captcha=await this.captchaService.execute('LOGIN');
   }
   onSubmit(){
     // console.log(this.reactiveForm);
@@ -53,19 +58,29 @@ export class LoginComponentComponent implements OnInit{
     // this.checkUser(email,password);
     this.loginUserByUrl={
       email:this.reactiveForm.get('email')?.value,
-      password:this.reactiveForm.get('password')?.value
+      password:this.reactiveForm.get('password')?.value,
+      captcha:this.captcha
     }
-    this.httpService.createLogin(this.loginUserByUrl).subscribe((response:any)=>{
+    this.httpService.createLogin(this.loginUserByUrl).subscribe({
+      next:(response:any)=>{
       console.log(response);
       this.tokenValue=response.token;
       localStorage.setItem('token1',JSON.stringify(this.tokenValue));
       if(this.tokenValue!=''){
-        this.router.navigate(['my-profile']);
+        // this.router.navigate(['my-profile']);
       }
-    },(err)=>{
-      // console.log(err.error.message);
+      this.executeCaptchaService();
+
+    },
+    error:(err)=>{
       this.httpService.error.next(err.error.message);
+      this.executeCaptchaService();
+    },
+    complete:()=>{
+      this.router.navigate(['my-profile']);
+    }
     });
+
   }
 
   checkUser(email:string,password:string){
