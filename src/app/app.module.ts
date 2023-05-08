@@ -7,7 +7,8 @@ import { AppRoutingModule } from './app-routing-module';
 import {HttpClientModule } from '@angular/common/http';
 import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
 import environment from 'src/environment/environment';
-
+import { SocialLoginModule, SocialAuthServiceConfig } from 'angularx-social-login';
+import { GoogleLoginProvider } from 'angularx-social-login';
 @NgModule({
   declarations: [
     AppComponent,
@@ -17,10 +18,28 @@ import environment from 'src/environment/environment';
     NgbModule,
     AppRoutingModule,
     HttpClientModule,
+    SocialLoginModule
     ],
   providers: [
     ReCaptchaV3Service,
-    { provide: RECAPTCHA_V3_SITE_KEY, useValue:environment.reCaptchaKey }
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue:environment.reCaptchaKey },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.clientId
+            )
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
   ],
   bootstrap: [AppComponent]
 })

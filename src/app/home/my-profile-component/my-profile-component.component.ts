@@ -1,5 +1,6 @@
 import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { CaptchaService } from 'src/app/service/captcha.service';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -17,12 +18,15 @@ export class MyProfileComponentComponent implements OnInit{
 
   cName!:string;
   eValue!:string;
+  captcha!:string;
+  
 
   @ViewChild('textFocus')textFocus!:ElementRef;
   @ViewChild('emailValue')emailValue!:ElementRef;
 
   constructor(private userService:UserService,private router:Router
-    ,private httpService:HttpService,private activatedRouter:ActivatedRoute){
+    ,private httpService:HttpService,private activatedRouter:ActivatedRoute
+    ,private captchaService:CaptchaService){
     // this.specificUser=userService.specificUser;
     // httpService.fetchUserDetails().subscribe((response:any)=>{
     //   // console.log(response);
@@ -37,10 +41,15 @@ export class MyProfileComponentComponent implements OnInit{
     //   this.successMessage='';
     // },3000);
   }
+  async executeCaptchaService(){
+    this.captcha=await this.captchaService.execute('LOGIN');
+  }
   ngOnInit(): void {
+    this.executeCaptchaService()
     this.httpService.fetchUserDetails().subscribe((response:any)=>{
       // console.log(response);
       this.specificUserByUrl=response;
+      this.userService.specificUserByUrl=this.specificUserByUrl;
       this.dataComingStatus=true;
     },err=>{
       this.httpService.error.next(err.error.message);
@@ -51,7 +60,14 @@ export class MyProfileComponentComponent implements OnInit{
       this.successMessage='';
     },3000);
   }
-
+  onVerifyEmail(){
+    this.executeCaptchaService();
+    this.httpService.verifyEmail({captcha:this.captcha}).subscribe(response=>{
+      console.log(response);
+    },err=>{
+      this.httpService.error.next(err.error.message);
+    });
+  }
   onLogOut(){
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
     // for(let userData of data){
@@ -85,4 +101,5 @@ export class MyProfileComponentComponent implements OnInit{
   onUsersDetails(){
     this.router.navigate(['setting/createUser']);
   }
+  
 }

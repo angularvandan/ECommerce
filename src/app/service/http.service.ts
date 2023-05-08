@@ -1,5 +1,5 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import { Injectable, OnInit } from '@angular/core';
 import { Register } from '../auth/Model/register';
 import { Login } from '../auth/Model/login';
 import { Subject, catchError, throwError } from 'rxjs';
@@ -7,7 +7,7 @@ import { Subject, catchError, throwError } from 'rxjs';
 @Injectable({
   providedIn: 'root'
 })
-export class HttpService {
+export class HttpService{
 
   error=new Subject<string>();
   token!:any;
@@ -17,7 +17,6 @@ export class HttpService {
     this.token=JSON.parse(<string>localStorage.getItem('token1'));
     this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
   }
-
   createRegister(register:Register){
     return this.http.post('https://shop-api.ngminds.com/auth/register',register);
   }
@@ -27,7 +26,11 @@ export class HttpService {
       return throwError(err);
     }));
   }
+
   fetchUserDetails(){
+    //below two line for first load
+    this.token=JSON.parse(<string>localStorage.getItem('token1'));
+    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
     return this.http.get('https://shop-api.ngminds.com/auth/self',{headers:this.headers})
     .pipe(catchError((err)=>{
       return throwError(err);
@@ -62,5 +65,44 @@ export class HttpService {
     .pipe(catchError((err)=>{
       return throwError(err);
     }));
+  }
+  changePassword(user:{}){
+    return this.http.post('https://shop-api.ngminds.com/users/auth/change-password',user,{headers:this.headers})
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }))
+  }
+  resetPassword(password:string,token:any){
+    const payload = {
+      password:password
+    }
+    return this.http.post('https://shop-api.ngminds.com/auth/reset-password?token='+token,payload)
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }))
+  }
+  forgotPassword(user:{}){
+    return this.http.post('https://shop-api.ngminds.com/auth/forgot-password',user)
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }))
+  }
+  verifyEmail(captcha:{}){
+    return this.http.post('https://shop-api.ngminds.com/auth/send-verification-email',captcha,{headers:this.headers})
+    .pipe(catchError((err)=>{
+        return throwError(err);
+    }))
+  }
+  verifyAccount(token:any){
+    return this.http.post('https://shop-api.ngminds.com/auth/verify-email?token='+token,{})
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }));
+  }
+  googleSignIn(user:{}){
+    return this.http.post('https://shop-api.ngminds.com/auth/login/google',user)
+    .pipe(catchError((err)=>{
+      return throwError(err);
+    }))
   }
 }

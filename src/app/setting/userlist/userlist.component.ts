@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { toArray } from 'rxjs';
@@ -42,7 +42,7 @@ export class UserlistComponent implements OnInit{
  
 
 
-  constructor(private httpService:HttpService,private router:Router){
+  constructor(private httpService:HttpService,private router:Router,private render:Renderer2){
   }
   ngOnInit() {
     this.onchange();
@@ -147,11 +147,12 @@ export class UserlistComponent implements OnInit{
     }
   }
   onPage(pageCount:any){
-    console.log(pageCount);
-    this.user={
-      limit:this.limit,
-      page:pageCount,
-    }
+    // this.user={
+    //   limit:this.limit,
+    //   page:pageCount,
+    // }
+    this.user.limit=this.limit;
+    this.user.page=pageCount;
     this.onchange();
   }
   onChangeSortBy(){
@@ -159,6 +160,7 @@ export class UserlistComponent implements OnInit{
       this.user.sortBy=this.sortBy;
       this.onchange();
     }else{
+      delete this.user.name;
       this.onchange();
     }
   }
@@ -172,7 +174,7 @@ export class UserlistComponent implements OnInit{
       delete this.user.page;
       this.name='';
       this.onchange();
-      delete this.user.name;
+      // delete this.user.name;
     }
   }
   onchange(){

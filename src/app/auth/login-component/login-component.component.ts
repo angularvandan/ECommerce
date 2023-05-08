@@ -5,6 +5,8 @@ import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 import { Login } from '../Model/login';
 import { CaptchaService } from 'src/app/service/captcha.service';
+import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
+import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login-component',
@@ -21,10 +23,13 @@ export class LoginComponentComponent implements OnInit{
   tokenValue:string='';
   errMessage!:string;
   captcha!:string;
+  googleData!:{token:string,captcha:string};
+  forgot_email!:any;
 
 
   constructor(private router:Router,private userService:UserService,
-    private httpService:HttpService,private captchaService:CaptchaService) {
+    private httpService:HttpService,private captchaService:CaptchaService
+    ,private socialAuthService: SocialAuthService) {
     //below code is for redirect on my-profile
     // if(userService.specificUser!=undefined){
     //   router.navigate(['my-profile']);
@@ -66,9 +71,9 @@ export class LoginComponentComponent implements OnInit{
       console.log(response);
       this.tokenValue=response.token;
       localStorage.setItem('token1',JSON.stringify(this.tokenValue));
-      if(this.tokenValue!=''){
-        // this.router.navigate(['my-profile']);
-      }
+      // if(this.tokenValue!=''){
+      //   // this.router.navigate(['my-profile']);
+      // }
       this.executeCaptchaService();
 
     },
@@ -81,6 +86,35 @@ export class LoginComponentComponent implements OnInit{
     }
     });
 
+  }
+  onGoogleSignIn(){
+    
+    this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((response)=>{
+      console.log(response);
+      let token=response.idToken;
+      this.httpService.googleSignIn({token:token,captcha:this.captcha}).subscribe((response:any)=>{
+        console.log(response);
+        this.tokenValue=response.token;
+        localStorage.setItem('token1',JSON.stringify(this.tokenValue));
+      },(err)=>{
+        this.httpService.error.next(err.error.message);
+      },()=>{
+        this.router.navigate(['my-profile']);
+      });
+    });
+  }
+
+  onForgot(){
+    let email=this.forgot_email;
+    this.forgot_email='';
+    console.log(email);
+    this.httpService.forgotPassword({email:email,captcha:this.captcha}).subscribe((response:any)=>{
+      console.log(response);
+      this.executeCaptchaService();
+    },(err)=>{
+      this.httpService.error.next(err.error.message);
+      this.executeCaptchaService();
+    });    
   }
 
   checkUser(email:string,password:string){

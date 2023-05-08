@@ -5,6 +5,7 @@ import { Injectable } from '@angular/core';
 })
 export class UserService {
 specificUser!:{}[]|undefined;
+specificUserByUrl!:any;
 //below three line of code for update company name
 userEmail!:string;
 userCompanyName!:string;

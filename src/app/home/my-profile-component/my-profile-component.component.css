@@ -16,3 +16,6 @@ input{
 .message{
     color:rgb(82, 146, 82);
 }
+.mouse{
+    cursor:pointer
+}
