@@ -31,11 +31,11 @@ export class CompanyComponent implements OnInit{
     this.httpService.updateUserCompanyDetails({email:this.eValue,name:this.cName})
     .subscribe(response=>{
       console.log(response);
-      this.userService.successMessage="Company name has changed"
+      this.userService.showSuccess('Company name has changed')
       this.router.navigate(['my-profile']);
 
     },err=>{
-      this.httpService.error.next(err.error.message);
+      this.userService.showSuccess(err.error.message)
     });
   }
 

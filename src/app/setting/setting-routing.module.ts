@@ -4,13 +4,19 @@ import { CompanyComponent } from './company/company.component';
 import { UserComponent } from './user/user.component';
 import { UserlistComponent } from './userlist/userlist.component';
 import { AuthGuardGuard } from '../auth-guard.guard';
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MyProfileComponentComponent } from './my-profile-component/my-profile-component.component';
 
 const routes: Routes = [
-  {path:'company',component:CompanyComponent,canActivate:[AuthGuardGuard]},
-  {path:'createUser',component:UserComponent,canActivate:[AuthGuardGuard]},
-  {path:'userList',component:UserlistComponent,canActivate:[AuthGuardGuard]},
-  // {path:'profile',component:p}
-];
+  {path:'',canActivate:[AuthGuardGuard],children:[
+    {path:'company',component:CompanyComponent},
+    {path:'createUser',component:UserComponent},
+    {path:'userList',component:UserlistComponent},
+    {path:'change-password',component:ChangePasswordComponent},
+    {path:'my-profile',component:MyProfileComponentComponent},
+    {path:'',redirectTo:'my-profile',pathMatch:'full'}
+
+  ]}];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],

@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { ToastrService } from 'ngx-toastr';
 
 @Injectable({
   providedIn: 'root'
@@ -10,8 +11,9 @@ specificUserByUrl!:any;
 userEmail!:string;
 userCompanyName!:string;
 successMessage!:string;
+
 //this below code for update users
-  constructor() { 
+  constructor(private toastrService:ToastrService) { 
     // console.log(this.specificUser);
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
     // for(let userData of data){
@@ -19,5 +21,11 @@ successMessage!:string;
     //     this.specificUser=userData;
     //   }
     // }
+  }
+  showSuccess(message:string) {
+    this.toastrService.success(message);
+  }
+  showWarning(message:string) {
+    this.toastrService.warning(message);
   }
 }

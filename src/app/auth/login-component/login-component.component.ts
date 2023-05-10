@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http.service';
@@ -6,7 +6,6 @@ import { UserService } from 'src/app/service/user.service';
 import { Login } from '../Model/login';
 import { CaptchaService } from 'src/app/service/captcha.service';
 import { GoogleLoginProvider, SocialAuthService } from 'angularx-social-login';
-import { ReCaptchaV3Service } from 'ng-recaptcha';
 
 @Component({
   selector: 'app-login-component',
@@ -36,7 +35,14 @@ export class LoginComponentComponent implements OnInit{
     // }
     let token=JSON.parse(<string>localStorage.getItem('token1'));
     if(token!=null){
-      this.router.navigate(['my-profile']);
+      this.router.navigate(['setting/my-profile']);
+      setTimeout(() => {
+        var ele: any = document.querySelector('.grecaptcha-badge');
+        // console.log(ele);
+        if(ele!=null){
+          ele.style.display = 'none';
+        }
+      }, 1000);
     }
   }
 
@@ -78,11 +84,12 @@ export class LoginComponentComponent implements OnInit{
 
     },
     error:(err)=>{
-      this.httpService.error.next(err.error.message);
       this.executeCaptchaService();
+      this.userService.showWarning(err.error.message);
     },
     complete:()=>{
-      this.router.navigate(['my-profile']);
+      this.userService.showSuccess('Login Successfully');
+      this.router.navigate(['setting/my-profile']);
     }
     });
 
@@ -96,10 +103,14 @@ export class LoginComponentComponent implements OnInit{
         console.log(response);
         this.tokenValue=response.token;
         localStorage.setItem('token1',JSON.stringify(this.tokenValue));
+        this.userService.showSuccess('Login Successfully');
+
       },(err)=>{
         this.httpService.error.next(err.error.message);
+        this.userService.showWarning(err.error.message);
+
       },()=>{
-        this.router.navigate(['my-profile']);
+        this.router.navigate(['/setting/my-profile']);
       });
     });
   }

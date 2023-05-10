@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaptchaService } from 'src/app/service/captcha.service';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -15,12 +14,8 @@ export class ResetPasswordComponent implements OnInit{
   captcha!:string;
   token!:string;
   successMessage!:string;
-  constructor(private userService:UserService,private captchaService:CaptchaService
+  constructor(private userService:UserService
     ,private httpService:HttpService,private router:Router,private activatedRouter:ActivatedRoute) {
-    this.executeCaptchaService();
-  }
-  async executeCaptchaService(){
-    this.captcha=await this.captchaService.execute('LOGIN');
   }
   ngOnInit():void{
     this.reactiveForm=new FormGroup({
@@ -38,16 +33,14 @@ export class ResetPasswordComponent implements OnInit{
     this.httpService.resetPassword(password,this.token).subscribe({
       next:(response:any)=>{
       console.log(response);
-      this.successMessage="Password has reset"
-      console.log('password has reset');
+      this.userService.showSuccess('Password has reset');
+      // console.log('password has reset');
     },
     error:(err)=>{
-      this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
+
     },complete:()=>{
-      setTimeout(() => {
-        this.successMessage='';
-        this.router.navigate(['auth/login']);
-      }, 2000);
+      this.router.navigate(['auth/login']);
     }
     });
   }

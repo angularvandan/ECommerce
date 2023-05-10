@@ -6,16 +6,18 @@ import { LoginComponentComponent } from './login-component/login-component.compo
 import { RegistrationComponentComponent } from './registration-component/registration-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
-import { ChangePasswordComponent } from './change-password/change-password.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { EmailVerifyComponent } from './email-verify/email-verify.component';
+import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
+import environment from 'src/environment/environment';
+import { GoogleLoginProvider, SocialAuthService, SocialAuthServiceConfig } from 'angularx-social-login';
+import { CaptchaService } from '../service/captcha.service';
 
 @NgModule({
   declarations: [
     LoginComponentComponent,
     RegistrationComponentComponent,
     AuthComponent,
-    ChangePasswordComponent,
     ResetPasswordComponent,
     EmailVerifyComponent
   ],
@@ -24,10 +26,33 @@ import { EmailVerifyComponent } from './email-verify/email-verify.component';
     AuthRoutingModule,
     ReactiveFormsModule,
     FormsModule
-  ]
+  ],
+  providers: [
+    ReCaptchaV3Service,
+    CaptchaService,
+    SocialAuthService,
+    { provide: RECAPTCHA_V3_SITE_KEY, useValue:environment.reCaptchaKey },
+    {
+      provide: 'SocialAuthServiceConfig',
+      useValue: {
+        autoLogin: false,
+        providers: [
+          {
+            id: GoogleLoginProvider.PROVIDER_ID,
+            provider: new GoogleLoginProvider(
+              environment.clientId
+            )
+          },
+        ],
+        onError: (err) => {
+          console.error(err);
+        }
+      } as SocialAuthServiceConfig,
+    }
+  ],
 })
 export class AuthModule {
   constructor(){
-    console.log('Auth Module Loaded')
+    console.log('Auth Module Loaded');
   }
  }

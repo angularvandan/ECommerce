@@ -20,21 +20,13 @@
                                 </select>
                             </div>
                         </div>
-                        <div class="col mb-3">
-                            <nav aria-label="Page navigation example">
-                                <ul class="pagination  justify-content-end">
-                                    <li class="page-item">
-                                        <a class="page-link"(click)="onPrevious()">Previous</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount)">{{pageCount}}</a></li>
-                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount+1)"tabindex="2">{{pageCount+1}}</a></li>
-                                    <li class="page-item"><a class="page-link"(click)="onPage(pageCount+2)"tabindex="3">{{pageCount+2}}</a></li>
-                                    <li class="page-item">
-                                        <a class="page-link"(click)="onNext()">Next</a>
-                                    </li>
-                                </ul>
-                            </nav>
-                        </div>
+                        <pagination-controls  id="first"
+                            (pageChange)="onPageChange($event)"
+                            [directionLinks]="true"
+                            previousLabel="Previous"
+                            nextLabel="Next"
+                            >
+                        </pagination-controls>
                     </div>
                     <div class="row">
                         <div class="col-4">
@@ -64,7 +56,12 @@
                         </tr>
                     </thead>
                     <tbody >
-                        <tr class="align-middle" *ngFor="let user of userDetails;let i=index">
+                        <tr class="align-middle" *ngFor="let user of userDetails |
+                            paginate:{ id: 'first',
+                            itemsPerPage: limit,
+                            currentPage: pageCount,
+                            totalItems: totalResult
+                            };let i=index">
                             <td scope="col">{{i+1}}</td>
                             <td>{{user['name']}}</td>
                             <td>{{user['email']}}</td>
@@ -85,7 +82,6 @@
                 <div class="col mt-3 py-3">
                     <h2 class="card-title text-center"*ngIf="editUserStatus">Update User</h2>
                     <h2 class="card-title text-center"*ngIf="editRoleStatus">Update Role</h2>
-                    <h2 class="message text-center">{{successMessage}}</h2>
                     <div class="card-body">
                         <form [formGroup]="reactiveForm"(ngSubmit)="onUpdateUser()">
                             <div class="form-group mb-4">

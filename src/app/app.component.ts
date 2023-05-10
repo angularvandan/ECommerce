@@ -9,9 +9,5 @@ import { Router } from '@angular/router';
 export class AppComponent {
   title = 'ECommerce';
   constructor(private route:Router){
-    // let token=JSON.parse(<string>localStorage.getItem('token1'));
-    // if(token!=null){
-    //   this.route.navigate(['my-profile']);
-    // }
   }
 }

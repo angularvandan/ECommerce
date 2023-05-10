@@ -28,4 +28,8 @@ td{
 a:hover {
     color: rgb(255, 0, 38);
 }
+pagination-controls{
+    display: flex;
+    justify-content: end;
+}
 

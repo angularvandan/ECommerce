@@ -19,7 +19,7 @@ export class RegistrationComponentComponent implements OnInit{
   errMessage!:string;
   captcha!:string;
 
-  constructor(private router:Router,userService:UserService,
+  constructor(private router:Router,private userService:UserService,
     private httpService:HttpService,private captchaService:CaptchaService){
     // fetch data from local storage every timeInterval
     // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
@@ -31,7 +31,14 @@ export class RegistrationComponentComponent implements OnInit{
 
     let token= localStorage.getItem('token1');
     if(token!=null){
-      this.router.navigate(['my-profile']);
+      this.router.navigate(['setting/my-profile']);
+      setTimeout(() => {
+        var ele: any = document.querySelector('.grecaptcha-badge');
+        console.log(ele);
+        if(ele!=null){
+          ele.style.display = 'none';
+        }
+      }, 1000);
     }
   }
   ngOnInit():void{
@@ -78,14 +85,16 @@ export class RegistrationComponentComponent implements OnInit{
       this.tokenValue.push(response.token);
       localStorage.setItem('token',JSON.stringify(this.tokenValue));
       this.executeCaptchaService();
+      this.userService.showSuccess('Register Successfully');
       this.onNavigateLogin();
 
     },
     error:err=>{
-      this.httpService.error.next(err.error.message);
-      setTimeout(()=>{
-        this.router.navigate(['auth']);
-      },2000);
+      this.userService.showWarning(err.error.message);
+
+      // setTimeout(()=>{
+      //   this.router.navigate(['auth']);
+      // },2000);
       this.executeCaptchaService();
 
     }
@@ -97,10 +106,10 @@ export class RegistrationComponentComponent implements OnInit{
     // this.onNavigateLogin();
   }
   onNavigateLogin(){
-    // console.log('Auth/login')
+
     this.router.navigate(['auth/login']);
   }
-  pushLocalStorage(data:object){
-    localStorage.setItem('RegisterData',JSON.stringify(data));
-  }
+  // pushLocalStorage(data:object){
+  //   localStorage.setItem('RegisterData',JSON.stringify(data));
+  // }
 }

@@ -32,12 +32,11 @@ export class UserComponent implements OnInit {
     console.log(this.reactiveForm);
     this.httpService.createUser(this.reactiveForm.value).subscribe(response=>{
       console.log(response);
-      this.userService.successMessage="User has Added";
+      this.userService.showSuccess('User has Added')
       this.router.navigate(['my-profile']);
     },(err)=>{
       this.httpService.error.next(err.error.message);
-      // console.log(err.error.message);
-      this.successMessage=err.error.message;
+      this.userService.showWarning(err.error.message);
     });
     setTimeout(()=>{
       this.successMessage='';

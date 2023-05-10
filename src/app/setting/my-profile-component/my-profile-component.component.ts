@@ -1,6 +1,5 @@
 import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { CaptchaService } from 'src/app/service/captcha.service';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -26,46 +25,30 @@ export class MyProfileComponentComponent implements OnInit{
 
   constructor(private userService:UserService,private router:Router
     ,private httpService:HttpService,private activatedRouter:ActivatedRoute
-    ,private captchaService:CaptchaService){
-    // this.specificUser=userService.specificUser;
-    // httpService.fetchUserDetails().subscribe((response:any)=>{
-    //   // console.log(response);
-    //   this.specificUserByUrl=response;
-    //   this.dataComingStatus=true;
-    // },err=>{
-    //   httpService.error.next(err.error.message);
-    // });
-    // this.successMessage=userService.successMessage;
-    // setTimeout(()=>{
-    //   userService.successMessage='';
-    //   this.successMessage='';
-    // },3000);
-  }
-  async executeCaptchaService(){
-    this.captcha=await this.captchaService.execute('LOGIN');
+    ){
+      var ele: any = document.querySelector('.grecaptcha-badge');
+      // console.log(ele);
+      if(ele!=null){
+        ele.style.display = 'none';
+      }
   }
   ngOnInit(): void {
-    this.executeCaptchaService()
     this.httpService.fetchUserDetails().subscribe((response:any)=>{
       // console.log(response);
       this.specificUserByUrl=response;
       this.userService.specificUserByUrl=this.specificUserByUrl;
       this.dataComingStatus=true;
     },err=>{
-      this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
     });
-    this.successMessage=this.userService.successMessage;
-    setTimeout(()=>{
-      this.userService.successMessage='';
-      this.successMessage='';
-    },3000);
   }
   onVerifyEmail(){
-    this.executeCaptchaService();
-    this.httpService.verifyEmail({captcha:this.captcha}).subscribe(response=>{
+    this.httpService.verifyEmail().subscribe(response=>{
       console.log(response);
+      this.userService.showSuccess('Link has send');
     },err=>{
       this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
     });
   }
   onLogOut(){

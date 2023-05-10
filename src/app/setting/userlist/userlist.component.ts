@@ -1,7 +1,6 @@
-import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
+import { Component, OnInit, Renderer2 } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { toArray } from 'rxjs';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
 
@@ -27,22 +26,26 @@ export class UserlistComponent implements OnInit{
   editUserStatus:boolean=false;
   editRoleStatus:boolean=false;
   containerStatus:boolean=false;
+  previousStatus:boolean=true;
+  nextStatus:boolean=false;
+  page1:boolean=false;
+  page2:boolean=false;
 
   specificUser!:any;
   pageCount:any=1;
-  pageSize:any=10;
+  pageSize!:number;
   limit:any=3;
   sortBy:any='';
   name:any='';
+  totalResult!: number;
+
 
   user:userType={
     limit:this.limit,
     page: this.pageCount,
   }
- 
-
-
-  constructor(private httpService:HttpService,private router:Router,private render:Renderer2){
+  constructor(private httpService:HttpService,private router:Router,
+    private render:Renderer2,private userService:UserService){
   }
   ngOnInit() {
     this.onchange();
@@ -55,23 +58,32 @@ export class UserlistComponent implements OnInit{
   }
   onGetUsers(user:userType){
     this.httpService.getUsers(user).subscribe((response:any)=>{
-      console.log(response.results);
+      console.log(response);
+      console.log(response.results.length);
+      // this.pageLength=response.results.length;
+      this.totalResult=response.totalResults;
+      this.pageCount=response.page;
+      this.pageSize=response.totalPages;
       this.userDetails=response.results;
       this.dataComingStatus=true;
+      this.pageCount==1?this.previousStatus=true:this.previousStatus=false;
+      this.pageCount==this.pageSize?this.page1=this.page2=this.nextStatus=true:this.page1=this.page2=this.nextStatus=false;
+      this.pageCount+1>=this.pageSize?this.page2=true:this.page2=false;
+      this.pageCount+2>=this.pageSize?this.nextStatus=true:this.nextStatus=false;
+
     },err=>{
       this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
     });
   }
   onDeleteUser(id:string){
     this.httpService.deleteUser(id).subscribe(()=>{
-      console.log('deleted successfully');
-      this.successMessage="Deleted successfully"
-      setTimeout(()=>{
-        this.successMessage=''
+      // console.log('deleted successfully');
+      this.userService.showSuccess('Successfully Deleted');
         this.router.navigate(['my-profile']);
-      },3000);
     },err=>{
       this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
     });
   }
   editUser(user:object){
@@ -111,53 +123,56 @@ export class UserlistComponent implements OnInit{
     if(this.editRoleStatus){
       this.httpService.updateUserRole(id,{role}).subscribe((res)=>{
         console.log(res);
-        this.successMessage='Role updated successfully';
+        this.userService.showSuccess('Role updated successfully');
+
         setTimeout(()=>{
-          this.successMessage=''
           this.reactiveForm.reset();
           this.router.navigate(['my-profile']);
         },2000);
       },err=>{
         this.httpService.error.next(err.error.message);
+        this.userService.showWarning(err.error.message);
       });
     }
     else{
       this.httpService.updateUserDetails(id,{email,password,name}).subscribe(()=>{
-        console.log('user updated');
-        this.successMessage='User updated successfully';
+        // console.log('user updated');
+        this.userService.showSuccess('User updated successfully');
+
         setTimeout(()=>{
-          this.successMessage='';
           this.reactiveForm.reset();
           this.router.navigate(['my-profile']);
         },2000);
       },err=>{
         this.httpService.error.next(err.error.message);
+        this.userService.showWarning(err.error.message);
       });
     }
   }
   // pegination 
-  onPrevious(){
-    if(this.pageCount>1){
-      this.pageCount=this.pageCount-1;
-    }
-  }
-  onNext(){
-    if(this.pageCount+2<this.pageSize){
-      this.pageCount=this.pageCount+1;
-    }
-  }
-  onPage(pageCount:any){
-    // this.user={
-    //   limit:this.limit,
-    //   page:pageCount,
-    // }
-    this.user.limit=this.limit;
-    this.user.page=pageCount;
-    this.onchange();
-  }
+  // onPrevious(){
+  //   if(this.pageCount>1){
+  //     this.pageCount=this.pageCount-1;
+  //     this.onGetUsers({...this.user,page:this.pageCount});
+  //   }
+    
+  // }
+  // onNext(){
+  //   if(this.pageCount+2<this.pageSize){
+  //     this.pageCount=this.pageCount+1;
+  //     this.onGetUsers({...this.user,page:this.pageCount});
+  //   }
+  // }
+  // onPage(pageCount:any){
+  //   this.user.limit=this.limit;
+  //   this.user.page=pageCount;
+  //   this.onchange();
+  // }
   onChangeSortBy(){
     if(this.sortBy!=''){
       this.user.sortBy=this.sortBy;
+      this.user.page=1;
+      this.pageCount=1;
       this.onchange();
     }else{
       delete this.user.name;
@@ -166,6 +181,8 @@ export class UserlistComponent implements OnInit{
   }
   onChangeRecord(){
     this.user.limit=this.limit;
+    this.user.page=1;
+    this.pageCount=1;
     this.onchange();
   }
   onChangeName(){
@@ -176,6 +193,11 @@ export class UserlistComponent implements OnInit{
       this.onchange();
       // delete this.user.name;
     }
+  }
+  onPageChange(pageCount:any){
+    this.pageCount=pageCount;
+    this.onGetUsers({...this.user,page:this.pageCount});
+
   }
   onchange(){
     this.dataComingStatus=false;

@@ -27,12 +27,14 @@ export class EmailVerifyComponent implements OnInit{
   }
   onVerifyAccount(){
     this.httpService.verifyAccount(this.token).subscribe(response=>{
-      this.userService.successMessage="Email has verified"
+      this.userService.showSuccess('Email has verified');
       
     },err=>{
       this.httpService.error.next(err.error.message);
+      this.userService.showWarning(err.error.message);
+
     },()=>{
-      this.router.navigate(['my-profile']);
+      this.router.navigate(['setting/my-profile']);
     })
   }
 

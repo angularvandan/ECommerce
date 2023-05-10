@@ -6,20 +6,27 @@ import { CompanyComponent } from './company/company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
 import { UserlistComponent } from './userlist/userlist.component';
-
+import { ChangePasswordComponent } from './change-password/change-password.component';
+import { MyProfileComponentComponent } from './my-profile-component/my-profile-component.component';
+import {NgxPaginationModule} from 'ngx-pagination';
 
 
 @NgModule({
   declarations: [
     CompanyComponent,
     UserComponent,
-    UserlistComponent
+    UserlistComponent,
+    ChangePasswordComponent,
+    MyProfileComponentComponent,
   ],
   imports: [
     CommonModule,
     SettingRoutingModule,
     ReactiveFormsModule,
-    FormsModule
+    FormsModule,
+    NgxPaginationModule
+
   ]
 })
-export class SettingModule { }
+export class SettingModule { 
+}

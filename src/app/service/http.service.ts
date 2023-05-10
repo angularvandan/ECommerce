@@ -87,8 +87,8 @@ export class HttpService{
       return throwError(err);
     }))
   }
-  verifyEmail(captcha:{}){
-    return this.http.post('https://shop-api.ngminds.com/auth/send-verification-email',captcha,{headers:this.headers})
+  verifyEmail(){
+    return this.http.post('https://shop-api.ngminds.com/auth/send-verification-email',{},{headers:this.headers})
     .pipe(catchError((err)=>{
         return throwError(err);
     }))
