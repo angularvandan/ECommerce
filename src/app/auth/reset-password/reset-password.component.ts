@@ -24,6 +24,9 @@ export class ResetPasswordComponent implements OnInit{
     //here git token from url
     this.activatedRouter.queryParamMap.subscribe(params=>{
       this.token=params.get('token')||'';
+      if(this.token==''){
+        this.router.navigate(['auth/login']);
+      }
     });
   }
   onReset(){

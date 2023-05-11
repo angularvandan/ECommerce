@@ -10,8 +10,8 @@ import { MyProfileComponentComponent } from './my-profile-component/my-profile-c
 const routes: Routes = [
   {path:'',canActivate:[AuthGuardGuard],children:[
     {path:'company',component:CompanyComponent},
-    {path:'createUser',component:UserComponent},
-    {path:'userList',component:UserlistComponent},
+    {path:'create-user',component:UserComponent},
+    {path:'user-list',component:UserlistComponent},
     {path:'change-password',component:ChangePasswordComponent},
     {path:'my-profile',component:MyProfileComponentComponent},
     {path:'',redirectTo:'my-profile',pathMatch:'full'}

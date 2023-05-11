@@ -105,4 +105,9 @@ export class HttpService{
       return throwError(err);
     }))
   }
+
+  getAdminId(){
+    return this.fetchUserDetails();
+  }
+
 }

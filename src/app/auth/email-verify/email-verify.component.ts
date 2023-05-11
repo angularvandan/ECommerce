@@ -19,8 +19,13 @@ export class EmailVerifyComponent implements OnInit{
     this.routeActivated.queryParamMap.subscribe(params=>{
       this.token=params.get('token')||'';
       console.log(this.token);
-      console.log('email success');
-      this.onVerifyAccount();
+      if(this.token==''){
+        this.router.navigate(['auth/login']);
+      }else{
+
+        console.log('email success');
+        this.onVerifyAccount();
+      }
     },err=>{
       this.httpService.error.next(err.error.message);
     });

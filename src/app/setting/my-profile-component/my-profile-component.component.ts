@@ -82,7 +82,7 @@ export class MyProfileComponentComponent implements OnInit{
     },0);
   }
   onUsersDetails(){
-    this.router.navigate(['setting/createUser']);
+    this.router.navigate(['setting/create-user']);
   }
   
 }

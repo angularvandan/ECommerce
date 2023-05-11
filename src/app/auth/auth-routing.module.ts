@@ -10,7 +10,7 @@ const routes: Routes = [
     {path:'register',component:RegistrationComponentComponent},
     {path:'login',component:LoginComponentComponent},
     {path:'reset-password',component:ResetPasswordComponent},
-    {path:'verify-email',component:EmailVerifyComponent,canActivate:[AuthGuardGuard]},
+    {path:'verify-email',component:EmailVerifyComponent},
     {path:'',redirectTo:'login',pathMatch:'full'}
 ];
 

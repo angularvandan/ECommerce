@@ -95,7 +95,6 @@ export class LoginComponentComponent implements OnInit{
 
   }
   onGoogleSignIn(){
-    
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((response)=>{
       console.log(response);
       let token=response.idToken;
@@ -120,34 +119,14 @@ export class LoginComponentComponent implements OnInit{
     this.forgot_email='';
     console.log(email);
     this.httpService.forgotPassword({email:email,captcha:this.captcha}).subscribe((response:any)=>{
-      console.log(response);
+      // console.log(response);
+      this.userService.showSuccess('Email has send');
       this.executeCaptchaService();
+
     },(err)=>{
       this.httpService.error.next(err.error.message);
+      this.userService.showSuccess(err.error.message);
       this.executeCaptchaService();
     });    
-  }
-
-  checkUser(email:string,password:string){
-    let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
-    // console.log(data);
-    this.allUserData=[];
-    for(let user of data){
-      if(<any>user.email===email&&<any>user.password===password){
-        this.validUser=true;
-        this.specificUser=user;
-        //fetch isLogin status
-        this.allUserData.push({...user,isLogin:true});
-        //provide to service to print in myProfile
-        this.userService.specificUser=this.specificUser;
-      }
-      else{
-        this.allUserData.push(user);
-      }
-    }
-    if(this.validUser){
-      localStorage.setItem('RegisterData',JSON.stringify(this.allUserData));
-      this.router.navigate(['my-profile']);
-    }
   }
 }

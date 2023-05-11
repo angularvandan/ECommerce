@@ -7,7 +7,6 @@ import { AppRoutingModule } from './app-routing-module';
 import {HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { NgxPaginationModule } from 'ngx-pagination';
 
 @NgModule({
   declarations: [
@@ -19,7 +18,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     AppRoutingModule,
     HttpClientModule,
     BrowserAnimationsModule,
-    NgxPaginationModule,
     ToastrModule.forRoot({
       timeOut: 2000
     })
