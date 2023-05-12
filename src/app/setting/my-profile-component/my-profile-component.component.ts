@@ -16,12 +16,10 @@ export class MyProfileComponentComponent implements OnInit{
   successMessage!:string;
 
   cName!:string;
-  eValue!:string;
   captcha!:string;
   
 
   @ViewChild('textFocus')textFocus!:ElementRef;
-  @ViewChild('emailValue')emailValue!:ElementRef;
 
   constructor(private userService:UserService,private router:Router
     ,private httpService:HttpService,private activatedRouter:ActivatedRoute
@@ -40,6 +38,8 @@ export class MyProfileComponentComponent implements OnInit{
       this.dataComingStatus=true;
     },err=>{
       this.userService.showWarning(err.error.message);
+      // this.dataComingStatus=true;
+      // this.router.navigate(['auth/login']);
     });
   }
   onVerifyEmail(){
@@ -52,34 +52,15 @@ export class MyProfileComponentComponent implements OnInit{
     });
   }
   onLogOut(){
-    // let data=JSON.parse(localStorage.getItem('RegisterData')||'[]');
-    // for(let userData of data){
-    //   if(userData.isLogin!=true){
-    //     this.logOutUser.push(userData);
-    //   }
-    //   else{
-    //     this.logOutUser.push({...this.specificUser,isLogin:false});
-    //   }
-    // }
-    // console.log('Logout Works')
-    //below line , for stop canActivate router
-    // this.userService.specificUser=undefined;
-    // localStorage.setItem('RegisterData',JSON.stringify(this.logOutUser));
-    // this.router.navigate(['auth/login']);
-
     localStorage.removeItem('token1');
-    // this.router.navigate(['auth']);
     this.router.navigate(['auth/login']);
   }
   onEditUsersDetails(){
     setTimeout(()=>{
       this.cName=this.textFocus.nativeElement.value;
-      this.eValue=this.emailValue.nativeElement.value;
-
-      this.userService.userEmail=this.eValue;
       this.userService.userCompanyName=this.cName;
       this.router.navigate(['setting/company']);
-    },0);
+    },10);
   }
   onUsersDetails(){
     this.router.navigate(['setting/create-user']);

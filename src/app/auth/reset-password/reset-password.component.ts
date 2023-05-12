@@ -21,7 +21,7 @@ export class ResetPasswordComponent implements OnInit{
     this.reactiveForm=new FormGroup({
       password:new FormControl(null,[Validators.required]),
     });
-    //here git token from url
+    //here got token from url
     this.activatedRouter.queryParamMap.subscribe(params=>{
       this.token=params.get('token')||'';
       if(this.token==''){
@@ -41,7 +41,7 @@ export class ResetPasswordComponent implements OnInit{
     },
     error:(err)=>{
       this.userService.showWarning(err.error.message);
-
+      this.router.navigate(['auth/login']);
     },complete:()=>{
       this.router.navigate(['auth/login']);
     }

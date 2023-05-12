@@ -18,17 +18,14 @@ export class CompanyComponent implements OnInit{
 
   ngOnInit():void{
     this.reactiveForm=new FormGroup({
-      email:new FormControl(this.userService.userEmail),
       cName:new FormControl(this.userService.userCompanyName,[Validators.required,
         Validators.pattern('[a-zA-z]*[ a-zA-Z]+([a-zA-Z]){2}')])
     });
-    this.reactiveForm.controls['email'].disable();
   }
 
   onChangesUserDetails(){
     this.cName=this.reactiveForm.controls['cName'].value;
-    this.eValue=this.reactiveForm.controls['email'].value;
-    this.httpService.updateUserCompanyDetails({email:this.eValue,name:this.cName})
+    this.httpService.updateUserCompanyDetails({name:this.cName})
     .subscribe(response=>{
       console.log(response);
       this.userService.showSuccess('Company name has changed')

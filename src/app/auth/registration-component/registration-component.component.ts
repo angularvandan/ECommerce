@@ -53,24 +53,15 @@ export class RegistrationComponentComponent implements OnInit{
       password:new FormControl(null,[Validators.required]),
       isLogin:new FormControl(false)
     });
-
-    this.httpService.error.subscribe(err=>{
-      this.errMessage=err;
-      setTimeout(()=>{
-        this.errMessage='';
-      },3000);
-    });
-
     this.executeCaptchaService();
   }
-
   async executeCaptchaService(){
     this.captcha=await this.captchaService.execute('REGISTER');
   }
-
   onSubmit(){
     // console.log(this.reactiveForm);
     // push the data into out Property
+    this.executeCaptchaService();
     this.registerDataByUrl={
       email:this.reactiveForm.value.email,
       password:this.reactiveForm.value.password,
@@ -81,22 +72,17 @@ export class RegistrationComponentComponent implements OnInit{
 
     this.httpService.createRegister(this.registerDataByUrl).subscribe({
       next:(response:any)=>{
-      console.log(response.token);
+      // console.log(response.token);
       this.tokenValue.push(response.token);
       localStorage.setItem('token',JSON.stringify(this.tokenValue));
       this.executeCaptchaService();
       this.userService.showSuccess('Register Successfully');
-      this.onNavigateLogin();
-
     },
     error:err=>{
       this.userService.showWarning(err.error.message);
-
-      // setTimeout(()=>{
-      //   this.router.navigate(['auth']);
-      // },2000);
       this.executeCaptchaService();
-
+    },complete:()=>{
+      this.onNavigateLogin();
     }
   });
     

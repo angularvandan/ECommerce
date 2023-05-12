@@ -36,7 +36,7 @@ export class HttpService{
       return throwError(err);
     }));
   }
-  updateUserCompanyDetails(user:{email:string,name:string}){
+  updateUserCompanyDetails(user:{name:string}){
     return this.http.patch('https://shop-api.ngminds.com/users/org',user,{headers:this.headers})
     .pipe(catchError((err)=>{
       return throwError(err);

@@ -29,7 +29,7 @@
                   placeholder="Enter Company name"
                 />
             </div>
-            <span *ngIf="!reactiveForm.get('cName')?.valid && 
+            <span *ngIf="!reactiveForm.get('cName')?.valid &&
                 reactiveForm.get('cName')?.touched">
                 Company name is Required !
             </span>
@@ -43,7 +43,7 @@
                   placeholder="Enter Role"
                 />
               </div>
-              <span *ngIf="!reactiveForm.get('role')?.valid && 
+              <span *ngIf="!reactiveForm.get('role')?.valid &&
               reactiveForm.get('role')?.touched">
               Role is Required !
                 </span>
@@ -58,9 +58,9 @@
               />
             </div>
             <span *ngIf="!reactiveForm.get('email')?.valid && 
-            reactiveForm.get('email')?.touched">
-            Email is Required !
-        </span>
+              reactiveForm.get('email')?.touched">
+              Email is Required !
+            </span>
             <div class="form-group row">
               <label for="password" class="p-0 mb-2">Enter Password:</label>
               <input

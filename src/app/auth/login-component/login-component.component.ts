@@ -51,22 +51,13 @@ export class LoginComponentComponent implements OnInit{
       email:new FormControl(null,[Validators.required,Validators.email]),
       password:new FormControl(null,[Validators.required])
     });
-    this.httpService.error.subscribe(err=>{
-      this.errMessage=err;
-      setTimeout(()=>{
-        this.errMessage='';
-      },3000);
-    });
     this.executeCaptchaService();
   }
   async executeCaptchaService(){
     this.captcha=await this.captchaService.execute('LOGIN');
   }
   onSubmit(){
-    // console.log(this.reactiveForm);
-    // let email=this.reactiveForm.get('email')?.value;
-    // let password=this.reactiveForm.get('password')?.value;
-    // this.checkUser(email,password);
+    this.executeCaptchaService();
     this.loginUserByUrl={
       email:this.reactiveForm.get('email')?.value,
       password:this.reactiveForm.get('password')?.value,
@@ -77,11 +68,7 @@ export class LoginComponentComponent implements OnInit{
       console.log(response);
       this.tokenValue=response.token;
       localStorage.setItem('token1',JSON.stringify(this.tokenValue));
-      // if(this.tokenValue!=''){
-      //   // this.router.navigate(['my-profile']);
-      // }
       this.executeCaptchaService();
-
     },
     error:(err)=>{
       this.executeCaptchaService();
@@ -95,6 +82,7 @@ export class LoginComponentComponent implements OnInit{
 
   }
   onGoogleSignIn(){
+    this.executeCaptchaService();
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((response)=>{
       console.log(response);
       let token=response.idToken;
@@ -113,16 +101,14 @@ export class LoginComponentComponent implements OnInit{
       });
     });
   }
-
   onForgot(){
     let email=this.forgot_email;
     this.forgot_email='';
-    console.log(email);
+    this.executeCaptchaService();
+    // console.log(email);
     this.httpService.forgotPassword({email:email,captcha:this.captcha}).subscribe((response:any)=>{
-      // console.log(response);
       this.userService.showSuccess('Email has send');
       this.executeCaptchaService();
-
     },(err)=>{
       this.httpService.error.next(err.error.message);
       this.userService.showSuccess(err.error.message);

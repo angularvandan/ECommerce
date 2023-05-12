@@ -39,8 +39,7 @@ export class UserComponent implements OnInit {
       this.userService.showWarning(err.error.message);
     });
     setTimeout(()=>{
-      this.successMessage='';
       this.reactiveForm.reset();
-    },3000);
+    },2000);
   }
 }

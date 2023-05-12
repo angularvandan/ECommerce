@@ -66,10 +66,10 @@ export class UserlistComponent implements OnInit{
       this.userDetails=response.results;
       this.dataComingStatus=true;
 
-      this.pageCount==1?this.previousStatus=true:this.previousStatus=false;
-      this.pageCount==this.pageSize?this.page1=this.page2=this.nextStatus=true:this.page1=this.page2=this.nextStatus=false;
-      this.pageCount+1>=this.pageSize?this.page2=true:this.page2=false;
-      this.pageCount+2>=this.pageSize?this.nextStatus=true:this.nextStatus=false;
+      // this.pageCount==1?this.previousStatus=true:this.previousStatus=false;
+      // this.pageCount==this.pageSize?this.page1=this.page2=this.nextStatus=true:this.page1=this.page2=this.nextStatus=false;
+      // this.pageCount+1>=this.pageSize?this.page2=true:this.page2=false;
+      // this.pageCount+2>=this.pageSize?this.nextStatus=true:this.nextStatus=false;
 
     },err=>{
       this.httpService.error.next(err.error.message);
@@ -86,7 +86,8 @@ export class UserlistComponent implements OnInit{
       if(this.adminId!=id){
         this.httpService.deleteUser(id).subscribe(()=>{
           this.userService.showSuccess('Successfully Deleted');
-            this.router.navigate(['my-profile']);
+            // this.router.navigate(['my-profile']);
+          this.onGetUsers({...this.user,page:this.pageCount});
         },err=>{
           this.httpService.error.next(err.error.message);
           this.userService.showWarning(err.error.message);
@@ -190,6 +191,6 @@ export class UserlistComponent implements OnInit{
   onchange(){
     this.dataComingStatus=false;
     this.onGetUsers(this.user);
-    console.log(this.user);
+    // console.log(this.user);
   }
 }
