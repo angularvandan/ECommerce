@@ -86,11 +86,11 @@ export class UserlistComponent implements OnInit{
       if(this.adminId!=id){
         this.httpService.deleteUser(id).subscribe(()=>{
           this.userService.showSuccess('Successfully Deleted');
-            // this.router.navigate(['my-profile']);
-          this.onGetUsers({...this.user,page:this.pageCount});
         },err=>{
           this.httpService.error.next(err.error.message);
           this.userService.showWarning(err.error.message);
+        },()=>{
+          this.onGetUsers({...this.user,page:this.pageCount});
         });
       }
       else{
@@ -134,27 +134,26 @@ export class UserlistComponent implements OnInit{
     if(this.editRoleStatus){
       this.httpService.updateUserRole(id,{role}).subscribe((res)=>{
         console.log(res);
+        this.containerStatus=false;
         this.userService.showSuccess('Role updated successfully');
-        setTimeout(()=>{
-          this.reactiveForm.reset();
-          this.router.navigate(['my-profile']);
-        },2000);
       },err=>{
         this.httpService.error.next(err.error.message);
         this.userService.showWarning(err.error.message);
+      },()=>{
+        this.reactiveForm.reset();
+        this.onchange();
       });
     }
     else{
       this.httpService.updateUserDetails(id,{email,password,name}).subscribe(()=>{
+        this.containerStatus=false;
         this.userService.showSuccess('User updated successfully');
-
-        setTimeout(()=>{
-          this.reactiveForm.reset();
-          this.router.navigate(['my-profile']);
-        },2000);
       },err=>{
         this.httpService.error.next(err.error.message);
         this.userService.showWarning(err.error.message);
+      },()=>{
+        this.reactiveForm.reset();
+        this.onchange();
       });
     }
   }
@@ -181,7 +180,6 @@ export class UserlistComponent implements OnInit{
       delete this.user.page;
       this.name='';
       this.onchange();
-      // delete this.user.name;
     }
   }
   onPageChange(pageCount:any){
@@ -191,6 +189,5 @@ export class UserlistComponent implements OnInit{
   onchange(){
     this.dataComingStatus=false;
     this.onGetUsers(this.user);
-    // console.log(this.user);
   }
 }

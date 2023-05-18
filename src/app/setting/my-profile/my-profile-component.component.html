@@ -6,10 +6,6 @@
   <span class="visually-hidden">Loading...</span>
 </div>
 <div class="container mt-5" *ngIf="dataComingStatus">
-  <!-- <div class="d-flex justify-content-end">
-            <button class="btn btn-primary"(click)="onLogOut()">Logout</button>
-        </div> -->
-
   <div class="dropdown show d-flex justify-content-end">
     <a
       class="btn btn-primary dropdown-toggle"
@@ -92,6 +88,13 @@
               (click)="onUsersDetails()"
             >
               Users Details
+            </button>
+            <button
+              type="button"
+              class="btn btn-secondary form-control mb-3"
+              (click)="onProductDetails()"
+            >
+              Product Details
             </button>
             <button
               type="button"

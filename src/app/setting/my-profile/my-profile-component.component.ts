@@ -38,8 +38,9 @@ export class MyProfileComponentComponent implements OnInit{
       this.dataComingStatus=true;
     },err=>{
       this.userService.showWarning(err.error.message);
-      // this.dataComingStatus=true;
-      // this.router.navigate(['auth/login']);
+      localStorage.removeItem('token1');
+      this.dataComingStatus=true;
+      this.router.navigate(['auth/login']);
     });
   }
   onVerifyEmail(){
@@ -63,7 +64,10 @@ export class MyProfileComponentComponent implements OnInit{
     },10);
   }
   onUsersDetails(){
-    this.router.navigate(['setting/create-user']);
+    this.router.navigate(['setting/user-list']);
+  }
+  onProductDetails(){
+    this.router.navigate(['/products/product-list'])
   }
   
 }

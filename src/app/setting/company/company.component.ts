@@ -32,7 +32,7 @@ export class CompanyComponent implements OnInit{
       this.router.navigate(['my-profile']);
 
     },err=>{
-      this.userService.showSuccess(err.error.message)
+      this.userService.showSuccess(err.error.message);
     });
   }
 

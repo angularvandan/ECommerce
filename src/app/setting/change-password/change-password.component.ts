@@ -18,7 +18,9 @@ export class ChangePasswordComponent implements OnInit{
   typeOfElement2:string='password';
 
   constructor(private userService:UserService,private httpService:HttpService
-    ,private router:Router){}
+    ,private router:Router){
+      
+    }
   ngOnInit():void{
     this.reactiveForm=new FormGroup({
       password1:new FormControl(null,[Validators.required]),

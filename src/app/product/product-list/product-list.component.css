@@ -1,0 +1,21 @@
+img{
+    height: 250px;
+}
+@media screen and (max-width:600px) {
+    .card{
+        max-width: fit-content;
+        margin: auto;
+    }
+}
+.card1{
+    width: 400px;
+}
+input.ng-invalid.ng-touched{
+    border:2px solid red;
+}
+a{
+    cursor: pointer;
+}
+.find-button{
+    width: 150px;
+}

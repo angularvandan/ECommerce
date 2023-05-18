@@ -2,10 +2,10 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { CompanyComponent } from './company/company.component';
 import { UserComponent } from './user/user.component';
-import { UserlistComponent } from './userlist/userlist.component';
-import { AuthGuardGuard } from '../auth-guard.guard';
+import { UserlistComponent } from './user-list/userlist.component';
+import { AuthGuardGuard } from '../guard/auth-guard.guard';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { MyProfileComponentComponent } from './my-profile-component/my-profile-component.component';
+import { MyProfileComponentComponent } from './my-profile/my-profile-component.component';
 
 const routes: Routes = [
   {path:'',canActivate:[AuthGuardGuard],children:[
@@ -22,4 +22,5 @@ const routes: Routes = [
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule]
 })
-export class SettingRoutingModule { }
+export class SettingRoutingModule {
+ }

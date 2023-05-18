@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
 import { AuthRoutingModule } from './auth-routing.module';
-import { LoginComponentComponent } from './login-component/login-component.component';
-import { RegistrationComponentComponent } from './registration-component/registration-component.component';
+import { LoginComponentComponent } from './login/login-component.component';
+import { RegistrationComponentComponent } from './register/registration-component.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthComponent } from './auth.component';
 import { ResetPasswordComponent } from './reset-password/reset-password.component';

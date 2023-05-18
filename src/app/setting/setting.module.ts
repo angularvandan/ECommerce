@@ -5,9 +5,9 @@ import { SettingRoutingModule } from './setting-routing.module';
 import { CompanyComponent } from './company/company.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { UserComponent } from './user/user.component';
-import { UserlistComponent } from './userlist/userlist.component';
+import { UserlistComponent } from './user-list/userlist.component';
 import { ChangePasswordComponent } from './change-password/change-password.component';
-import { MyProfileComponentComponent } from './my-profile-component/my-profile-component.component';
+import { MyProfileComponentComponent } from './my-profile/my-profile-component.component';
 import {NgxPaginationModule} from 'ngx-pagination';
 
 

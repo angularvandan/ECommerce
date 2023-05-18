@@ -14,8 +14,12 @@ export class HttpService{
   headers!:any;
 
   constructor(private http:HttpClient) {
-    this.token=JSON.parse(<string>localStorage.getItem('token1'));
-    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    try{
+      this.token=JSON.parse(<string>localStorage.getItem('token1'));
+      this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    }catch(err){
+      localStorage.removeItem('token1');
+    }
   }
   createRegister(register:Register){
     return this.http.post('https://shop-api.ngminds.com/auth/register',register);
@@ -30,7 +34,7 @@ export class HttpService{
   fetchUserDetails(){
     //below two line for first load
     this.token=JSON.parse(<string>localStorage.getItem('token1'));
-    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`);
     return this.http.get('https://shop-api.ngminds.com/auth/self',{headers:this.headers})
     .pipe(catchError((err)=>{
       return throwError(err);
@@ -110,4 +114,33 @@ export class HttpService{
     return this.fetchUserDetails();
   }
 
+//products
+
+  createProducts(product:any){
+    console.log(product);
+    this.token=JSON.parse(<string>localStorage.getItem('token1'));
+    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    // .set( 'Content-Type', 'multipart/form-data');
+    return this.http.post('https://shop-api.ngminds.com/products',product,{headers:this.headers}).pipe(catchError((err)=>{
+      return throwError(err);
+    }))
+  }
+  getProducts(product:{}){
+    return this.http.get('https://shop-api.ngminds.com/products',{headers:this.headers,params:product})
+  }
+  getProduct(id:any){
+    return this.http.get('https://shop-api.ngminds.com/products/'+id,{headers:this.headers});
+  }
+  updateImage(product:{},id:any){
+    this.token=JSON.parse(<string>localStorage.getItem('token1'));
+    this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    // .set( 'Content-Type', 'multipart/form-data');
+    return this.http.patch('https://shop-api.ngminds.com/products/images/'+id,product,{headers:this.headers})
+  }
+  updateProducts(product:{},id:any){
+    return this.http.patch('https://shop-api.ngminds.com/products/'+id,product,{headers:this.headers})
+  }
+  deleteProduct(id:any){
+    return this.http.delete('https://shop-api.ngminds.com/products/'+id,{headers:this.headers})
+  }
 }

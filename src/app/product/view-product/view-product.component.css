@@ -1,0 +1,9 @@
+.card{
+    width: 400px;
+}
+.scroll{
+    overflow-x: scroll;
+}
+a{
+    cursor: pointer;
+}
