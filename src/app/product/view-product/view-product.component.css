@@ -2,8 +2,13 @@
     width: 400px;
 }
 .scroll{
-    overflow-x: scroll;
+    overflow-x:scroll!important;
 }
 a{
     cursor: pointer;
+}
+#check{
+    position: absolute;
+    top:-15px;
+    right: 10px;
 }

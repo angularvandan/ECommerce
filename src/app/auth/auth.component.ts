@@ -1,14 +1,10 @@
-import { Component, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
   styleUrls: ['./auth.component.css'],
 })
-export class AuthComponent implements OnInit{
-  constructor(private route:Router){
-  }
-  ngOnInit(): void {
-  }
+export class AuthComponent {
+  
 }

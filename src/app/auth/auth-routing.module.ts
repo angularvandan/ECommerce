@@ -6,11 +6,11 @@ import { ResetPasswordComponent } from './reset-password/reset-password.componen
 import { EmailVerifyComponent } from './email-verify/email-verify.component';
 
 const routes: Routes = [
+  {path:'',redirectTo:'login',pathMatch:'full'},
   {path:'register',component:RegistrationComponentComponent},
   {path:'login',component:LoginComponentComponent},
   {path:'reset-password',component:ResetPasswordComponent},
   {path:'verify-email',component:EmailVerifyComponent},
-  {path:'',redirectTo:'login',pathMatch:'full'}
 ];
 
 @NgModule({
@@ -18,5 +18,5 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AuthRoutingModule {
-
+  
 }

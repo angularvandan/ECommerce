@@ -24,6 +24,7 @@ export class ProductListComponent implements OnInit{
   updateProductStatus:boolean=false;
   updateImageStatus:boolean=false;
   createProductStatus:boolean=true;
+  dataComingStatus:boolean=false;
   updateImageId:any;
   deleteImageId:any;
 // for sorting 
@@ -54,10 +55,11 @@ export class ProductListComponent implements OnInit{
       // below two used in paginate 
       this.page=response.page;
       this.total_products=response.totalResults;
-
       this.filterProducts=response.results;
     },err=>{
       console.log(err);
+    },()=>{
+      this.dataComingStatus=true;
     });
   }
 

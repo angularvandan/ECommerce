@@ -22,6 +22,7 @@ export class ViewProductComponent implements OnInit{
   images:any[]=[];
   deleteImageId:any;
 
+
   constructor(private http:HttpService, private userService:UserService,private activatedRoute:ActivatedRoute){
   }
   ngOnInit(): void {
@@ -64,6 +65,29 @@ export class ViewProductComponent implements OnInit{
       this.userService.showSuccess('Image Deleted Successfully');
       this.onGetProduct();
     });
+  }
+  onDeleteMultipleImages(){
+    let check:any=document.querySelectorAll("input[type='checkbox']:checked");
+    // console.log(check.length);
+    if(check.length){
+      const formData=new FormData();
+      for(let img of check){
+        // console.log(img);
+        formData.append('delete',img.value);
+      }
+      this.http.updateImage(formData,this.productId).subscribe((response:any)=>{
+        console.log(response);
+      },err=>{
+        console.log(err.error.message);
+      },()=>{
+        this.userService.showSuccess('Image Deleted Successfully');
+        this.onGetProduct();
+      });
+    }
+    else{
+      this.userService.showWarning('Select at least one image');
+    }
+    
   }
   onAddImage(){
     const formData = new FormData();

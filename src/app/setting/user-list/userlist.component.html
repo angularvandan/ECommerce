@@ -1,17 +1,3 @@
-<div class="container">
-  <nav class="navbar navbar-expand-sm navbar-light bg-light mt-4">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="#"></a>
-      <div class=" " id="navbarNav">
-        <ul class="navbar-nav ms-auto">
-          <li class="nav-item"routerLinkActive="active">
-            <button type="button"class=" btn btn-primary" routerLink="../create-user">Create User</button>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-</div>
 <div
   class="spinner-border text-warning loading"
   role="status"
@@ -72,47 +58,43 @@
     </div>
   </div>
   <div class="container" *ngIf="!containerStatus">
-  <div class="container">
-    <div class="row">
+    <div class="container">
+      <div class="row">
         <div class="col my-5 text-center"><h4>User Details</h4></div>
-    </div>
-    <div class="row">
-      <div class="col-md-4">
-        <div class="form-group">
-
+      </div>
+      <div class="row">
+        <div class="col-md-3">
+          <div class="form-group">
             <label class="form-label">Limit</label>
-          <select
-          [(ngModel)]="limit"
-          (change)="onChangeRecord()"
-          
-          class="form-select"
-        >
-          <option value="3">3</option>
-          <option value="4">4</option>
-          <option value="6">6</option>
-          <option value="10">10</option>
-        </select>
-          
+            <select
+              [(ngModel)]="limit"
+              (change)="onChangeRecord()"
+              class="form-select"
+            >
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="6">6</option>
+              <option value="10">10</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
+        <div class="col-md-3">
+          <div class="form-group">
             <label class="form-label">Sort</label>
-          <select
-            [(ngModel)]="sortBy"
-            class="form-select"
-            (change)="onChangeSortBy()"
-          >
-            <option value="">--Sort--</option>
-            <option value="role">Role</option>
-            <option value="name">Name</option>
-            <option value="email">Email</option>
-          </select>
-         
+            <select
+              [(ngModel)]="sortBy"
+              class="form-select"
+              (change)="onChangeSortBy()"
+            >
+              <option value="">--Sort--</option>
+              <option value="role">Role</option>
+              <option value="name">Name</option>
+              <option value="email">Email</option>
+            </select>
+          </div>
         </div>
-      </div>
-      <div class="col-md-4">
-        <div class="form-group">
+        <div class="col-md-6">
+          <div class="form-group">
             <label class="form-label">Search Name</label>
             <div class="d-flex">
               <input
@@ -124,93 +106,100 @@
               <button
                 type="button"
                 (click)="onChangeName()"
-                class="btn btn-primary form-control ms-2"
+                class="btn btn-primary form-control mx-2"
               >
                 Find
               </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                routerLink="../create-user"
+              >
+                Create User
+              </button>
             </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12">
+          <div class="scrollbar">
+            <table class="table table-secondary table-striped table-hover mt-4">
+              <thead class="table-secondary">
+                <tr class="align-top">
+                  <th scope="col">#</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Email</th>
+                  <th scope="col">Role</th>
+                  <th scope="col">Edit User</th>
+                  <th scope="col">Edit Role</th>
+                  <th scope="col">Delete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  class="align-middle"
+                  *ngFor="
+                    let user of userDetails
+                      | paginate
+                        : {
+                            id: 'first',
+                            itemsPerPage: limit,
+                            currentPage: pageCount,
+                            totalItems: totalResult
+                          };
+                    let i = index
+                  "
+                >
+                  <td scope="col">{{ i + 1 }}</td>
+                  <td>{{ user["name"] }}</td>
+                  <td>{{ user["email"] }}</td>
+                  <td>{{ user["role"] }}</td>
+                  <td>
+                    <button
+                      (click)="editUser(user)"
+                      class="btn btn-secondary"
+                      type="button"
+                    >
+                      Edit User
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      (click)="editRole(user)"
+                      class="btn btn-secondary"
+                      type="button"
+                    >
+                      Edit Role
+                    </button>
+                  </td>
+                  <td>
+                    <button
+                      class="btn btn-danger"
+                      type="button"
+                      (click)="onDeleteUser(user['_id'])"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="row d-flex justify-content-end">
+        <div class="col mt-4">
+          <pagination-controls
+            id="first"
+            (pageChange)="onPageChange($event)"
+            [directionLinks]="true"
+            previousLabel="Previous"
+            nextLabel="Next"
+          >
+          </pagination-controls>
         </div>
       </div>
     </div>
-    <div class="row">
-      <div class="col-12">
-        <div class="scrollbar">
-        <table class="table table-secondary table-striped table-hover mt-4">
-          <thead class="table-secondary">
-            <tr class="align-top">
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Email</th>
-              <th scope="col">Role</th>
-              <th scope="col">Edit User</th>
-              <th scope="col">Edit Role</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              class="align-middle"
-              *ngFor="
-                let user of userDetails
-                  | paginate
-                    : {
-                        id: 'first',
-                        itemsPerPage: limit,
-                        currentPage: pageCount,
-                        totalItems: totalResult
-                      };
-                let i = index
-              "
-            >
-              <td scope="col">{{ i + 1 }}</td>
-              <td>{{ user["name"] }}</td>
-              <td>{{ user["email"] }}</td>
-              <td>{{ user["role"] }}</td>
-              <td>
-                <button
-                  (click)="editUser(user)"
-                  class="btn btn-secondary"
-                  type="button"
-                >
-                  Edit User
-                </button>
-              </td>
-              <td>
-                <button
-                  (click)="editRole(user)"
-                  class="btn btn-secondary"
-                  type="button"
-                >
-                  Edit Role
-                </button>
-              </td>
-              <td>
-                <button
-                  class="btn btn-danger"
-                  type="button"
-                  (click)="onDeleteUser(user['_id'])"
-                >
-                  Delete
-                </button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
-        </div>
-      </div>
-    </div>
-    <div class="row d-flex justify-content-end">
-      <div class="col mt-4">
-        <pagination-controls
-          id="first"
-          (pageChange)="onPageChange($event)"
-          [directionLinks]="true"
-          previousLabel="Previous"
-          nextLabel="Next"
-        >
-        </pagination-controls>
-      </div>
-    </div>
-  </div>
   </div>
 </div>

@@ -1,6 +1,6 @@
 
 
-<div class="container mt-4"*ngIf="viewStatus">
+<!-- <div class="container mt-4"*ngIf="viewStatus">
     <div class="row">
       <div
         class="col my-3"
@@ -11,21 +11,25 @@
             class="card-img-top"
             alt="image"
           />
-        <hr/>
           <div class="d-flex scroll pb-3">
-            <img  *ngFor="let image of product?.images"
-              src="{{ image.url }}"
-              alt="image"
-              width="100px"
-              (click)="onShowBigImage(image)"
-              class="small-image mx-2 p-1"
-              [ngStyle]="{'border': showBigImage==image.url ? '1px solid black':'none'}"
-            />
+            <div class="position-relative mt-4"*ngFor="let image of product?.images">
+              <input type="checkbox"value="{{image.public_id}}"name="check" id="check">
+              <img
+                src="{{ image.url }}"
+                alt="image"
+                width="100px"
+                height="130px"
+                (click)="onShowBigImage(image)"
+                class="small-image mx-2 p-1"
+                [ngStyle]="{'border': showBigImage==image.url ? '1px solid black':'none'}"
+              />
+            </div>
           </div>
           <hr />
           <div class="card-body">
-            <a class="card-link" data-bs-toggle="modal" data-bs-target="#exampleModal">Add image</a>
-            <a class="card-link" (click)="onDeleteImage()">Delete image</a>
+            <a class="card-link text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add image</a>
+            <a class="card-link text-primary" (click)="onDeleteImage()">Delete image</a>
+            <a class="card-link text-primary"(click)="onDeleteMultipleImages()">Delete multiple image</a>
             <h5 class="card-title">{{ product?.name }}</h5>
             <h5 class="card-title">
               Price: {{ product?.price | currency : "INR" }}
@@ -35,7 +39,42 @@
         </div>
       </div>
     </div>
-  </div>
+</div> -->
+
+<div class="container"*ngIf="viewStatus">
+    <div class="row">
+      <div class="col-md-6 card ms-auto">
+        <img src="{{showBigImage}}" alt="image"class="image-responsive card-img-top">
+      </div>
+      <div class="col-md-6 card me-auto">
+        <div class="d-flex scroll pb-3">
+          <div class="position-relative mt-4"*ngFor="let image of product?.images">
+            <input type="checkbox"value="{{image.public_id}}"name="check" id="check">
+            <img
+              src="{{ image.url }}"
+              alt="image"
+              width="100px"
+              height="130px"
+              (click)="onShowBigImage(image)"
+              class="mx-2 p-1"
+              [ngStyle]="{'border': showBigImage==image.url ? '1px solid black':'none'}"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="card-body">
+          <a class="card-link text-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">Add image</a>
+          <a class="card-link text-primary" (click)="onDeleteImage()">Delete image</a>
+          <a class="card-link text-primary"(click)="onDeleteMultipleImages()">Delete multiple image</a>
+          <h5 class="card-title">{{ product?.name }}</h5>
+          <h5 class="card-title">
+            Price: {{ product?.price | currency : "INR" }}
+          </h5>
+          <p class="card-text">{{ product?.description }}</p>
+        </div>
+      </div>
+    </div>
+</div>
   <!-- modal add image-->
   <div class="container">
     <div

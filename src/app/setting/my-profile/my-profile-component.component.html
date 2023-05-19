@@ -6,29 +6,10 @@
   <span class="visually-hidden">Loading...</span>
 </div>
 <div class="container mt-5" *ngIf="dataComingStatus">
-  <div class="dropdown show d-flex justify-content-end">
-    <a
-      class="btn btn-primary dropdown-toggle"
-      role="button"
-      id="dropdownMenuLink"
-      data-toggle="dropdown"
-      aria-haspopup="true"
-      aria-expanded="false"
-    >
-      Profile
-    </a>
-    <div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-      <a class="dropdown-item" routerLink="../change-password"
-        >Change password</a
-      >
-      <a class="dropdown-item" (click)="onLogOut()">Logout</a>
-    </div>
-  </div>
-
   <div class="row mt-2">
-    <div class="card mx-auto">
+    <div class="card mx-auto shadow">
       <div class="col">
-        <div class="col-3 card-img-top d-flex justify-content-center">
+        <div class="col card-img-top d-flex justify-content-center">
           <img src="../../../assets/user.png" width="200px" alt="logo" />
         </div>
         <div class="mt-5 card-body">
@@ -68,14 +49,13 @@
               <input
                 class="form-control my-3"
                 type="text"
-                #textFocus
                 value="{{ specificUserByUrl?._org.name }}"
                 disabled
               />
               <label for="name"><b>Role:</b></label>
               <input
                 class="form-control"
-                type="email"
+                type="text"
                 value="{{ specificUserByUrl?.role }}"
                 disabled
               />
@@ -84,23 +64,9 @@
           <div class="form-group mt-3">
             <button
               type="button"
-              class="btn btn-secondary form-control mb-3"
-              (click)="onUsersDetails()"
-            >
-              Users Details
-            </button>
-            <button
-              type="button"
-              class="btn btn-secondary form-control mb-3"
-              (click)="onProductDetails()"
-            >
-              Product Details
-            </button>
-            <button
-              type="button"
               class="btn btn-secondary form-control"
-              (click)="onEditUsersDetails()"
-            >
+              routerLink="../company"
+              >
               EditCompanyName
             </button>
           </div>

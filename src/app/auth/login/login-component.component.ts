@@ -51,7 +51,7 @@ export class LoginComponentComponent implements OnInit{
       email:new FormControl(null,[Validators.required,Validators.email]),
       password:new FormControl(null,[Validators.required])
     });
-    this.executeCaptchaService();
+    this.executeCaptchaService();true
   }
   async executeCaptchaService(){
     this.captcha=await this.captchaService.execute('LOGIN');

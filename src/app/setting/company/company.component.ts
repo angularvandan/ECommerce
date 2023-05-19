@@ -18,7 +18,7 @@ export class CompanyComponent implements OnInit{
 
   ngOnInit():void{
     this.reactiveForm=new FormGroup({
-      cName:new FormControl(this.userService.userCompanyName,[Validators.required,
+      cName:new FormControl(this.userService.specificUserByUrl?._org.name,[Validators.required,
         Validators.pattern('[a-zA-z]*[ a-zA-Z]+([a-zA-Z]){2}')])
     });
   }

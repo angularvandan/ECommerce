@@ -1,3 +1,28 @@
-<div class="container">
-    <p>navbar works!</p>
+<div class="container my-2">
+  <nav class="navbar navbar-default navbar-expand-lg navbar-light bg-light" [hidden]="navStatus">
+  <a class="navbar-brand fs-3">E-commerce</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ms-auto">
+      <li class="nav-item active me-3">
+        <a class="nav-link fs-5"routerLink="setting/my-profile" >My Profile</a>
+      </li>
+      <li class="nav-item dropdown ms-3">
+        <a class="nav-link dropdown-toggle btn  bg-primary"  id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Features
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item"routerLink="setting/user-list" >User Details</a>
+          <a class="dropdown-item"routerLink="products/product-list" >Product Details</a>
+          <div class="dropdown-divider"></div>
+          <a class="dropdown-item"routerLink="setting/change-password" >Change Password</a>
+          <a class="dropdown-item text-danger"(click)="onLogOut()">Logout</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+  </nav>
 </div>

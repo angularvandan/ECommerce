@@ -1,4 +1,4 @@
-import { Component, ElementRef, Injectable, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpService } from 'src/app/service/http.service';
 import { UserService } from 'src/app/service/user.service';
@@ -18,9 +18,6 @@ export class MyProfileComponentComponent implements OnInit{
   cName!:string;
   captcha!:string;
   
-
-  @ViewChild('textFocus')textFocus!:ElementRef;
-
   constructor(private userService:UserService,private router:Router
     ,private httpService:HttpService,private activatedRouter:ActivatedRoute
     ){
@@ -29,6 +26,8 @@ export class MyProfileComponentComponent implements OnInit{
       if(ele!=null){
         ele.style.display = 'none';
       }
+      //navbar show
+      userService.nav.next(false);
   }
   ngOnInit(): void {
     this.httpService.fetchUserDetails().subscribe((response:any)=>{
@@ -41,6 +40,7 @@ export class MyProfileComponentComponent implements OnInit{
       localStorage.removeItem('token1');
       this.dataComingStatus=true;
       this.router.navigate(['auth/login']);
+    },()=>{
     });
   }
   onVerifyEmail(){
@@ -52,22 +52,4 @@ export class MyProfileComponentComponent implements OnInit{
       this.userService.showWarning(err.error.message);
     });
   }
-  onLogOut(){
-    localStorage.removeItem('token1');
-    this.router.navigate(['auth/login']);
-  }
-  onEditUsersDetails(){
-    setTimeout(()=>{
-      this.cName=this.textFocus.nativeElement.value;
-      this.userService.userCompanyName=this.cName;
-      this.router.navigate(['setting/company']);
-    },10);
-  }
-  onUsersDetails(){
-    this.router.navigate(['setting/user-list']);
-  }
-  onProductDetails(){
-    this.router.navigate(['/products/product-list'])
-  }
-  
 }

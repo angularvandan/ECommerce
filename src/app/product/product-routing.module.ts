@@ -7,9 +7,11 @@ import { ViewProductComponent } from './view-product/view-product.component';
 
 const routes: Routes = [
   {path:'',canActivate:[AuthGuardGuard],children:[
+    {path:'',redirectTo:'product-list',pathMatch:'full'},
     {path:'product-list',component:ProductListComponent},
     {path:'create-products',component:CreateProductComponent},
-    {path:'view-product',component:ViewProductComponent}
+    {path:'view-product',component:ViewProductComponent},
+    {path:'**',redirectTo:'product-list',pathMatch:'full'}
   ]},
 ];
 

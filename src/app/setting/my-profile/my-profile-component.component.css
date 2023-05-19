@@ -3,7 +3,7 @@ input{
     margin-bottom: 20px;
 }
 .card{
-    width: fit-content;
+    width: 600px;
 }
 .loading{
     position:absolute;
