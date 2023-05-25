@@ -1,0 +1,81 @@
+<div class="container">
+    <!-- all products list  -->
+    <div class="row mt-5">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="form-label">Limit</label>
+          <select class="form-select"[(ngModel)]="limit"(change)="onLimit()">
+            <option value="8">8</option>
+            <option value="16">16</option>
+            <option value="24">24</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="form-group">
+          <label class="form-label">Sort</label>
+          <select class="form-select"[(ngModel)]="sortBy"(change)="onSortBy()">
+            <option value="">--Sort--</option>
+            <option value="name">Name</option>
+            <option value="price">Price</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-md-4">
+        <div class="row">
+          <div class="col">
+            <div class="form-group">
+              <label class="form-label">Search Name</label>
+              <div class="d-flex">
+                <input
+                  class="form-control"
+                  type="text"
+                  placeholder="Enter Name"
+                  [(ngModel)]="name"
+                />
+                <button type="button" class="btn btn-primary mx-2" (click)="onSortByName()">Search</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div
+        class="col-lg-3 col-md-4 col-sm-6 my-3"
+        *ngFor="let product of products | paginate: { id: 'first',
+                                      itemsPerPage: limit,
+                                      currentPage: page,
+                                      totalItems: totalProducts }"
+      >
+        <div class="card shadow">
+          <img
+            src="{{ product.images[0]?.url }}"
+            class="card-img-top"
+            alt="image"
+          />
+          <hr />
+          <div class="card-body">
+            <a class="card-link text-primary"(click)="onViewProduct(product?._id)">View Product</a>
+            <h5 class="card-title">{{ product?.name }}</h5>
+            <h5 class="card-title">
+              Price: {{ product?.price | currency : "INR" }}
+            </h5>
+            <p class="card-text">{{ product?.description | slice : 0 : 20 }}</p>
+            <a class="btn btn-primary float-start">Add to Cart</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col mt-4 d-flex justify-content-end">
+        <pagination-controls 
+        id="first" 
+        (pageChange)="pageChanged($event)"
+        previousLabel="Previous"
+         nextLabel="Next">
+        </pagination-controls>
+      </div>
+    </div>
+  </div>
+  

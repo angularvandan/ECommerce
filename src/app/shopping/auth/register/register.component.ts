@@ -70,6 +70,7 @@ export class RegisterComponent implements OnInit{
         this.userService.showWarning(err.error.message);
       },()=>{
         this.reactiveForm.reset();
+        this.router.navigate(['shop/auth/login']);
       });
     }
     else{

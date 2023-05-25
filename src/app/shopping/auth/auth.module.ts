@@ -15,7 +15,7 @@ import { CaptchaService } from '../service/captcha.service';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    SelfComponent
+    SelfComponent,
   ],
   imports: [
     CommonModule,

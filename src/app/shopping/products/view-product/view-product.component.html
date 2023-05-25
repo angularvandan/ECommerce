@@ -1,0 +1,30 @@
+<div class="container card">
+    <div class="row mx-auto my-2">
+      <div class="col-md-6">
+        <img src="{{showBigImage}}" alt="image"class="image-responsive card-img-top">
+      </div>
+      <div class="col-md-6">
+        <div class="d-flex scroll pb-3">
+          <div class="position-relative mt-4"*ngFor="let image of product?.images">
+            <img
+              src="{{image?.url}}"
+              alt="image"
+              width="100px"
+              height="130px"
+              class="mx-2 p-1"
+              (click)="onSmallImageClick(image)"
+              [ngStyle]="{'border': showBigImage==image?.url ? '2px solid black':'none' }"
+            />
+          </div>
+        </div>
+        <hr />
+        <div class="card-body">
+          <h5 class="card-title">{{product?.name}}</h5>
+          <h5 class="card-title">
+            Price:{{product?.price |currency:'INR'}}
+          </h5>
+          <p class="card-text">{{product?.description}}</p>
+        </div>
+      </div>
+    </div>
+</div>

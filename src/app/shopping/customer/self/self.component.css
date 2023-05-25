@@ -1,3 +1,11 @@
 .card{
     width: 600px;
 }
+.user-img{
+    position: relative;
+}
+.user-btn{
+    position: absolute;
+    right: 5px;
+    top:0%;
+}

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-self',
@@ -9,15 +10,85 @@ import { UserService } from '../../service/user.service';
 })
 export class SelfComponent implements OnInit{
   user:any;
-  constructor(private httpService:HttpService,private userService:UserService){}
+  image:any;
+  reactiveForm!:FormGroup;
+  editProfileStatus:boolean=true;
+
+  constructor(private httpService:HttpService,private userService:UserService){
+    this.userService.loginRegisterStatus.next(true);
+  }
   ngOnInit(): void {
+    this.getSelf();
+    this.reactiveForm=new FormGroup({
+      name:new FormControl(null,Validators.required),
+      email:new FormControl(null,[Validators.required,Validators.email]),
+    });
+    this.reactiveForm.disable();
+  }
+  getSelf(){
     this.httpService.self().subscribe((response:any)=>{
       console.log(response);
       this.user=response;
     },err=>{
-      console.log(err);
+      // console.log(err);
     },()=>{
       this.userService.loginRegisterStatus.next(true);
+    });
+  }
+  onUpdateImage(){
+    const formData=new FormData();
+    formData.append('picture',this.image);
+
+    this.httpService.updateProfilePicture(formData).subscribe((response:any)=>{
+      console.log(response);
+
+    },err=>{
+      // console.log(err.error.message);
+      this.userService.showWarning(err.error.message);
+    },()=>{
+      this.userService.showSuccess('Successfully updated');
+      this.getSelf();
+    });
+  }
+  onDeleteImage(){
+    let confirm=window.confirm('Do you want to delete image ?');
+    if(confirm){
+      this.httpService.deleteProfilePicture().subscribe((response:any)=>{
+        console.log(response);
+      },err=>{
+        // console.log(err.error.message);
+        this.userService.showWarning(err.error.message);
+
+      },()=>{
+        this.userService.showSuccess('Successfully deleted');
+        this.getSelf();
+      });
+    }
+  }
+  onFile(image:any){
+    // console.log(image.target.files[0]);
+    this.image=image.target.files[0];
+  }
+  onEditProfile(){
+    this.reactiveForm.enable();
+    this.editProfileStatus=false;
+    document.getElementById('name')?.focus();
+    this.reactiveForm.patchValue({
+      name:this.user?.name,
+      email:this.user?.email
+    });
+  }
+  onEditProfileSave(){
+    console.log(this.reactiveForm.value);
+    this.httpService.updateProfile(this.reactiveForm.value).subscribe((response:any)=>{
+      console.log(response);
+    },err=>{
+      // console.log(err);
+      this.userService.showWarning(err.error.message);
+    },()=>{
+      this.userService.showSuccess('Successfully Updated');
+      this.reactiveForm.disable();
+      this.editProfileStatus=true;
     });
   }
 }
