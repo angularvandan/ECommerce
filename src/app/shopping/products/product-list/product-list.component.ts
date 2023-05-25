@@ -38,6 +38,12 @@ export class ProductListComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    // for hide product 
+    var ele: any = document.querySelector('.grecaptcha-badge');
+      // console.log(ele);
+      if(ele!=null){
+        ele.style.display = 'none';
+      }
     this.onGetAllProducts();
   }
   onGetAllProducts(){

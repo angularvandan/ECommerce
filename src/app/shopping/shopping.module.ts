@@ -6,14 +6,15 @@ import { ProductsComponent } from './products/products.component';
 import { HttpClientModule } from '@angular/common/http';
 import {NgxPaginationModule} from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
-import { ViewProductComponent } from './products/view-product/view-product.component';
-
+import { ShoppingComponent } from './shopping.component';
+import { NavbarShopComponent } from './navbar-shop/navbar-shop.component';
 
 
 @NgModule({
   declarations: [
     ProductsComponent,
-    ViewProductComponent,
+    ShoppingComponent,
+    NavbarShopComponent
   ],
   imports: [
     CommonModule,

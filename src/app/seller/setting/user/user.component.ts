@@ -39,7 +39,7 @@ export class UserComponent implements OnInit {
       this.userService.showSuccess('User has Added');
       this.reactiveForm.reset();
       this.reactiveForm.patchValue({role:'user'});
-      this.router.navigate(['setting/user-list']);
+      this.router.navigate(['seller/setting/user-list']);
     });
     
   }

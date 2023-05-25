@@ -9,8 +9,6 @@ import { UserService } from '../service/user.service';
 })
 export class AuthGuardGuard implements CanActivate {
   constructor(private router: Router, private httpService: HttpService,private userService:UserService) { }
-  //never miss behave with canActivate
-  //because it calls many time after first call
   canActivate(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
     let token: any;
@@ -26,14 +24,14 @@ export class AuthGuardGuard implements CanActivate {
         login=true;
         this.userService.nav.next(false);
       }, (err) => {
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['/seller/auth/login']);
         login=false;
         this.userService.nav.next(true);
       })
       return login;
     }
     else {
-      this.router.navigate(['auth/login']);
+      this.router.navigate(['/seller/auth/login']);
       return false;
     }
   }

@@ -47,6 +47,22 @@ export class HttpService {
   deleteProfilePicture(){
     return this.http.delete('https://shop-api.ngminds.com/customers/profile-picture',{headers:this.headers})
   }
+  getSavedAddress(){
+    return this.http.get('https://shop-api.ngminds.com/customers/address',{headers:this.headers});
+  }
+  getAddressById(addressId:any){
+    return this.http.get('https://shop-api.ngminds.com/customers/address/'+addressId,{headers:this.headers});
+  }
+  addAddress(address:{}){
+    return this.http.post('https://shop-api.ngminds.com/customers/address',address,{headers:this.headers})
+  }
+  updateAddress(address:{},addressId:any){
+    return this.http.put('https://shop-api.ngminds.com/customers/address/'+addressId,address,{headers:this.headers})
+  }
+  deleteAddress(addressId:any){
+    return this.http.delete('https://shop-api.ngminds.com/customers/address/'+addressId,{headers:this.headers});
+  }
+
   changePassword(password:{}){
     return this.http.post('https://shop-api.ngminds.com/customers/auth/change-password',password,{headers:this.headers})
   }

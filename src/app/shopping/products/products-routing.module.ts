@@ -4,10 +4,10 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { ProductListComponent } from './product-list/product-list.component';
 
 const routes: Routes = [
-  {path:'',redirectTo:'shop/products/product-list',pathMatch:'full'},
+  {path:'',redirectTo:'product-list',pathMatch:'full'},
   {path:'product-list',component:ProductListComponent},
   {path:'view-product',component:ViewProductComponent},
-  {path:'**',redirectTo:'shop/products/product-list',pathMatch:'full'}
+  {path:'**',redirectTo:'product-list',pathMatch:'full'}
 ];
 
 @NgModule({

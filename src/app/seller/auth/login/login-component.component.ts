@@ -35,7 +35,7 @@ export class LoginComponentComponent implements OnInit{
     // }
     let token=JSON.parse(<string>localStorage.getItem('token1'));
     if(token!=null){
-      this.router.navigate(['setting/my-profile']);
+      this.router.navigate(['seller/setting/my-profile']);
       setTimeout(() => {
         var ele: any = document.querySelector('.grecaptcha-badge');
         // console.log(ele);
@@ -76,7 +76,7 @@ export class LoginComponentComponent implements OnInit{
     },
     complete:()=>{
       this.userService.showSuccess('Login Successfully');
-      this.router.navigate(['setting/my-profile']);
+      this.router.navigate(['seller/setting/my-profile']);
     }
     });
 

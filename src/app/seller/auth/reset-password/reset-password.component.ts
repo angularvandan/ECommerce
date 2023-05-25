@@ -25,7 +25,7 @@ export class ResetPasswordComponent implements OnInit{
     this.activatedRouter.queryParamMap.subscribe(params=>{
       this.token=params.get('token')||'';
       if(this.token==''){
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['seller/auth/login']);
       }
     });
   }
@@ -41,9 +41,9 @@ export class ResetPasswordComponent implements OnInit{
     },
     error:(err)=>{
       this.userService.showWarning(err.error.message);
-      this.router.navigate(['auth/login']);
+      this.router.navigate(['seller/auth/login']);
     },complete:()=>{
-      this.router.navigate(['auth/login']);
+      this.router.navigate(['seller/auth/login']);
     }
     });
   }

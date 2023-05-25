@@ -51,6 +51,12 @@ export class RegisterComponent implements OnInit{
         pin:new FormControl(null,[Validators.required,Validators.pattern('[0-9]+([0-9]){5}')]),
       })
     });
+    // for display captcha
+    var ele: any = document.querySelector('.grecaptcha-badge');
+      // console.log(ele);
+      if(ele!=null){
+        ele.style.display = 'block';
+      }
   }
   onRegister(){
     if(this.reactiveForm.get('password')?.value==this.reactiveForm.get('confirmPassword')?.value){

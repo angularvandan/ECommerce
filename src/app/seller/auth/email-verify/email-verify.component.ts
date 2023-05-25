@@ -20,7 +20,7 @@ export class EmailVerifyComponent implements OnInit{
       this.token=params.get('token')||'';
       console.log(this.token);
       if(this.token==''){
-        this.router.navigate(['auth/login']);
+        this.router.navigate(['seller/auth/login']);
       }else{
         // console.log('email success');
         this.onVerifyAccount();
@@ -35,9 +35,9 @@ export class EmailVerifyComponent implements OnInit{
     },err=>{
       this.httpService.error.next(err.error.message);
       this.userService.showWarning(err.error.message);
-      this.router.navigate(['auth/login']);
+      this.router.navigate(['seller/auth/login']);
     },()=>{
-      this.router.navigate(['setting/my-profile']);
+      this.router.navigate(['seller/setting/my-profile']);
     })
   }
 

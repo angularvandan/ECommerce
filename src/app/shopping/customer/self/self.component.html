@@ -37,8 +37,11 @@
               />
             </div>
             <div class="col form-group">
-              <button type="button"(click)="onEditProfile()"class="btn btn-primary"[hidden]="!editProfileStatus">Edit Profile</button>
-              <button class="btn btn-primary"[hidden]="editProfileStatus">Save</button>
+              <button type="button"(click)="onEditProfile()"class="btn btn-primary me-2"[hidden]="!editProfileStatus">Edit Profile</button>
+              <button class="btn btn-primary me-2"[hidden]="editProfileStatus">Save</button>
+              <button type="button"class="btn btn-primary me-2"(click)="onCancel()"[hidden]="editProfileStatus">Cancel</button>
+              <button type="button"class="btn btn-primary me-2"(click)="onAddAddress()">Add Address</button>
+              <button type="button"class="btn btn-primary "(click)="onGetAddress()">Get Address</button>
             </div>
           </form>
           </div>           

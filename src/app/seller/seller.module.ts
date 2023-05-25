@@ -1,13 +1,16 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
-
 
 import { SellerRoutingModule } from './seller-routing.module';
+import { SellerComponent } from './seller.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 @NgModule({
-  declarations: [],
+  declarations: [
+    SellerComponent,
+    NavbarComponent,
+  ],
   imports: [
     CommonModule,
     SellerRoutingModule

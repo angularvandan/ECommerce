@@ -7,14 +7,10 @@ import { AppRoutingModule } from './app-routing-module';
 import {HttpClientModule } from '@angular/common/http';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
-import { NavbarComponent } from './seller/navbar/navbar.component';
-import { NavbarShopComponent } from './shopping/navbar-shop/navbar-shop.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent,
-    NavbarShopComponent
   ],
   imports: [
     BrowserModule,
@@ -23,7 +19,7 @@ import { NavbarShopComponent } from './shopping/navbar-shop/navbar-shop.componen
     HttpClientModule,
     BrowserAnimationsModule,
     ToastrModule.forRoot({
-      timeOut: 1000
+      timeOut: 2000
     })
     ],
   providers: [

@@ -38,6 +38,12 @@ export class LoginComponent implements OnInit{
       email:new FormControl(null,[Validators.required,Validators.email]),
       password:new FormControl(null,Validators.required)
     });
+    // for display captcha
+    var ele: any = document.querySelector('.grecaptcha-badge');
+      // console.log(ele);
+      if(ele!=null){
+        ele.style.display = 'block';
+      }
   }
   onLogin(){
     this.httpService.login({...this.reactiveForm.value,captcha:this.captcha}).subscribe((response:any)=>{

@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { AuthRoutingModule } from './auth-routing.module';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
-import { SelfComponent } from '../customer/self/self.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RECAPTCHA_V3_SITE_KEY, ReCaptchaV3Service } from 'ng-recaptcha';
 import environment from 'src/environment/environment';
@@ -15,7 +14,6 @@ import { CaptchaService } from '../service/captcha.service';
   declarations: [
     LoginComponent,
     RegisterComponent,
-    SelfComponent,
   ],
   imports: [
     CommonModule,

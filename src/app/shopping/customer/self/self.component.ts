@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-self',
@@ -14,7 +15,8 @@ export class SelfComponent implements OnInit{
   reactiveForm!:FormGroup;
   editProfileStatus:boolean=true;
 
-  constructor(private httpService:HttpService,private userService:UserService){
+  constructor(private httpService:HttpService,private userService:UserService,
+    private router:Router){
     this.userService.loginRegisterStatus.next(true);
   }
   ngOnInit(): void {
@@ -24,6 +26,12 @@ export class SelfComponent implements OnInit{
       email:new FormControl(null,[Validators.required,Validators.email]),
     });
     this.reactiveForm.disable();
+    //for hide th recaptcha
+    var ele: any = document.querySelector('.grecaptcha-badge');
+      // console.log(ele);
+      if(ele!=null){
+        ele.style.display = 'none';
+      }
   }
   getSelf(){
     this.httpService.self().subscribe((response:any)=>{
@@ -78,6 +86,10 @@ export class SelfComponent implements OnInit{
       email:this.user?.email
     });
   }
+  onCancel(){
+    this.reactiveForm.disable();
+    this.editProfileStatus=true;
+  }
   onEditProfileSave(){
     console.log(this.reactiveForm.value);
     this.httpService.updateProfile(this.reactiveForm.value).subscribe((response:any)=>{
@@ -90,5 +102,11 @@ export class SelfComponent implements OnInit{
       this.reactiveForm.disable();
       this.editProfileStatus=true;
     });
+  }
+  onAddAddress(){
+    this.router.navigate(['shop/customer/add-address']);
+  }
+  onGetAddress(){
+    this.router.navigate(['shop/customer/get-address']);
   }
 }

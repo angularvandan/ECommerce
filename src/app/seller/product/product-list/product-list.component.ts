@@ -100,7 +100,7 @@ export class ProductListComponent implements OnInit{
   onViewProduct(product:any){
     // console.log(id);
     let id=product._id;
-    this.router.navigate(['products/view-product'], { queryParams: { id: id } });
+    this.router.navigate(['seller/product/view-product'], { queryParams: { id: id } });
   }
   onUpdate(product:any){
     console.log(product);

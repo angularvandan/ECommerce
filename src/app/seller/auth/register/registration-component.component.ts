@@ -31,7 +31,7 @@ export class RegistrationComponentComponent implements OnInit{
 
     let token= localStorage.getItem('token1');
     if(token!=null){
-      this.router.navigate(['setting/my-profile']);
+      this.router.navigate(['seller/setting/my-profile']);
       setTimeout(() => {
         var ele: any = document.querySelector('.grecaptcha-badge');
         console.log(ele);
@@ -93,7 +93,7 @@ export class RegistrationComponentComponent implements OnInit{
   }
   onNavigateLogin(){
 
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['seller/auth/login']);
   }
   // pushLocalStorage(data:object){
   //   localStorage.setItem('RegisterData',JSON.stringify(data));

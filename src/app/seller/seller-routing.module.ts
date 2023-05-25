@@ -7,7 +7,7 @@ const routes: Routes = [
   { path: 'auth', component: AuthComponent, loadChildren: () => import("./auth/auth.module").then(module => module.AuthModule) },
   { path: 'product', loadChildren: () => import("./product/product.module").then(module => module.ProductModule) },
   { path: 'setting',loadChildren: () => import("./setting/setting.module").then(module => module.SettingModule) },
-  
+  { path:'**',redirectTo:'auth',pathMatch:'full'},
 ];
 
 @NgModule({

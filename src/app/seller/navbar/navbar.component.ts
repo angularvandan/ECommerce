@@ -17,7 +17,7 @@ export class NavbarComponent {
   }
   onLogOut(){
     localStorage.removeItem('token1');
-    this.router.navigate(['auth/login']);
+    this.router.navigate(['seller/auth/login']);
     this.userService.nav.next(true);
   }
 }

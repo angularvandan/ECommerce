@@ -6,11 +6,13 @@ import {NgxPaginationModule} from 'ngx-pagination';
 import { ProductsRoutingModule } from './products-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ProductListComponent } from './product-list/product-list.component';
+import { ViewProductComponent } from './view-product/view-product.component';
 
 
 @NgModule({
   declarations: [
-    ProductListComponent
+    ProductListComponent,
+    ViewProductComponent
   ],
   imports: [
     CommonModule,

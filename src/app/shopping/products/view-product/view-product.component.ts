@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { ActivatedRoute } from '@angular/router';
+import { UserService } from '../../service/user.service';
 
 @Component({
   selector: 'app-view-product',
@@ -12,7 +13,10 @@ export class ViewProductComponent implements OnInit{
   productId:any;
   product:any;
   showBigImage: any;
-  constructor(private httpService:HttpService,private activatedRoute:ActivatedRoute){}
+  constructor(private httpService:HttpService,private activatedRoute:ActivatedRoute,
+    private userService:UserService){
+    this.userService.loginRegisterStatus.next(true);
+  }
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((response:any)=>{
       this.productId=response.get('id');

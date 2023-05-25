@@ -41,7 +41,7 @@ export class ChangePasswordComponent implements OnInit{
         console.log(response);
         this.userService.showSuccess('Password has changed');
         setTimeout(()=>{
-          this.router.navigate(['my-profile']);
+          this.router.navigate(['seller/setting/my-profile']);
         },1000);
       },
       error:(err)=>{

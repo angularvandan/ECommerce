@@ -1,5 +1,5 @@
 import { HttpSentEvent } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../service/http.service';
@@ -21,7 +21,7 @@ export class ViewProductComponent implements OnInit{
   bigImageId!:any;
   images:any[]=[];
   deleteImageId:any;
-
+  @ViewChild('file')ele!:ElementRef;
 
   constructor(private http:HttpService, private userService:UserService,private activatedRoute:ActivatedRoute){
   }
@@ -56,58 +56,41 @@ export class ViewProductComponent implements OnInit{
     this.showBigImage=image.url;
     this.bigImageId=image.public_id;
   }
-  onDeleteImage(){
-    this.http.updateImage({delete:this.bigImageId},this.productId).subscribe((response:any)=>{
-      console.log(response);
-    },err=>{
-      console.log(err.error.message);
-    },()=>{
-      this.userService.showSuccess('Image Deleted Successfully');
-      this.onGetProduct();
-    });
-  }
-  onDeleteMultipleImages(){
-    let check:any=document.querySelectorAll("input[type='checkbox']:checked");
-    // console.log(check.length);
-    if(check.length){
-      const formData=new FormData();
-      for(let img of check){
-        // console.log(img);
-        formData.append('delete',img.value);
-      }
-      this.http.updateImage(formData,this.productId).subscribe((response:any)=>{
-        console.log(response);
-      },err=>{
-        console.log(err.error.message);
-      },()=>{
-        this.userService.showSuccess('Image Deleted Successfully');
-        this.onGetProduct();
-      });
-    }
-    else{
-      this.userService.showWarning('Select at least one image');
-    }
-    
-  }
-  onAddImage(){
-    const formData = new FormData();
-    for(let image of this.images){
-      formData.append("images",image);
-    }
-    this.http.updateImage(formData,this.productId).subscribe((response:any)=>{
-      console.log(response);
-    },err=>{
-      console.log(err.error.message);
-    },()=>{
-      this.userService.showSuccess('Image Added Successfully');
-      this.onGetProduct();
-    });
-  }
+
   onFile(files:any){
     let images=files.target.files;
     console.log(files.target.files);
     for(let image of images){
       this.images.push(image);
     }
+  }
+  onAddAndDeleteImages(){
+    let confirm=window.confirm('Do you want to add or delete ?');
+    if(confirm){
+      const formData = new FormData();
+      let check:any=document.querySelectorAll("input[type='checkbox']:checked");
+      for(let img of check){
+        formData.append('delete',img.value);
+      }
+      for(let image of this.images){
+        formData.append("new_images",image);
+      }
+      if(formData.has('delete')||formData.has('new_images')){
+        this.http.updateImage(formData,this.productId).subscribe((response:any)=>{
+          console.log(response);
+        },err=>{
+          console.log(err.error.message);
+        },()=>{
+          this.userService.showSuccess('Image Added and Deleted Successfully');
+          this.images=[];
+          this.onGetProduct();
+        });
+      }else{
+        this.userService.showWarning('Delete or add minimum one image !');
+      }
+    }
+  }
+  onResetInputField(){
+    this.ele.nativeElement.value="";
   }
 }

@@ -39,7 +39,7 @@ export class CreateProductComponent implements OnInit{
       this.userService.showWarning(err.error.message);
     },()=>{
       this.userService.showSuccess('Created Successfully');
-      this.router.navigate(['products/product-list']);
+      this.router.navigate(['seller/products/product-list']);
     });
   }
   onFile(files:any){
