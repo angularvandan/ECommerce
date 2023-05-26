@@ -22,11 +22,9 @@ export class LoginComponent implements OnInit{
   constructor(private httpService:HttpService,private userService:UserService
     ,private captchaService:CaptchaService,private router:Router){
       
-      let token=JSON.parse(localStorage.getItem('CustomerToken')||'[]');
-      if(token!=''){
-        this.userService.loginRegisterStatus.next(true);
-        router.navigate(['shop/customer/profile'])
-      }
+      this.userService.getSelf().then((res)=>{
+        router.navigate(['shop/customer/profile']);
+      })
   }
 
   async executeCaptchaService(){

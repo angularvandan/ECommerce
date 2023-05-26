@@ -23,15 +23,14 @@ export class RegisterComponent implements OnInit{
   };
   constructor(private httpService:HttpService,
     private userService:UserService,private captchaService:CaptchaService,private router:Router){
-      let token=JSON.parse(localStorage.getItem('CustomerToken')||'[]');
-      if(token!=''){
+      
+      this.userService.getSelf().then((res)=>{
         router.navigate(['shop/customer/profile']);
-      }
+      })
     }
 
   async executeCaptchaService(){
     this.captcha=await this.captchaService.execute('register');
-    // console.log(this.captcha);
   }
   ngOnInit(): void {
 

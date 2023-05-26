@@ -11,28 +11,14 @@ export class AuthGuardGuard implements CanActivate {
   constructor(private router: Router, private httpService: HttpService,private userService:UserService) { }
   canActivate(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let token: any;
-    try {
-      token = JSON.parse(<string>localStorage.getItem('token1'));
-    } catch (err) {
-      localStorage.removeItem('token1');
-    }
-    let login:any;
-    if (token != null) {
-      this.httpService.fetchUserDetails().subscribe((response: any) => {
-        console.log('guard');
-        login=true;
-        this.userService.nav.next(false);
-      }, (err) => {
-        this.router.navigate(['/seller/auth/login']);
-        login=false;
-        this.userService.nav.next(true);
-      })
-      return login;
-    }
-    else {
-      this.router.navigate(['/seller/auth/login']);
+      
+    return this.userService.getProfile().then((res:any)=>{
+      this.userService.nav.next(false);
+      return res;
+    }).catch((err)=>{
+      this.userService.nav.next(true);
+      this.router.navigate(['seller/auth/login']);
       return false;
-    }
+    });   
   }
 }

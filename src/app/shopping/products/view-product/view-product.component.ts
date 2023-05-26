@@ -15,8 +15,7 @@ export class ViewProductComponent implements OnInit{
   showBigImage: any;
   constructor(private httpService:HttpService,private activatedRoute:ActivatedRoute,
     private userService:UserService){
-    this.userService.loginRegisterStatus.next(true);
-  }
+    }
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe((response:any)=>{
       this.productId=response.get('id');

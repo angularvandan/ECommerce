@@ -17,7 +17,6 @@ export class SelfComponent implements OnInit{
 
   constructor(private httpService:HttpService,private userService:UserService,
     private router:Router){
-    this.userService.loginRegisterStatus.next(true);
   }
   ngOnInit(): void {
     this.getSelf();
@@ -39,8 +38,6 @@ export class SelfComponent implements OnInit{
       this.user=response;
     },err=>{
       // console.log(err);
-    },()=>{
-      this.userService.loginRegisterStatus.next(true);
     });
   }
   onUpdateImage(){

@@ -14,8 +14,6 @@ export class ChangePasswordComponent implements OnInit{
   reactiveForm!:FormGroup;
   constructor(private userService:UserService,private httpService:HttpService,
     private router:Router){
-    this.userService.loginRegisterStatus.next(true);
-    // console.log('hii');
   }
   ngOnInit(): void {
     this.reactiveForm=new FormGroup({

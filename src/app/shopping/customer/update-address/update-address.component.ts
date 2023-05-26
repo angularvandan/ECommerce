@@ -17,7 +17,6 @@ export class UpdateAddressComponent implements OnInit{
 
   constructor(private userService:UserService,private httpService:HttpService,
     private router:Router,private activatedRoute:ActivatedRoute){
-    this.userService.loginRegisterStatus.next(true);
   }
   ngOnInit(): void {
     this.reactiveForm=new FormGroup({

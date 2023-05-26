@@ -31,10 +31,6 @@ export class ProductListComponent implements OnInit{
 
   constructor(private httpService:HttpService,private userService:UserService,
     private router:Router){
-    let token=JSON.parse(localStorage.getItem('CustomerToken')||'[]');
-    if(token!=''){
-      this.userService.loginRegisterStatus.next(true);
-    }  
   }
 
   ngOnInit(): void {

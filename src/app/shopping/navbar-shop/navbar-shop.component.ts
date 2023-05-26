@@ -9,18 +9,17 @@ import { HttpService } from '../service/http.service';
   styleUrls: ['./navbar-shop.component.css']
 })
 export class NavbarShopComponent implements OnInit{
-  shopNavbarStatus:boolean=false;
   loginRegisterStatus:boolean=false;
   constructor(private router:Router,private userService:UserService,private httpService:HttpService){
   }
   ngOnInit(): void {
-    let token=JSON.parse(localStorage.getItem('CustomerToken')||'[]');
-      if(token!=''){
-        this.userService.loginRegisterStatus.next(true);
-      }
+    this.userService.getSelf().then((res)=>{
+      this.userService.loginRegisterStatus.next(res);
+    })
     this.userService.loginRegisterStatus.subscribe((response:any)=>{
       this.loginRegisterStatus=response;
     });
+    console.log('hii');
   }
   onLogOut(){
     this.loginRegisterStatus=false;

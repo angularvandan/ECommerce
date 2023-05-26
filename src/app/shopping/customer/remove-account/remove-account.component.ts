@@ -12,7 +12,6 @@ export class RemoveAccountComponent implements OnInit{
 
   constructor(private httpService:HttpService,private userService:UserService,
     private router:Router){
-    this.userService.loginRegisterStatus.next(true);
   }
   ngOnInit(): void {
     this.httpService.removeAccount().subscribe((response:any)=>{

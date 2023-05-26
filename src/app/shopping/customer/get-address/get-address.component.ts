@@ -15,7 +15,6 @@ export class GetAddressComponent implements OnInit{
 
   constructor(private userService:UserService,private httpService:HttpService,
     private router:Router){
-    this.userService.loginRegisterStatus.next(true);
   }
   ngOnInit(): void {
     
