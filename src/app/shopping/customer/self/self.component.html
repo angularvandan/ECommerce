@@ -53,13 +53,30 @@
 <!-- model  -->
 <div class="container">
 <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
+  <div class="modal-dialog modal-fullscreen	">
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Update image</h5>
       </div>
       <div class="modal-body">
-        <input type="file" name="file" id="file"(change)="onFile($event)">
+        <input type="file" name="file" id="file"(change)="fileChangeEvent($event)">
+        <div class="row">
+          <div class="col-6">
+            <image-cropper
+            [imageChangedEvent]="imageChangedEvent"
+            [maintainAspectRatio]="true"
+            [aspectRatio]="4 / 3"
+            format="png"
+            (imageCropped)="imageCropped($event)"
+            (imageLoaded)="imageLoaded()"
+            (cropperReady)="cropperReady()"
+            (loadImageFailed)="loadImageFailed()"
+            ></image-cropper>
+          </div>
+          <div class="col-6">
+            <img [src]="croppedImage"width="350px"/>
+          </div>
+        </div>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>

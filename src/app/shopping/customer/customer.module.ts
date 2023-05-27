@@ -9,6 +9,7 @@ import { AddAddressComponent } from './add-address/add-address.component';
 import { UpdateAddressComponent } from './update-address/update-address.component';
 import { GetAddressComponent } from './get-address/get-address.component';
 import { SelfComponent } from './self/self.component';
+import { ImageCropperModule } from 'ngx-image-cropper';
 
 
 @NgModule({
@@ -23,7 +24,8 @@ import { SelfComponent } from './self/self.component';
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    ImageCropperModule
   ]
 })
 export class CustomerModule { }

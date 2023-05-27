@@ -1,8 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { ImageCroppedEvent, LoadedImage, base64ToFile } from 'ngx-image-cropper';
+
 
 @Component({
   selector: 'app-self',
@@ -14,6 +16,10 @@ export class SelfComponent implements OnInit{
   image:any;
   reactiveForm!:FormGroup;
   editProfileStatus:boolean=true;
+  imageChangedEvent: any = '';
+  croppedImage: any = '';
+  imageName:any;
+
 
   constructor(private httpService:HttpService,private userService:UserService,
     private router:Router){
@@ -37,16 +43,14 @@ export class SelfComponent implements OnInit{
       console.log(response);
       this.user=response;
     },err=>{
-      // console.log(err);
     });
   }
   onUpdateImage(){
     const formData=new FormData();
+    console.log(this.image);
     formData.append('picture',this.image);
-
     this.httpService.updateProfilePicture(formData).subscribe((response:any)=>{
       console.log(response);
-
     },err=>{
       // console.log(err.error.message);
       this.userService.showWarning(err.error.message);
@@ -70,10 +74,10 @@ export class SelfComponent implements OnInit{
       });
     }
   }
-  onFile(image:any){
-    // console.log(image.target.files[0]);
-    this.image=image.target.files[0];
-  }
+  // onFile(image:any){
+  //   // console.log(image.target.files[0]);
+  //   this.image=image.target.files[0];
+  // }
   onEditProfile(){
     this.reactiveForm.enable();
     this.editProfileStatus=false;
@@ -105,5 +109,25 @@ export class SelfComponent implements OnInit{
   }
   onGetAddress(){
     this.router.navigate(['shop/customer/get-address']);
+  }
+  fileChangeEvent(event: any): void {
+      this.imageChangedEvent = event;
+      console.log(this.imageChangedEvent);
+      this.imageName=this.imageChangedEvent.target.files[0].name;
+  }
+  imageCropped(event: ImageCroppedEvent) {
+      this.croppedImage = event.base64;
+      console.log(event);
+      this.image = base64ToFile(this.croppedImage);
+      console.log(this.image);
+  }
+  imageLoaded() {
+      // show cropper
+  }
+  cropperReady() {
+      // cropper ready
+  }
+  loadImageFailed() {
+      // show message
   }
 }

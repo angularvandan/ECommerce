@@ -9,3 +9,7 @@
     right: 5px;
     top:0%;
 }
+.modal-dialog {
+    width: 800px;
+    margin: auto;
+  }

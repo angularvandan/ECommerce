@@ -42,6 +42,12 @@ export class HttpService {
     return this.http.patch('https://shop-api.ngminds.com/customers/update-profile',user,{headers:this.headers})
   }
   updateProfilePicture(image:any){
+    try{
+      this.token=JSON.parse(<string>localStorage.getItem('CustomerToken'));
+      this.headers=new HttpHeaders().set('Authorization',`bearer ${this.token}`)
+    }catch(err){
+      localStorage.removeItem('CustomerToken');
+    }
     return this.http.post('https://shop-api.ngminds.com/customers/profile-picture',image,{headers:this.headers});
   }
   deleteProfilePicture(){
