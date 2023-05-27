@@ -6,7 +6,7 @@ import { CreateProductComponent } from './create-product/create-product.componen
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ViewProductComponent } from './view-product/view-product.component';
-import {NgxPaginationModule} from 'ngx-pagination'; 
+import { NgxPaginationModule} from 'ngx-pagination'; 
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxEditorModule } from 'ngx-editor';
 
@@ -25,7 +25,7 @@ import { NgxEditorModule } from 'ngx-editor';
     FormsModule,
     NgxPaginationModule,
     NgxDropzoneModule,
-    NgxEditorModule
+    NgxEditorModule,
   ]
 })
 export class ProductModule { }

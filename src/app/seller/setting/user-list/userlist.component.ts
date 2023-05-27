@@ -3,6 +3,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
+import Swal from 'sweetalert2';
 
 export interface userType{
   limit?:any,
@@ -77,26 +78,44 @@ export class UserlistComponent implements OnInit{
     });
   }
   onDeleteUser(id:string){
-    this.httpService.getAdminId().subscribe((response:any)=>{
-      // console.log(response._id);
-      this.adminId=response._id;
-    },err=>{
-      this.httpService.error.next(err.error.message);
-    },()=>{
-      if(this.adminId!=id){
-        this.httpService.deleteUser(id).subscribe(()=>{
-          this.userService.showSuccess('Successfully Deleted');
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.getAdminId().subscribe((response:any)=>{
+          // console.log(response._id);
+          this.adminId=response._id;
         },err=>{
           this.httpService.error.next(err.error.message);
-          this.userService.showWarning(err.error.message);
         },()=>{
-          this.onGetUsers({...this.user,page:this.pageCount});
+          if(this.adminId!=id){
+            this.httpService.deleteUser(id).subscribe(()=>{
+            },err=>{
+              this.httpService.error.next(err.error.message);
+              Swal.fire(
+                err.error.message
+              )
+            },()=>{
+              Swal.fire(
+                'Deleted!',
+                'Your file has been deleted.',
+                'success'
+              )
+              this.onGetUsers({...this.user,page:this.pageCount});
+            });
+          }
+          else{
+            this.userService.showWarning('Admin can not be deleted');
+          }
         });
       }
-      else{
-        this.userService.showWarning('Admin can not be deleted');
-      }
-    });
+    })
   }
   editUser(user:object){
     this.editUserStatus=true;

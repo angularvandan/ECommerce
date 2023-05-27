@@ -29,9 +29,6 @@ export class NavbarShopComponent implements OnInit{
     this.router.navigate(['shop/auth/login']);
   }
   onDeleteAccount(){
-    let confirm=window.confirm('Do you want to delete your account ?');
-    if(confirm){
       this.router.navigate(['shop/customer/remove-account']);
-    }
   }
 }

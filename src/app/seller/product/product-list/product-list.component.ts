@@ -3,6 +3,7 @@ import { FormControl, FormGroup, FormGroupDirective, FormsModule, Validators } f
 import { Router } from '@angular/router';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
+import Swal from 'sweetalert2';
 
 export interface productType{
   limit?:number,
@@ -96,7 +97,6 @@ export class ProductListComponent implements OnInit{
     this.product.page=this.page;
     this.onGetProduct();
   }
-
   onViewProduct(product:any){
     // console.log(id);
     let id=product._id;
@@ -137,20 +137,33 @@ export class ProductListComponent implements OnInit{
     this.updateProductStatus=false;
     this.updateImageStatus=false;
     this.createProductStatus=true;
-
   }
   onDeleteProduct(id:any){
-    // console.log(id);
-    let status=window.confirm('Do you want to delete ?');
-    if(status){
-      this.http.deleteProduct(id).subscribe(()=>{
-      },err=>{
-        console.log(err.error.message);
-      },()=>{
-        this.userService.showSuccess('Successfully Deleted');
-        this.onGetProduct();
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.http.deleteProduct(id).subscribe(()=>{
+        },err=>{
+          Swal.fire(
+            err.error.message
+          )
+          console.log(err.error.message);
+        },()=>{
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          this.onGetProduct();
+        });
+      }
+    })  
   }
-
 }

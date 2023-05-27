@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-remove-account',
@@ -14,16 +15,38 @@ export class RemoveAccountComponent implements OnInit{
     private router:Router){
   }
   ngOnInit(): void {
-    this.httpService.removeAccount().subscribe((response:any)=>{
-      console.log(response);
-    },err=>{
-      console.log(err.error.message);
-      this.userService.showWarning(err.error.message);
-    },()=>{
-      this.userService.showSuccess('Successfully Removed');
-      this.userService.loginRegisterStatus.next(false);
-      localStorage.removeItem('CustomerToken');
-      this.router.navigate(['shop/auth/login']);
-    });
+    this.removeAccount();
+  }
+  removeAccount(){
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.removeAccount().subscribe((response:any)=>{
+          console.log(response);
+        },err=>{
+          console.log(err.error.message);
+          this.userService.showWarning(err.error.message);
+          Swal.fire(
+            err.error.message
+          )
+        },()=>{
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          this.userService.loginRegisterStatus.next(false);
+          localStorage.removeItem('CustomerToken');
+          this.router.navigate(['shop/auth/login']);
+        });
+      }
+    })
   }
 }

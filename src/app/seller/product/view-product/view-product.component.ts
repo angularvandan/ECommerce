@@ -4,6 +4,7 @@ import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-view-product',
@@ -50,6 +51,7 @@ export class ViewProductComponent implements OnInit{
       console.log(err.error.message);
     },()=>{
       this.viewStatus=true;
+
     })
   }
   onShowBigImage(image:any){
@@ -66,6 +68,7 @@ export class ViewProductComponent implements OnInit{
   }
   onAddAndDeleteImages(){
     let confirm=window.confirm('Do you want to add or delete ?');
+    
     if(confirm){
       const formData = new FormData();
       let check:any=document.querySelectorAll("input[type='checkbox']:checked");
