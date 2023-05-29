@@ -1,5 +1,5 @@
 .card{
-    width: 400px;
+    width: fit-content;
 }
 .scroll{
     overflow-x:scroll!important;

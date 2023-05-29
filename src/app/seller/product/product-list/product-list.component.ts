@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
-import { FormControl, FormGroup, FormGroupDirective, FormsModule, Validators } from '@angular/forms';
+import { Component, OnDestroy, OnInit, ViewEncapsulation } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import Swal from 'sweetalert2';
+import { Editor } from 'ngx-editor';
 
 export interface productType{
   limit?:number,
@@ -15,10 +16,12 @@ export interface productType{
 @Component({
   selector: 'app-product-list',
   templateUrl: './product-list.component.html',
-  styleUrls: ['./product-list.component.css']
-})
-export class ProductListComponent implements OnInit{
+  styleUrls: ['./product-list.component.css'],
 
+})
+export class ProductListComponent implements OnInit,OnDestroy{
+
+  editor!: Editor;
   filterProducts:any[]=[];
   reactiveForm!:FormGroup;
   images!:File;
@@ -40,8 +43,10 @@ export class ProductListComponent implements OnInit{
     limit:this.limit
   }
 
-  constructor(private http:HttpService,private userService:UserService,private router:Router){}
+  constructor(private http:HttpService,private userService:UserService,
+    private router:Router){}
     ngOnInit(): void {
+      this.editor = new Editor();
       this.onGetProduct();
       this.reactiveForm=new FormGroup({
         name:new FormControl(null,Validators.required),
@@ -49,6 +54,9 @@ export class ProductListComponent implements OnInit{
         id:new FormControl(null),
         price:new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*[0-9]$')]),
       })
+    }
+    ngOnDestroy(){
+      this.editor.destroy();
     }
   onGetProduct(){
     this.http.getProducts(this.product).subscribe((response:any)=>{
@@ -110,7 +118,7 @@ export class ProductListComponent implements OnInit{
 
     this.reactiveForm.patchValue({
       name:product.name,
-      description:product.description,
+      description:(product.description),
       price:product.price,
       id:product._id
     });

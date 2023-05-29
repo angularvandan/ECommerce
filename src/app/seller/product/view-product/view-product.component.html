@@ -1,11 +1,11 @@
 
 
-<div class="container"*ngIf="viewStatus">
+<div class="container card "*ngIf="viewStatus">
     <div class="row">
-      <div class="col-md-6 card ms-auto">
+      <div class="col-md-6">
         <img src="{{showBigImage}}" alt="image"class="image-responsive card-img-top">
       </div>
-      <div class="col-md-6 card me-auto">
+      <div class="col-md-6">
         <div class="d-flex scroll pb-3">
           <div class="position-relative mt-4"*ngFor="let image of product?.images">
             <input type="checkbox"value="{{image.public_id}}"name="check" id="check">
@@ -28,7 +28,7 @@
           <h5 class="card-title">
             Price: {{ product?.price | currency : "INR" }}
           </h5>
-          <p class="card-text">{{ product?.description }}</p>
+          <div class="e2e-inner-html-bound"[innerHtml]="product?.description | html"></div>
         </div>
       </div>
     </div>
