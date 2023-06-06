@@ -75,4 +75,20 @@ export class HttpService {
   removeAccount(){
     return this.http.delete('https://shop-api.ngminds.com/customers/account',{headers:this.headers})
   }
+  //order
+  createOrder(data:any){
+    return this.http.post('https://shop-api.ngminds.com/shop/orders',data,{headers:this.headers});
+  }
+  confirmOrder(details:{},orderId:any){
+    return this.http.put('https://shop-api.ngminds.com/shop/orders/confirm/'+orderId,details,{headers:this.headers})
+  }
+  orderHistory(data:{}){
+    return this.http.get('https://shop-api.ngminds.com/shop/orders',{headers:this.headers,params:data})
+  }
+  orderDetails(orderId:string){
+    return this.http.get('https://shop-api.ngminds.com/shop/orders/'+orderId,{headers:this.headers})
+  }
+  cancelOrder(orderId:string){
+    return this.http.patch('https://shop-api.ngminds.com/shop/orders/cancel/'+orderId,{},{headers:this.headers})
+  }
 }

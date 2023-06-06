@@ -23,6 +23,7 @@ export class ProductListComponent implements OnInit{
   totalProducts!:number;
   sortBy:string='';
   name:string='';
+  product!:any;
 
   productPerms:productType={
     page:this.page,
@@ -88,5 +89,33 @@ export class ProductListComponent implements OnInit{
   }
   onViewProduct(id:any){
     this.router.navigate(['shop/products/view-product'],{queryParams:{id:id}});
+  }
+  onAddCart(id:any){
+    // this.router.navigate(['shop/products/cart'],{queryParams:{id:id}});
+    this.onGetProduct(id);
+  }
+  onGetProduct(productId:any){
+    this.httpService.getProduct(productId).subscribe((response:any)=>{
+      console.log(response);
+      this.product=response;
+    },err=>{
+      console.log(err.error.message);
+    },()=>{
+      let products=JSON.parse(localStorage.getItem('products')||'[]');
+      console.log(products);
+      let productByLocal=[];
+      if(products.length>=0){
+        for(let product of products){
+          productByLocal.push(product);
+        }
+        productByLocal.push({...this.product,count:1,totalPrice:this.product.price});
+        localStorage.setItem('products',JSON.stringify(productByLocal));
+        this.userService.showSuccess('Product has been added to cart');
+      }
+      else{
+        localStorage.clear();
+        this.userService.showWarning('Some problem occur');
+      }
+    })
   }
 }

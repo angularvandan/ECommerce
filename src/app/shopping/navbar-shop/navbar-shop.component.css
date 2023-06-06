@@ -5,3 +5,6 @@ a{
 a:focus{
     color: rgb(8, 140, 15)!important;
 }
+.active{
+    color: green;
+}

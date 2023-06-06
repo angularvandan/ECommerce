@@ -4,6 +4,9 @@
 .scroll{
     overflow-x:scroll!important;
 }
+.desc-scroll{
+    overflow-y:auto;
+}
 a{
     cursor: pointer;
 }

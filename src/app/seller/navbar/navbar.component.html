@@ -13,6 +13,9 @@
       <li class="nav-item active me-3">
         <a class="nav-link fs-5"routerLink="/shop/products/product-list" >Buyer</a>
       </li>
+      <li class="nav-item active me-3"[hidden]="navStatus">
+        <a class="nav-link fs-5"routerLink="/seller/order/order-list" >Order</a>
+      </li>
       <li class="nav-item active me-3"[hidden]="!navStatus">
         <a class="nav-link fs-5"routerLink="/seller/auth/login" >Login</a>
       </li>

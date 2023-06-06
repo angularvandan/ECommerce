@@ -14,7 +14,7 @@ import { NavbarShopComponent } from './navbar-shop/navbar-shop.component';
   declarations: [
     ProductsComponent,
     ShoppingComponent,
-    NavbarShopComponent
+    NavbarShopComponent,
   ],
   imports: [
     CommonModule,
