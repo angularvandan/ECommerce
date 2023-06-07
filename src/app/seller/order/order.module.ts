@@ -4,18 +4,20 @@ import { CommonModule } from '@angular/common';
 import { OrderRoutingModule } from './order-routing.module';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-import { OrderActionsComponent } from './order-actions/order-actions.component';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
   declarations: [
     OrderListComponent,
     OrderDetailsComponent,
-    OrderActionsComponent
   ],
   imports: [
     CommonModule,
-    OrderRoutingModule
+    OrderRoutingModule,
+    NgxPaginationModule,
+    FormsModule
   ]
 })
 export class OrderModule { }

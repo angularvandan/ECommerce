@@ -10,3 +10,9 @@
 a{
     cursor: pointer;
 }
+.scrollbar{
+    overflow:auto;
+}
+button{
+    width: 120px;
+}

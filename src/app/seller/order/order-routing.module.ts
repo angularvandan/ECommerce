@@ -2,14 +2,16 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
-import { OrderActionsComponent } from './order-actions/order-actions.component';
+import { AuthGuardGuard } from '../guard/auth-guard.guard';
 
 const routes: Routes = [
-  {path:'',component:OrderListComponent},
-  {path:'order-list',component:OrderListComponent},
-  {path:'order-details',component:OrderDetailsComponent},
-  {path:'order-action',component:OrderActionsComponent},
-  {path:'**',component:OrderListComponent},
+{path:'',canActivate:[AuthGuardGuard],children:[
+    {path:'',component:OrderListComponent},
+    {path:'order-list',component:OrderListComponent},
+    {path:'order-details',component:OrderDetailsComponent},
+    {path:'**',component:OrderListComponent},
+  ]
+}
 ];
 
 @NgModule({

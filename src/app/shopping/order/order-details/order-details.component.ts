@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import { ActivatedRoute, Router } from '@angular/router';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-order-details',
@@ -16,7 +17,9 @@ export class OrderDetailsComponent implements OnInit{
   totalPrice:number=0;
   orderId!:string;
   showBigImage: any;
-
+  productImage:any[]=[];
+  cancelStatus:boolean=false;
+  confirmStatus:boolean=false;
 
   constructor(private httpService:HttpService,private activatedRoute:ActivatedRoute,
     private userService:UserService,private router:Router){}
@@ -33,11 +36,38 @@ export class OrderDetailsComponent implements OnInit{
       this.products=response.items;
       this.totalProducts=this.products.length;
       this.deliveryFee=response.deliveryFee;
+      if(response.status=='Confirmed'){
+        this.cancelStatus=true;
+        this.confirmStatus=false;
+
+      }
+      else if(response.status=='Cancelled'){
+        this.cancelStatus=false;
+        this.confirmStatus=false;
+
+      }
+      else if(response.status=='Pending'){
+        this.cancelStatus=true;
+        this.confirmStatus=true;
+      }
     },err=>{
       console.log(err.error.message)
     },()=>{
       this.onTotalPrice();
+      this.onProductImage();
     });
+  }
+  onProductImage(){
+    for(let product of this.products){
+      console.log(product.productId);
+      this.httpService.getProduct(product.productId).subscribe((response:any)=>{
+        console.log(response);
+        this.productImage.push(response.images[0].url);
+        console.log(this.productImage);
+      },err=>{
+        console.log(err);
+      });
+    }
   }
   onTotalPrice(){
     this.totalPrice=0;
@@ -46,19 +76,38 @@ export class OrderDetailsComponent implements OnInit{
     }
     this.totalPrice+=this.deliveryFee;
   }
-  onSmallImageClick(image:any){
-    this.showBigImage=image?.url;
+  onConfirmOrder(){
+    this.router.navigate(['shop/order/confirm-order'],{queryParams:{id:this.orderId}})
   }
   onCancelOrder(){
     console.log(this.orderId);
-    this.httpService.cancelOrder(this.orderId).subscribe((response:any)=>{
-      console.log(response);
-    },err=>{
-      console.log(err.error.message);
-      this.userService.showWarning(err.error.message);
-    },()=>{
-      this.userService.showSuccess('Cancel Successfully');
-      this.router.navigate(['shop/order/order-history']);
-    });
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, cancel order!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.cancelOrder(this.orderId).subscribe((response:any)=>{
+          console.log(response);
+        },err=>{
+          console.log(err.error.message);
+          this.userService.showWarning(err.error.message);
+          Swal.fire(
+            err.error.message
+          )
+        },()=>{
+          Swal.fire(
+            'Canceled!',
+            'Cancel Successfully',
+            'success'
+          )
+          this.router.navigate(['shop/order/order-history']);
+        });
+      }
+    })
   }
 }

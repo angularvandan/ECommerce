@@ -143,12 +143,12 @@ export class HttpService{
   deleteProduct(id:any){
     return this.http.delete('https://shop-api.ngminds.com/products/'+id,{headers:this.headers})
   }
-  //order
-  orderList(){
-    return this.http.get('https://shop-api.ngminds.com/orders',{headers:this.headers});
+  //order seller
+  orderList(sort:{}){
+    return this.http.get('https://shop-api.ngminds.com/orders',{headers:this.headers,params:sort});
   }
   orderDetails(orderId:string){
-    return this.http.get('https://shop-api.ngminds.com/orders'+orderId,{headers:this.headers});
+    return this.http.get('https://shop-api.ngminds.com/orders/'+orderId,{headers:this.headers});
   }
   orderActions(action:string,orderId:string){
     return this.http.patch('https://shop-api.ngminds.com/orders/'+action+'/'+orderId,{},{headers:this.headers});
