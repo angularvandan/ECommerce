@@ -94,14 +94,12 @@
         <div class="col-6 text-center">
           <p>Price({{ totalProducts }} items)</p>
           <p>Discount</p>
-          <p>Charges</p>
           <p class="fw-bold">Total Amounts:</p>
         </div>
         <div class="col-6 text-center">
-          <p>{{ totalPrice | currency : "INR" }}</p>
-          <p>{{ "1200" | currency : "INR" }}</p>
-          <p>{{ "90" | currency : "INR" }}</p>
-          <p class="fw-bold">{{ totalPrice | currency : "INR" }}</p>
+          <p>{{ totalPrice+totalDiscount | currencyFormatting:'&#8377;' }}</p>
+          <p>{{ totalDiscount | currencyFormatting:'&#8377;'  }}</p>
+          <p class="fw-bold">{{ totalPrice | currencyFormatting:'&#8377;'  }}</p>
           <div class="form-group">
             <button
               class="btn btn-primary"

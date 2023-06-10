@@ -4,6 +4,13 @@ import { addLocalToState, cancelProduct, updateCount } from "./order.actions";
 
 export const _productReducer=createReducer(initialState,on(addLocalToState,(state)=>{
     const products=  JSON.parse(localStorage.getItem('products')||'[]');
+    for(let product of products){
+        if(product?.deal?.price){
+            product.totalPrice=(product.deal.price)*product.count;
+        }else{
+            product.totalPrice=(product.price)*product.count;
+        }
+    }
     return {
         ...state,products:[...products]
     }
@@ -11,10 +18,18 @@ export const _productReducer=createReducer(initialState,on(addLocalToState,(stat
     console.log(state.products);
     const newCart = state.products.map((item) => {
         if (action.payload.id == item._id) {
-          let price = item.price;
+
+          let price =item.price;
           let arrCopy = { ...item };
           arrCopy.count = action.payload.count;
-          arrCopy.totalPrice = action.payload.count * price;
+          if(item?.deal?.price){
+            arrCopy.totalPrice=(item.deal.price)*action.payload.count;
+            console.log(arrCopy.totalPrice);
+          }
+          else{
+            arrCopy.totalPrice = action.payload.count * price;
+            console.log(arrCopy.totalPrice);
+          }
           return arrCopy;
         } else {
           return item;

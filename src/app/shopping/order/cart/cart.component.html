@@ -31,9 +31,16 @@
             <hr />
             <div>
               <h5 >{{product?.name}}</h5>
-              <h5>
-                Price:{{product?.price |currency:'INR'}}
-              </h5>
+              <div *ngIf="product?.deal"><b>(Discount)</b><b appDiscount >{{product?.deal?.discount}}</b>
+                <b class="card-title display">
+                  <del>Price: {{ product?.price | currencyFormatting:'&#8377;' }}</del>
+                  {{ product?.deal?.price | currencyFormatting:'&#8377;'}}
+                </b>
+                <b>Deals end in: <span appDiscount [abc]="product?.deal?.ends"></span></b>
+              </div>
+              <b class="card-title display mb-2"*ngIf="!product?.deal">
+                Price: {{ product?.price | currencyFormatting:'&#8377;' }}
+              </b>
               <div class="desc-scroll"[innerHTML]="product?.description"></div>
             </div>
           </div>
@@ -44,20 +51,18 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-5 ms-auto">
+      <div class="col-lg-4 ms-auto">
         <h4 class="text-center">Price Details</h4>
         <div class="row shadow">
             <div class="col-6 text-center">
                 <p>Price({{totalProducts}} items)</p>
                 <p>Discount</p>
-                <p>Charges</p>
                 <p class="fw-bold">Total Amounts:</p>
             </div>
             <div class="col-6 text-center">
-                <p>{{totalPrice | currency:'INR'}}</p>
-                <p>{{'1200' | currency:'INR'}}</p>
-                <p>{{'90' | currency:'INR'}}</p>
-                <p class="fw-bold">{{totalPrice | currency:'INR'}}</p>
+                <p>{{totalPrice+totalDiscount | currencyFormatting:'&#8377;'}}</p>
+                <p>{{totalDiscount | currencyFormatting:'&#8377;'}}</p>
+                <p class="fw-bold">{{totalPrice | currencyFormatting:'&#8377;'}}</p>
             </div>
         </div>
       </div>

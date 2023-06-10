@@ -6,6 +6,7 @@ import { OrderListComponent } from './order-list/order-list.component';
 import { OrderDetailsComponent } from './order-details/order-details.component';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { FormsModule } from '@angular/forms';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -17,7 +18,8 @@ import { FormsModule } from '@angular/forms';
     CommonModule,
     OrderRoutingModule,
     NgxPaginationModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ]
 })
 export class OrderModule { }

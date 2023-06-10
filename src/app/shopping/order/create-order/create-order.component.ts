@@ -19,6 +19,8 @@ export class CreateOrderComponent implements OnInit{
   totalProducts:number=0;
   allAddress:any[]=[];
   totalPrice!:number;
+  totalDiscount:number=0;
+
   specificAddress={
     street: '' ,
     addressLine2: '' ,
@@ -53,9 +55,19 @@ export class CreateOrderComponent implements OnInit{
   }
   getTotalPrice(){
     this.totalPrice=0;
+    this.totalDiscount=0;
+
     for(let product of this.products){
-      this.totalPrice+=product.price*product.count;
+      this.totalPrice+=product.totalPrice;
     }
+    //this is for discount
+    for(let product of this.products){
+      this.totalDiscount+=product.price*product.count;
+    }
+    this.totalDiscount=this.totalDiscount-this.totalPrice;
+    this.totalDiscount=Number(this.totalDiscount.toFixed(2));
+
+    this.totalPrice=Number(this.totalPrice.toFixed(2));
     console.log(this.totalPrice);
   }
   onRadioAddress(addressId:string){

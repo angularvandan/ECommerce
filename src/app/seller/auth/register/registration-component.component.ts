@@ -29,7 +29,7 @@ export class RegistrationComponentComponent implements OnInit{
     //   router.navigate(['my-profile']);
     // }
 
-    let token= localStorage.getItem('token1');
+    let token=JSON.parse(<string>localStorage.getItem('token1'));
     if(token!=null){
       this.router.navigate(['seller/setting/my-profile']);
       setTimeout(() => {

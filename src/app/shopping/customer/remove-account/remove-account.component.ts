@@ -47,6 +47,9 @@ export class RemoveAccountComponent implements OnInit{
           this.router.navigate(['shop/auth/login']);
         });
       }
+      else{
+        this.router.navigate(['shop/customer/profile']);
+      }
     })
   }
 }

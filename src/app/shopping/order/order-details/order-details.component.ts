@@ -15,6 +15,8 @@ export class OrderDetailsComponent implements OnInit{
   deliveryFee:number=0;
   totalProducts:number=0;
   totalPrice:number=0;
+  totalDiscount:number=0;
+
   orderId!:string;
   showBigImage: any;
   productImage:any[]=[];
@@ -71,9 +73,12 @@ export class OrderDetailsComponent implements OnInit{
   }
   onTotalPrice(){
     this.totalPrice=0;
+    this.totalDiscount=0;
     for(let product of this.products){
       this.totalPrice+=product.subTotal;
+      this.totalDiscount+=product.price*product.qty;
     }
+    this.totalDiscount=this.totalDiscount-this.totalPrice;
     this.totalPrice+=this.deliveryFee;
   }
   onConfirmOrder(){

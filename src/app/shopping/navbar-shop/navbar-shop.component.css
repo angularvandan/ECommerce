@@ -2,9 +2,6 @@ a{
     cursor: pointer;
     color: rgb(61, 56, 56)!important;
 }
-a:focus{
-    color: rgb(8, 140, 15)!important;
-}
 .active{
-    color: green;
+    color: rgb(8, 140, 15)!important;
 }

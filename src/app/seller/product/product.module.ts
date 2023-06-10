@@ -9,8 +9,7 @@ import { ViewProductComponent } from './view-product/view-product.component';
 import { NgxPaginationModule} from 'ngx-pagination'; 
 import { NgxDropzoneModule } from 'ngx-dropzone';
 import { NgxEditorModule } from 'ngx-editor';
-import { HtmlPipe } from './html.pipe';
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 
 @NgModule({
@@ -18,7 +17,6 @@ import { HtmlPipe } from './html.pipe';
     CreateProductComponent,
     ProductListComponent,
     ViewProductComponent,
-    HtmlPipe,
   ],
   imports: [
     CommonModule,
@@ -28,6 +26,7 @@ import { HtmlPipe } from './html.pipe';
     NgxPaginationModule,
     NgxDropzoneModule,
     NgxEditorModule,
+    SharedModule
   ]
 })
 export class ProductModule { }

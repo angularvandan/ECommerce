@@ -21,6 +21,7 @@ export class CartComponent implements OnInit{
   products:any[]=[];
   totalProducts!:number;
   totalPrice:number=0;
+  totalDiscount:number=0;
   checkAddressLogin:boolean=true;
 
   constructor(private httpService:HttpService,private userService:UserService,
@@ -40,13 +41,24 @@ export class CartComponent implements OnInit{
   }
   getTotalPrice(){
     this.totalPrice=0;
+    this.totalDiscount=0;
     this.store.select(getProducts).subscribe(res=>{
       this.products=res;
       console.log(this.products);
     })
     for(let product of this.products){
-      this.totalPrice+=product.price*product.count;
+      // console.log(product.price);
+      this.totalPrice+=(product.totalPrice);
+      console.log(product.totalPrice);
     }
+    //this is for discount
+    for(let product of this.products){
+      this.totalDiscount+=product.price*product.count;
+    }
+    this.totalDiscount=this.totalDiscount-this.totalPrice;
+    this.totalDiscount=Number(this.totalDiscount.toFixed(2));
+
+    this.totalPrice=Number(this.totalPrice.toFixed(2));
     console.log(this.totalPrice);
     this.totalProducts=this.products.length;
   }

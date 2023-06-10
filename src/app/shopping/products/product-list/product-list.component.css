@@ -7,3 +7,6 @@ img{
 a{
     cursor: pointer;
 }
+.display{
+    display: inline-block;
+}

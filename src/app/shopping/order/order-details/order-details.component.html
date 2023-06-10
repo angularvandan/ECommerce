@@ -11,6 +11,7 @@
                 <th scope="col">Product Name:</th>
                 <th scope="col">Price:</th>
                 <th scope="col">Quantity:</th>
+                <th scope="col">Discount</th>
                 <th scope="col">Total Price:</th>
               </tr>
             </thead>
@@ -24,9 +25,10 @@
                   <img [src]="productImage[i]" alt="image"width="150px"height="200px">
                 </td>
                 <td class="align-middle">{{ product?.name }}</td>
-                <td class="align-middle">{{ product?.price | currency:'INR'}}</td>
+                <td class="align-middle">{{ product?.price | currencyFormatting:'&#8377;'}}</td>
                 <td class="align-middle">{{ product?.qty }}</td>
-                <td class="align-middle">{{ product?.subTotal | currency:'INR'}}</td>
+                <td class="align-middle">{{ (product?.price*product?.qty)-product?.subTotal | currencyFormatting:'&#8377;' }}</td>
+                <td class="align-middle">{{ product?.subTotal | currencyFormatting:'&#8377;'}}</td>
               </tr>
             </tbody>
           </table>
@@ -39,15 +41,13 @@
           <p>Price({{ totalProducts }} items)</p>
           <p>Discount</p>
           <p>Delivery Fee</p>
-          <p>Charges</p>
           <p class="fw-bold">Total Amounts:</p>
         </div>
         <div class="col-6 text-center">
-          <p>{{ totalPrice | currency : "INR" }}</p>
-          <p>{{ "1200" | currency : "INR" }}</p>
-          <p>{{ deliveryFee | currency : "INR" }}</p>
-          <p>{{ "90" | currency : "INR" }}</p>
-          <p class="fw-bold">{{ totalPrice | currency : "INR" }}</p>
+          <p>{{ totalPrice+totalDiscount | currencyFormatting:'&#8377;' }}</p>
+          <p>{{ totalDiscount | currencyFormatting:'&#8377;' }}</p>
+          <p>{{ deliveryFee | currencyFormatting:'&#8377;' }}</p>
+          <p class="fw-bold">{{ totalPrice | currencyFormatting:'&#8377;' }}</p>
         </div>
         <div class="row text-center">
           <div class="col">

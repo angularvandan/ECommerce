@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { Route, Router } from '@angular/router';
+import { UserService } from '../../service/user.service';
 
 export interface productType{
   page:number,
@@ -28,7 +29,7 @@ export class OrderHistoryComponent implements OnInit{
     limit:this.limit
   }
 
-  constructor(private httpService:HttpService,private router:Router){}
+  constructor(private httpService:HttpService,private router:Router,private userService:UserService){}
 
   ngOnInit(): void {
     this.onGetAllOrderHistory();
@@ -40,6 +41,7 @@ export class OrderHistoryComponent implements OnInit{
       this.totalProducts=response.totalResults;
     },err=>{
       console.log(err.error.message);
+      this.userService.showWarning(err.error.message);
     });
   }
   onShowProductDetails(productId:string){

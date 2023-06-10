@@ -26,7 +26,7 @@
           <a class="card-link text-primary"(click)="onAddAndDeleteImages()">Delete_or_add_image</a>
           <h5 class="card-title">{{ product?.name }}</h5>
           <h5 class="card-title">
-            Price: {{ product?.price | currency : "INR" }}
+            Price: {{ product?.price |currencyFormatting:'&#8377;' }}
           </h5>
           <div class="e2e-inner-html-bound"[innerHtml]="product?.description | html"></div>
         </div>

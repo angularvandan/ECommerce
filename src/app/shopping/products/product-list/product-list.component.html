@@ -57,10 +57,17 @@
           <hr />
           <div class="card-body">
             <a class="card-link text-primary"(click)="onViewProduct(product?._id)">View Product</a>
-            <h5 class="card-title">{{ product?.name }}</h5>
-            <h5 class="card-title">
-              Price: {{ product?.price | currency : "INR" }}
-            </h5>
+            <p class="card-title">{{ product?.name }}</p>
+            <div *ngIf="product?.deal"><b>(Discount)</b><b appDiscount >{{product?.deal?.discount}}</b>
+              <b class="card-title display">
+                <del>Price: {{ product?.price | currencyFormatting:'&#8377;' }}</del>
+                {{ product?.deal?.price | currencyFormatting:'&#8377;'}}
+              </b>
+              <b>Deals end in: <span appDiscount [abc]="product?.deal?.ends"></span></b>
+            </div>
+            <b class="card-title display mb-2"*ngIf="!product?.deal">
+              Price: {{ product?.price | currencyFormatting:'&#8377;' }}
+            </b>
             <p class="card-text"[innerHtml]="product?.description | slice : 0 : 20  "> </p>
             <a class="btn btn-primary float-start"(click)="onAddCart(product?._id)">Add to Cart</a>
           </div>

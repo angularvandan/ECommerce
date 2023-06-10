@@ -7,22 +7,19 @@ import { ProductsRoutingModule } from './products-routing.module';
 import { FormsModule } from '@angular/forms';
 import { ProductListComponent } from './product-list/product-list.component';
 import { ViewProductComponent } from './view-product/view-product.component';
-import { HtmlPipe } from './html.pipe';
-
-
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @NgModule({
   declarations: [
     ProductListComponent,
     ViewProductComponent,
-    HtmlPipe,
   ],
   imports: [
     CommonModule,
     ProductsRoutingModule,
     FormsModule,
     NgxPaginationModule,
-
+    SharedModule,
   ]
 })
 export class ProductsModule { }

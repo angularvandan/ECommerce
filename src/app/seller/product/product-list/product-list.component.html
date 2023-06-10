@@ -95,7 +95,7 @@ role="status"
             >
             <h5 class="card-title">{{ product.name }}</h5>
             <h5 class="card-title">
-              Price: {{ product.price | currency : "INR" }}
+              Price: {{ product.price | currencyFormatting:'&#8377;' }}
             </h5>
             <p class="card-text"[innerHtml]="product?.description |slice : 0 : 10"></p>
             <a class="btn btn-secondary mb-2" (click)="onUpdate(product)"
