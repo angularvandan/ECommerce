@@ -37,6 +37,7 @@ export class OrderHistoryComponent implements OnInit{
   onGetAllOrderHistory(){
     this.httpService.orderHistory(this.productPerms).subscribe((response:any)=>{
       console.log(response);
+      console.log(response.results[0].createdAt);
       this.products=response.results;
       this.totalProducts=response.totalResults;
     },err=>{

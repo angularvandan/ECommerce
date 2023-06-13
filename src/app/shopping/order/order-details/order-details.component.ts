@@ -79,6 +79,7 @@ export class OrderDetailsComponent implements OnInit{
       this.totalDiscount+=product.price*product.qty;
     }
     this.totalDiscount=this.totalDiscount-this.totalPrice;
+    this.totalDiscount=Number(this.totalDiscount.toFixed(2));
     this.totalPrice+=this.deliveryFee;
   }
   onConfirmOrder(){

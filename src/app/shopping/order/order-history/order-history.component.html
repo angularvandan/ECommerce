@@ -46,7 +46,7 @@
                 <td>{{product?.transactionNo}}</td>
                 <td>{{product?.paymentStatus}}</td>
                 <td>{{product?.status}}</td>
-                <td>{{product?.createdAt}}</td>
+                <td>{{product?.createdAt | date:'fullDate'}}</td>
                 <td>
                     <button
                     class="btn btn-secondary"

@@ -5,11 +5,14 @@
     "outDir": "./out-tsc/spec",
     "types": [
       "jasmine",
-      "@angular/localize"
+      "@angular/localize",
+      "node"
     ]
   },
   "include": [
     "src/**/*.spec.ts",
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/**/*.ts"
   ]
+  
 }

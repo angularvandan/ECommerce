@@ -67,6 +67,7 @@
             </div>
             <b class="card-title display mb-2"*ngIf="!product?.deal">
               Price: {{ product?.price | currencyFormatting:'&#8377;' }}
+              
             </b>
             <p class="card-text"[innerHtml]="product?.description | slice : 0 : 20  "> </p>
             <a class="btn btn-primary float-start"(click)="onAddCart(product?._id)">Add to Cart</a>

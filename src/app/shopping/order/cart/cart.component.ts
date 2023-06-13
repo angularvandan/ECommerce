@@ -120,6 +120,7 @@ export class CartComponent implements OnInit{
     this.store.dispatch(cancelProduct({id}));
     this.getAllProductFormStore();
     this.getTotalPrice();
-
+    let cartCount=JSON.parse(localStorage.getItem('products')||'[]');
+    this.userService.cartCount.next(cartCount.length);
   }
 }

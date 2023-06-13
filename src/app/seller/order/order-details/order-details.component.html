@@ -11,6 +11,7 @@
                   <th scope="col">Product Name:</th>
                   <th scope="col">Price:</th>
                   <th scope="col">Quantity:</th>
+                  <th scope="col">Discount:</th>
                   <th scope="col">Total Price:</th>
                 </tr>
               </thead>
@@ -26,6 +27,7 @@
                   <td class="align-middle">{{ product?.name }}</td>
                   <td class="align-middle">{{ product?.price | currencyFormatting:'&#8377;'}}</td>
                   <td class="align-middle">{{ product?.qty }}</td>
+                  <td class="align-middle">{{ product?.price-product?.subTotal | currencyFormatting:'&#8377;'}}</td>
                   <td class="align-middle">{{ product?.subTotal | currencyFormatting:'&#8377;'}}</td>
                 </tr>
               </tbody>
@@ -39,15 +41,13 @@
             <p>Price({{ totalProducts }} items)</p>
             <p>Discount</p>
             <p>Delivery Fee</p>
-            <p>Charges</p>
             <p class="fw-bold">Total Amounts:</p>
           </div>
           <div class="col-6 text-center">
             <p>{{ totalPrice | currencyFormatting:'&#8377;' }}</p>
-            <p>{{ 1200 | currencyFormatting:'&#8377;'}}</p>
+            <p>{{ totalDiscount | currencyFormatting:'&#8377;'}}</p>
             <p>{{ deliveryFee | currencyFormatting:'&#8377;' }}</p>
-            <p>{{ 90 |currencyFormatting:'&#8377;' }}</p>
-            <p class="fw-bold">{{ totalPrice | currencyFormatting:'&#8377;' }}</p>
+            <p class="fw-bold">{{ totalPrice-totalDiscount+deliveryFee | currencyFormatting:'&#8377;' }}</p>
           </div>
           <div class="row text-center">
             <div class="col">

@@ -15,6 +15,8 @@ export class OrderDetailsComponent {
   deliveryFee:number=0;
   totalProducts:number=0;
   totalPrice:number=0;
+  totalDiscount:number=0;
+
   orderId!:string;
   showBigImage: any;
   productImage:any[]=[];
@@ -76,9 +78,10 @@ export class OrderDetailsComponent {
   onTotalPrice(){
     this.totalPrice=0;
     for(let product of this.products){
-      this.totalPrice+=product.subTotal;
+      this.totalPrice+=product.price;
+      this.totalDiscount+=product.subTotal;
     }
-    this.totalPrice+=this.deliveryFee;
+    this.totalDiscount=this.totalPrice-this.totalDiscount;
   }
   onCancel(){
     Swal.fire({

@@ -27,7 +27,7 @@
                 <td class="align-middle">{{ product?.name }}</td>
                 <td class="align-middle">{{ product?.price | currencyFormatting:'&#8377;'}}</td>
                 <td class="align-middle">{{ product?.qty }}</td>
-                <td class="align-middle">{{ (product?.price*product?.qty)-product?.subTotal | currencyFormatting:'&#8377;' }}</td>
+                <td class="align-middle">{{ (product?.price*product?.qty)-product?.subTotal | currencyFormatting:'&#8377;'  }}</td>
                 <td class="align-middle">{{ product?.subTotal | currencyFormatting:'&#8377;'}}</td>
               </tr>
             </tbody>

@@ -9,7 +9,7 @@ export class DiscountDirective implements AfterViewInit{
 
 
   @Input('abc') abc:any;
-  constructor(private element:ElementRef,private renderer:Renderer2) {
+  constructor(private element:ElementRef) {
   }
   ngAfterViewInit(): void {
     // console.log(this.element.nativeElement.localName);
@@ -20,12 +20,12 @@ export class DiscountDirective implements AfterViewInit{
     let endTime=new Date(this.abc);
     setInterval(()=>{
       let currentTime=new Date();
-      let remainingMili=endTime.getTime()-currentTime.getTime();
+      let remainingMilliSecond=endTime.getTime()-currentTime.getTime();
       
       let obj={
-        hours:Math.floor(remainingMili/(1000*60*60)),
-        minutes:Math.floor((remainingMili/(1000*60))%60),
-        seconds:Math.floor((remainingMili/1000)%60),
+        hours:Math.floor(remainingMilliSecond/(1000*60*60)),
+        minutes:Math.floor((remainingMilliSecond/(1000*60))%60),
+        seconds:Math.floor((remainingMilliSecond/1000)%60),
       }
       if(this.element.nativeElement.localName=='span'){
         this.element.nativeElement.style.color="red";

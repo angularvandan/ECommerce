@@ -2,6 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { HttpService } from '../../service/http.service';
 import { UserService } from '../../service/user.service';
 import { Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { OrderState } from '../../order/state/order.state';
+import { addLocalToState } from '../../order/state/order.actions';
+import { getProducts } from '../../order/state/order.selector';
 
 
 export interface productType{
@@ -31,7 +35,7 @@ export class ProductListComponent implements OnInit{
   }
 
   constructor(private httpService:HttpService,private userService:UserService,
-    private router:Router){
+    private router:Router,private store:Store<OrderState>){
   }
 
   ngOnInit(): void {
@@ -42,6 +46,7 @@ export class ProductListComponent implements OnInit{
         ele.style.display = 'none';
       }
     this.onGetAllProducts();
+    // this.cartCount();
   }
   onGetAllProducts(){
     this.httpService.getAllProducts(this.productPerms).subscribe((response:any)=>{
@@ -116,6 +121,12 @@ export class ProductListComponent implements OnInit{
         localStorage.clear();
         this.userService.showWarning('Some problem occur');
       }
+      //this is for update cart count on navbar
+      this.cartCount();
     })
+  }
+  cartCount(){
+    let cartItems=JSON.parse(localStorage.getItem('products')||'[]');
+    this.userService.cartCount.next(cartItems.length);
   }
 }

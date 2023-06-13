@@ -8,7 +8,7 @@ export class CurrencyFormattingPipe implements PipeTransform {
   transformValue:string='';
   
   transform(value: number, currencySymbol: string = '$'):string {
-    let currency=currencySymbol;    
+    let currency=currencySymbol;  
     let temp:string=value.toString();
     let temp1=[];
     temp1=temp.split(".");
@@ -25,8 +25,10 @@ export class CurrencyFormattingPipe implements PipeTransform {
         return `${currencySymbol} ${this.transformValue}`
       }
       else{
+        if(temp1[1].length>2){
+          return `${currencySymbol} ${this.transformValue+'.'+temp1[1].slice(1,3)}`;
+        }
         return `${currencySymbol} ${this.transformValue+'.'+temp1[1]}`
-
       }
     }
     else{
@@ -37,7 +39,6 @@ export class CurrencyFormattingPipe implements PipeTransform {
 
   currencyTransform(value:number){
     let str:string=value.toString();
-    let afterPoint=str.split('.')[1];
     let strCopy:string='';
     let count=3;
     for(let i=str.length;i>0;i--){

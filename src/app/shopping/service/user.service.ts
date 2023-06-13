@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
-import { Subject } from 'rxjs';
+import { BehaviorSubject, Subject } from 'rxjs';
 import { HttpService } from './http.service';
 
 @Injectable({
@@ -10,6 +10,7 @@ export class UserService {
 
   constructor(private toastrService:ToastrService,private httpService:HttpService) { }
   loginRegisterStatus=new Subject();
+  cartCount=new BehaviorSubject(0);
   showSuccess(message:string) {
     this.toastrService.success(message);
   }
