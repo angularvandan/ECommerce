@@ -30,7 +30,6 @@ export class HttpService{
       return throwError(err);
     }));
   }
-
   fetchUserDetails(){
     //below two line for first load
     this.token=JSON.parse(<string>localStorage.getItem('token1'));
@@ -109,7 +108,6 @@ export class HttpService{
       return throwError(err);
     }))
   }
-
   getAdminId(){
     return this.fetchUserDetails();
   }

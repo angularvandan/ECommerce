@@ -15,8 +15,7 @@ export class HttpService {
     }catch(err){
       localStorage.removeItem('CustomerToken');
     }
-   }
-
+  }
   getAllProducts(product:{}){
     return this.http.get('https://shop-api.ngminds.com/shop/products',{params:product});
   }

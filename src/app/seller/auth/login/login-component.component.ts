@@ -97,7 +97,7 @@ export class LoginComponentComponent implements OnInit{
         this.userService.showWarning(err.error.message);
 
       },()=>{
-        this.router.navigate(['/setting/my-profile']);
+        this.router.navigate(['seller/setting/my-profile']);
       });
     });
   }
