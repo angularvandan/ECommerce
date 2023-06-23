@@ -34,15 +34,16 @@ export class CartComponent implements OnInit{
   getAllProductFormStore(){
     this.store.dispatch(addLocalToState());
     this.store.select(getProducts).subscribe(res=>{
+      console.log(res,"From Res");
       this.products=res;
     });
-    this.totalProducts=this.products.length;
+    this.totalProducts=this.products?.length;
     this.getTotalPrice();
   }
   getTotalPrice(){
     this.totalPrice=0;
     this.totalDiscount=0;
-    this.store.select(getProducts).subscribe(res=>{
+    this.store.select(getProducts)?.subscribe(res=>{
       this.products=res;
       console.log(this.products);
     })
@@ -72,7 +73,7 @@ export class CartComponent implements OnInit{
       let payload={
         id,
         count:value
-      }
+      };
       this.store.dispatch(updateCount({payload}));
       this.getAllProductFormStore();
       this.getTotalPrice();

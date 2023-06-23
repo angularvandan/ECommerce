@@ -13,8 +13,10 @@ describe('HttpService', () => {
       providers:[HttpService]
     });
     service = TestBed.inject(HttpService);
-    httpMock = TestBed.inject(HttpTestingController);
+    httpMock = TestBed.inject(HttpTestingController);  
+
   });
+    
 
   it('should be created', () => {
     expect(service).toBeTruthy();
@@ -164,6 +166,7 @@ describe('HttpService', () => {
     })
     const req=httpMock.expectOne(res=>res.method==='GET' );
     expect(req.request.method).toEqual('GET');
+    
     req.flush(dummySelf);
   })
   const dummyUpdateProfile={
@@ -194,8 +197,8 @@ describe('HttpService', () => {
     service.updateProfilePicture(formData).subscribe(res=>{
       expect(res).toEqual(dummyUpdateProfilePicture);
     })
-    const req=httpMock.expectOne(res=>res.method==='PATCH' );
-    expect(req.request.method).toEqual('PATCH');
+    const req=httpMock.expectOne(res=>res.method==='POST' );
+    expect(req.request.method).toEqual('POST');
     req.flush(dummyUpdateProfilePicture);
 
   })

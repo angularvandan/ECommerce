@@ -40,7 +40,7 @@ export class OrderListComponent implements OnInit{
     });
   }
   onShowProductDetails(productId:string){
-    this.router.navigate(['seller/order/order-details'],{queryParams:{id:productId}});
+    this.router.navigate(['order/order-details'],{queryParams:{id:productId}});
   }
   onLimit(){
     this.productPerms.limit=this.limit;

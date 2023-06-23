@@ -26,10 +26,12 @@ export class UpdateAddressComponent implements OnInit{
       city:new FormControl(null,Validators.required),
       pin:new FormControl(null,[Validators.required,Validators.pattern('^[0-9]+([0-9]){5}$')]),
     });
-    this.activatedRoute.queryParamMap.subscribe((response:any)=>{
-      // console.log(response.get('id'));
-      this.addressId=response.get('id');
-    });
+    setTimeout(()=>{
+      this.activatedRoute.queryParamMap.subscribe((response:any)=>{
+        // console.log(response.get('id'));
+        this.addressId=response.get('id');
+      });
+    },10);
     this.getAddress();
   }
   getAddress(){

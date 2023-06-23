@@ -35,7 +35,7 @@ export class ProductListComponent implements OnInit{
   }
 
   constructor(private httpService:HttpService,private userService:UserService,
-    private router:Router,private store:Store<OrderState>){
+    private router:Router){
   }
 
   ngOnInit(): void {
@@ -96,7 +96,6 @@ export class ProductListComponent implements OnInit{
     this.router.navigate(['shop/products/view-product'],{queryParams:{id:id}});
   }
   onAddCart(id:any){
-    // this.router.navigate(['shop/products/cart'],{queryParams:{id:id}});
     this.onGetProduct(id);
   }
   onGetProduct(productId:any){

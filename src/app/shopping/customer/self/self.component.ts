@@ -4,6 +4,7 @@ import { UserService } from '../../service/user.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ImageCroppedEvent, LoadedImage, base64ToFile } from 'ngx-image-cropper';
+import Swal from 'sweetalert2';
 
 
 @Component({
@@ -60,19 +61,34 @@ export class SelfComponent implements OnInit{
     });
   }
   onDeleteImage(){
-    let confirm=window.confirm('Do you want to delete image ?');
-    if(confirm){
-      this.httpService.deleteProfilePicture().subscribe((response:any)=>{
-        console.log(response);
-      },err=>{
-        // console.log(err.error.message);
-        this.userService.showWarning(err.error.message);
-
-      },()=>{
-        this.userService.showSuccess('Successfully deleted');
-        this.getSelf();
-      });
-    }
+    Swal.fire({
+      title: 'Are you sure?',
+      text: "You won't be able to revert this!",
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: 'Yes, delete it!'
+    }).then((result) => {
+      if (result.isConfirmed) {
+        this.httpService.deleteProfilePicture().subscribe((response:any)=>{
+          console.log(response);
+        },err=>{
+          // console.log(err.error.message);
+          // this.userService.showWarning(err.error.message);
+          Swal.fire(
+            err.error.message
+          )
+        },()=>{
+          Swal.fire(
+            'Deleted!',
+            'Your file has been deleted.',
+            'success'
+          )
+          this.getSelf();
+        });
+      }
+    })
   }
   // onFile(image:any){
   //   // console.log(image.target.files[0]);
@@ -112,14 +128,14 @@ export class SelfComponent implements OnInit{
   }
   fileChangeEvent(event: any): void {
       this.imageChangedEvent = event;
-      console.log(this.imageChangedEvent);
+      // console.log(this.imageChangedEvent);
       this.imageName=this.imageChangedEvent.target.files[0].name;
   }
   imageCropped(event: ImageCroppedEvent) {
       this.croppedImage = event.base64;
-      console.log(event);
+      // console.log(event);
       this.image = base64ToFile(this.croppedImage);
-      console.log(this.image);
+      // console.log(this.image);
   }
   imageLoaded() {
       // show cropper

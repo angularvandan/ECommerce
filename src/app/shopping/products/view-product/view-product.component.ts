@@ -14,18 +14,25 @@ export class ViewProductComponent implements OnInit{
   product:any;
   showBigImage: any;
   constructor(private httpService:HttpService,private activatedRoute:ActivatedRoute,
-    private userService:UserService){}
+  private userService:UserService){}
+
+
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe((response:any)=>{
-      this.productId=response.get('id');
-    });
-    this.onGetProduct();
+    // setTimeout(()=>{
+      this.activatedRoute.queryParamMap.subscribe((response:any)=>{
+        this.productId=response.get('id');
+        this.onGetProduct();
+      });
+    // },10)
+    // console.log('')
+    
   }
   onGetProduct(){
+    console.log(this.productId)
     this.httpService.getProduct(this.productId).subscribe((response:any)=>{
       console.log(response);
       this.product=response;
-      this.showBigImage=this.product.images[0]?.url;
+      this.showBigImage=this.product?.images[0]?.url;
     },err=>{
       console.log(err.error.message);
     },()=>{

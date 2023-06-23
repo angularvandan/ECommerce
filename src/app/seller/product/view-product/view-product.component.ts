@@ -1,4 +1,3 @@
-import { HttpSentEvent } from '@angular/common/http';
 import { Component, ElementRef, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ActivatedRoute } from '@angular/router';
@@ -9,7 +8,6 @@ import { UserService } from '../../service/user.service';
   selector: 'app-view-product',
   templateUrl: './view-product.component.html',
   styleUrls: ['./view-product.component.css'],
-
 })
 export class ViewProductComponent implements OnInit{
 
@@ -34,11 +32,12 @@ export class ViewProductComponent implements OnInit{
       price:new FormControl(null),
     })
     this.reactiveForm.disable();
-    this.activatedRoute.queryParamMap.subscribe((response:any)=>{
-      // console.log(response);
-      this.productId=response.get('id');
-    });
-    this.onGetProduct();
+    setTimeout(()=>{
+      this.activatedRoute.queryParamMap.subscribe((response:any)=>{
+        this.productId=response.get('id');
+      });
+      this.onGetProduct();
+    },10);
   }
   onGetProduct(){
     this.http.getProduct(this.productId).subscribe((response)=>{
@@ -66,6 +65,8 @@ export class ViewProductComponent implements OnInit{
       this.images.push(image);
     }
   }
+
+  //confirm:any;
   onAddAndDeleteImages(){
     let confirm=window.confirm('Do you want to add or delete ?');
     
@@ -78,6 +79,7 @@ export class ViewProductComponent implements OnInit{
       for(let image of this.images){
         formData.append("new_images",image);
       }
+      // console.log(formData.has('delete')||formData.has('new_images'))
       if(formData.has('delete')||formData.has('new_images')){
         this.http.updateImage(formData,this.productId).subscribe((response:any)=>{
           console.log(response);

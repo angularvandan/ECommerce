@@ -45,19 +45,21 @@ export class ProductListComponent implements OnInit,OnDestroy{
 
   constructor(private http:HttpService,private userService:UserService,
     private router:Router){}
-    ngOnInit(): void {
-      this.editor = new Editor();
-      this.onGetProduct();
-      this.reactiveForm=new FormGroup({
-        name:new FormControl(null,Validators.required),
-        description:new FormControl(null,Validators.required),
-        id:new FormControl(null),
-        price:new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*[0-9]$')]),
-      })
-    }
-    ngOnDestroy(){
+  ngOnInit(): void {
+    this.editor = new Editor();
+    this.onGetProduct();
+    this.reactiveForm=new FormGroup({
+      name:new FormControl(null,Validators.required),
+      description:new FormControl(null,Validators.required),
+      id:new FormControl(null),
+      price:new FormControl(null,[Validators.required,Validators.pattern('^[0-9]*[0-9]$')]),
+    })
+  }
+  ngOnDestroy(){
+    if(this.editor!=undefined){
       this.editor.destroy();
     }
+  }
   onGetProduct(){
     this.http.getProducts(this.product).subscribe((response:any)=>{
       console.log(response);
@@ -108,10 +110,10 @@ export class ProductListComponent implements OnInit,OnDestroy{
   onViewProduct(product:any){
     // console.log(id);
     let id=product._id;
-    this.router.navigate(['seller/product/view-product'], { queryParams: { id: id } });
+    this.router.navigate(['product/view-product'], { queryParams: { id: id } });
   }
   onUpdate(product:any){
-    console.log(product);
+    // console.log(product);
     this.updateProductStatus=true;
     this.updateImageStatus=false;
     this.createProductStatus=false;

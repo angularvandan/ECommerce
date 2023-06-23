@@ -35,7 +35,7 @@ export class LoginComponentComponent implements OnInit{
     // }
     let token=JSON.parse(<string>localStorage.getItem('token1'));
     if(token!=null){
-      this.router.navigate(['seller/setting/my-profile']);
+      this.router.navigate(['setting/my-profile']);
       setTimeout(() => {
         var ele: any = document.querySelector('.grecaptcha-badge');
         // console.log(ele);
@@ -51,7 +51,7 @@ export class LoginComponentComponent implements OnInit{
       email:new FormControl(null,[Validators.required,Validators.email]),
       password:new FormControl(null,[Validators.required])
     });
-    this.executeCaptchaService();true
+    this.executeCaptchaService();
   }
   async executeCaptchaService(){
     this.captcha=await this.captchaService.execute('LOGIN');
@@ -76,7 +76,7 @@ export class LoginComponentComponent implements OnInit{
     },
     complete:()=>{
       this.userService.showSuccess('Login Successfully');
-      this.router.navigate(['seller/setting/my-profile']);
+      this.router.navigate(['setting/my-profile']);
     }
     });
 
@@ -84,20 +84,21 @@ export class LoginComponentComponent implements OnInit{
   onGoogleSignIn(){
     this.executeCaptchaService();
     this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID).then((response)=>{
+      console.log(GoogleLoginProvider.PROVIDER_ID);
       console.log(response);
       let token=response.idToken;
-      this.httpService.googleSignIn({token:token,captcha:this.captcha}).subscribe((response:any)=>{
+      this.httpService.googleSignIn({token:token,captcha:this.captcha}).subscribe(
+        (response:any)=>{
         console.log(response);
         this.tokenValue=response.token;
         localStorage.setItem('token1',JSON.stringify(this.tokenValue));
         this.userService.showSuccess('Login Successfully');
-
       },(err)=>{
         this.httpService.error.next(err.error.message);
         this.userService.showWarning(err.error.message);
 
       },()=>{
-        this.router.navigate(['seller/setting/my-profile']);
+        this.router.navigate(['setting/my-profile']);
       });
     });
   }

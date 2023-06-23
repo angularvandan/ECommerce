@@ -8,16 +8,16 @@ import { UserService } from '../service/user.service';
   providedIn: 'root'
 })
 export class AuthGuardGuard implements CanActivate {
-  constructor(private router: Router, private httpService: HttpService,private userService:UserService) { }
-  canActivate(route: ActivatedRouteSnapshot,
-    state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+  constructor(private router: Router,private userService:UserService) { }
+  canActivate(route?: ActivatedRouteSnapshot,
+    state?: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
       
     return this.userService.getProfile().then((res:any)=>{
       this.userService.nav.next(false);
       return res;
     }).catch((err)=>{
       this.userService.nav.next(true);
-      this.router.navigate(['seller/auth/login']);
+      this.router.navigate(['auth/login']);
       return false;
     });   
   }

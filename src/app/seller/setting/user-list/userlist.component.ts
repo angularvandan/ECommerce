@@ -43,8 +43,8 @@ export class UserlistComponent implements OnInit{
     limit:this.limit,
     page: this.pageCount,
   }
-  constructor(private httpService:HttpService,private router:Router,
-    private render:Renderer2,private userService:UserService){
+  constructor(private httpService:HttpService,
+    private userService:UserService){
   }
   ngOnInit() {
     this.onchange();

@@ -10,6 +10,8 @@ import { ToastrModule } from 'ngx-toastr';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { SellerComponent } from './seller/seller.component';
+import { ShoppingComponent } from './shopping/shopping.component';
 
 @NgModule({
   declarations: [

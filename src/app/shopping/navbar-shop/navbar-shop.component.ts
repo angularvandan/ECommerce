@@ -18,7 +18,7 @@ export class NavbarShopComponent implements OnInit{
   totalCart:number=0;
 
   constructor(private router:Router,private userService:UserService,
-    private httpService:HttpService,private store:Store<OrderState>){
+    private httpService:HttpService){
   }
   ngOnInit(): void {
     this.userService.getSelf().then((res)=>{

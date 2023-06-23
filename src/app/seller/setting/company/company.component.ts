@@ -29,7 +29,7 @@ export class CompanyComponent implements OnInit{
     .subscribe(response=>{
       console.log(response);
       this.userService.showSuccess('Company name has changed')
-      this.router.navigate(['seller/setting/my-profile']);
+      this.router.navigate(['setting/my-profile']);
 
     },err=>{
       this.userService.showSuccess(err.error.message);

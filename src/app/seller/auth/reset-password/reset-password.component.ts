@@ -22,11 +22,16 @@ export class ResetPasswordComponent implements OnInit{
       password:new FormControl(null,[Validators.required]),
     });
     //here got token from url
-    this.activatedRouter.queryParamMap.subscribe(params=>{
+    setTimeout(()=>{this.getTokenFromUrl();},0)
+  }
+  getTokenFromUrl(){
+    this.activatedRouter.queryParamMap.subscribe((params:any)=>{
       this.token=params.get('token')||'';
       if(this.token==''){
-        this.router.navigate(['seller/auth/login']);
+        this.router.navigate(['auth/login']);
       }
+    },err=>{
+
     });
   }
   onReset(){
@@ -41,9 +46,9 @@ export class ResetPasswordComponent implements OnInit{
     },
     error:(err)=>{
       this.userService.showWarning(err.error.message);
-      this.router.navigate(['seller/auth/login']);
+      this.router.navigate(['auth/login']);
     },complete:()=>{
-      this.router.navigate(['seller/auth/login']);
+      this.router.navigate(['auth/login']);
     }
     });
   }

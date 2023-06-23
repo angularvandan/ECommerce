@@ -107,7 +107,7 @@ export class OrderDetailsComponent {
             'Cancel Successfully',
             'success'
           )
-          this.router.navigate(['seller/order/order-list']);
+          this.router.navigate(['order/order-list']);
         })
       }
     })
@@ -119,7 +119,7 @@ export class OrderDetailsComponent {
       console.log(err.error.message);
     },()=>{
       this.userService.showSuccess('Dispatched Successfully');
-      this.router.navigate(['seller/order/order-list']);
+      this.router.navigate(['order/order-list']);
     })
   }
   onDelivered(){
@@ -129,7 +129,7 @@ export class OrderDetailsComponent {
       console.log(err.error.message);
     },()=>{
       this.userService.showSuccess('Delivered Successfully');
-      this.router.navigate(['seller/order/order-list']);
+      this.router.navigate(['order/order-list']);
     })
   }
 }

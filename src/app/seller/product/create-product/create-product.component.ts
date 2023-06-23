@@ -34,18 +34,22 @@ export class CreateProductComponent implements OnInit,OnDestroy{
     })
   }
   ngOnDestroy(): void {
-    this.editor.destroy();
+    if(this.editor!=undefined){
+      this.editor.destroy();
+    }
   }
   onCreateProduct(){
     console.log(this.reactiveForm);
     //this is form to convert doc into html
     let jsonDoc=this.reactiveForm.get('description')?.value;
+    console.log("converted value to html",jsonDoc)
     const html = toHTML(jsonDoc);
     // console.log(html);
     this.html=html;
     const formData = new FormData();
     formData.append("name",this.reactiveForm.get('name')?.value);
     formData.append("description",this.html);
+    
     for(let image of this.files){
       formData.append("images",image);
     }
@@ -57,7 +61,7 @@ export class CreateProductComponent implements OnInit,OnDestroy{
       this.userService.showWarning(err.error.message);
     },()=>{
       this.userService.showSuccess('Created Successfully');
-      this.router.navigate(['seller/products/product-list']);
+      this.router.navigate(['products/product-list']);
     });
   }
   // onFile(files:any){

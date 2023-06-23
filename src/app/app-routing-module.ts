@@ -4,8 +4,8 @@ import { ShoppingComponent } from "./shopping/shopping.component";
 import { SellerComponent } from "./seller/seller.component";
 const appRoute: Routes = [
     {path:'',redirectTo:'shop',pathMatch:'full'},
-    {path:'seller',component:SellerComponent,loadChildren:()=>import("./seller/seller.module").then(module=>module.SellerModule)},
     {path:'shop',component:ShoppingComponent,loadChildren:()=>import("./shopping/shopping.module").then(module=>module.ShoppingModule)},
+    {path:'',component:SellerComponent,loadChildren:()=>import("./seller/seller.module").then(module=>module.SellerModule)},
     {path:'**',redirectTo:'shop',pathMatch:"full"},
 ];
 @NgModule({

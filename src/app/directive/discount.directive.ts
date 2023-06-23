@@ -13,15 +13,16 @@ export class DiscountDirective implements AfterViewInit{
   }
   ngAfterViewInit(): void {
     // console.log(this.element.nativeElement.localName);
+    console.log(this.element.nativeElement,"From Directive")
     this.element.nativeElement.style.color='green';
     this.calculateTime();
   }
   calculateTime(){
     let endTime=new Date(this.abc);
-    setInterval(()=>{
+    let remainingMilliSecond:any;
+    let clear_interval=setInterval(()=>{
       let currentTime=new Date();
-      let remainingMilliSecond=endTime.getTime()-currentTime.getTime();
-      
+      remainingMilliSecond=endTime.getTime()-currentTime.getTime();
       let obj={
         hours:Math.floor(remainingMilliSecond/(1000*60*60)),
         minutes:Math.floor((remainingMilliSecond/(1000*60))%60),
@@ -39,6 +40,7 @@ export class DiscountDirective implements AfterViewInit{
           this.element.nativeElement.innerText=`(${obj.hours} H :${obj.minutes} M: ${obj.seconds} S)`
         }
       }
-    },1000)
+    },1000);
+   
   }
 }

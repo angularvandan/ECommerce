@@ -69,7 +69,7 @@ export class RegisterComponent implements OnInit{
       console.log(this.payLoad);
       this.httpService.register(this.payLoad).subscribe((response)=>{
         // console.log(response);
-        this.userService.showSuccess('Register Successfully')
+        this.userService.showSuccess('Register Successfully');
       },err=>{
         // console.log(err);
         this.userService.showWarning(err.error.message);

@@ -3,56 +3,86 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 
 import { LoginComponent } from './login.component';
 import { HttpService } from '../../service/http.service';
+import { Router } from '@angular/router';
+import { GoogleLoginProvider, SocialAuthService, SocialAuthServiceConfig } from 'angularx-social-login';
+import { CaptchaService } from '../../service/captcha.service';
+import { UserService } from '../../service/user.service';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
+import { ReCaptchaV3Service, RECAPTCHA_V3_SITE_KEY } from 'ng-recaptcha';
+import environment from 'src/environment/environment';
+import { of, throwError } from 'rxjs';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let httpMock:HttpTestingController;
+  let captchaService:CaptchaService;
+  let httpService:HttpService;
+  let userService:UserService;
+  let socialAuthService:SocialAuthService;
+  let router:Router;
+
+  let myRouter = {
+    navigate: jasmine.createSpy('navigate')
+  }
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent],
-      providers: [HttpService],
-      imports: [HttpClientTestingModule]
+      providers:[LoginComponent,HttpService,UserService,CaptchaService
+        ,ReCaptchaV3Service,SocialAuthService,
+        { provide: Router, useValue: myRouter },
+        { provide: RECAPTCHA_V3_SITE_KEY, useValue:environment.reCaptchaKey },
+        {
+          provide: 'SocialAuthServiceConfig',
+          useValue: {
+            autoLogin: false,
+            providers: [
+              {
+                id: GoogleLoginProvider.PROVIDER_ID,
+                provider: new GoogleLoginProvider(
+                  environment.clientId
+                )
+              },
+            ],
+            onError: (err) => {
+              console.error(err);
+            }
+          } as SocialAuthServiceConfig,
+        }],
+        imports:[ToastrModule.forRoot(),HttpClientTestingModule,FormsModule,ReactiveFormsModule,BrowserAnimationsModule]
+    }).compileComponents();
+  });
 
-    })
-      .compileComponents();
-
+  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
+    httpMock = TestBed.inject(HttpTestingController);
+    userService = TestBed.inject(UserService);
+    httpService = TestBed.inject(HttpService);
+    captchaService = TestBed.inject(CaptchaService);
+    socialAuthService = TestBed.inject(SocialAuthService);
+    router = TestBed.inject(Router) as jasmine.SpyObj<Router>;
+    component=TestBed.inject(LoginComponent);
+
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
-
-  let service: HttpService;
-  let httpTestingController: HttpTestingController;
-
-  beforeEach(() => {
-    service = TestBed.inject(HttpService);
-    httpTestingController = TestBed.inject(HttpTestingController);
-  });
-
-  // it('should make a GET request to the correct URL', () => {
-  //   const expectedData = {
-  //     "user": {
-  //       "_id": "6447662e49ce72c17a340cf0",
-  //       "name": "Vandan", "_org": { "_id": "6447662e49ce72c17a340ced", "name": "AngularMinds.in", "email": "vandan@angularminds.in" }, "email": "vandan@angularminds.in", "role": "admin", "isEmailVerified": true, "deleted": false, "createdAt": "2023-04-25T05:33:34.881Z", "updatedAt": "2023-06-03T11:28:38.135Z"
-  //     }, "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2NDQ3NjYyZTQ5Y2U3MmMxN2EzNDBjZjAiLCJpYXQiOjE2ODY2Mzg4MDEsImV4cCI6MTY4NjcyNTIwMSwidHlwZSI6ImFjY2VzcyJ9.Dh8b98egCHwmCkrnrdDiuJ5j8te6PhUmFuNk73Gedys", "expires": "2023-06-14T06:46:41.361Z"
-  //   };
-  //   const payload = { email: 'dsd@gmail.com', password: 'ddss232' }
-
-  //   service.login(payload).subscribe(data => {
-  //     expect(data).toEqual(expectedData);
-  //   });
-
-  //   const req = httpTestingController.expectOne('https://shop-api.ngminds.com/shop/auth/login');
-  //   expect(req.request.method).toEqual('POST');
-
-  //   req.flush(expectedData);
-
-  //   httpTestingController.verify();
-  // });
-
-
   it('should create', () => {
     expect(component).toBeTruthy();
+    spyOn(userService, 'getSelf').and.returnValue(Promise.resolve(true));
+    TestBed.createComponent(LoginComponent);
+    expect(userService.getSelf).toHaveBeenCalled();
+  });
+  it('should on login',()=>{
+    spyOn(httpService,'login').and.returnValues(of({email:'vand@gmail.com',password:'sds',captcha:'sdfs'}));
+    component.onLogin();
+    expect(httpService.login).toHaveBeenCalled();
+  });
+  it('should on login',()=>{
+    spyOn(httpService,'login').and.returnValues(throwError({error:{message:'invalid user'}}));
+    component.onLogin();
+    expect(httpService.login).toHaveBeenCalled();
   });
 });

@@ -16,17 +16,20 @@ export class EmailVerifyComponent implements OnInit{
 
   }
   ngOnInit(): void {
+    setTimeout(()=>{
+      this.getTokenFromUrl();
+    },10);
+  }
+  getTokenFromUrl(){
     this.routeActivated.queryParamMap.subscribe(params=>{
       this.token=params.get('token')||'';
       console.log(this.token);
       if(this.token==''){
-        this.router.navigate(['seller/auth/login']);
+        this.router.navigate(['auth/login']);
       }else{
         // console.log('email success');
         this.onVerifyAccount();
       }
-    },err=>{
-      this.httpService.error.next(err.error.message);
     });
   }
   onVerifyAccount(){
@@ -35,9 +38,9 @@ export class EmailVerifyComponent implements OnInit{
     },err=>{
       this.httpService.error.next(err.error.message);
       this.userService.showWarning(err.error.message);
-      this.router.navigate(['seller/auth/login']);
+      this.router.navigate(['auth/login']);
     },()=>{
-      this.router.navigate(['seller/setting/my-profile']);
+      this.router.navigate(['setting/my-profile']);
     })
   }
 

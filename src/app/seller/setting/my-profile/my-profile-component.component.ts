@@ -39,7 +39,7 @@ export class MyProfileComponentComponent implements OnInit{
       this.userService.showWarning(err.error.message);
       localStorage.removeItem('token1');
       this.dataComingStatus=true;
-      this.router.navigate(['seller/auth/login']);
+      this.router.navigate(['auth/login']);
     },()=>{
     });
   }
