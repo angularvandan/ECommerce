@@ -22,10 +22,10 @@ export class HttpService{
     }
   }
   createRegister(register:Register){
-    return this.http.post('https://shop-api.ngminds.com/auth/register',register);
+    return this.http.post('https://shop-api.ngminds.com/auth/register?captcha=false',register);
   }
   createLogin(login:Login){
-    return this.http.post('https://shop-api.ngminds.com/auth/login',login)
+    return this.http.post('https://shop-api.ngminds.com/auth/login?captcha=false',login)
     // .pipe(catchError((err)=>{
     //   return throwError(err);
     // }));

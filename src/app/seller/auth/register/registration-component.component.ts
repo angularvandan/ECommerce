@@ -67,7 +67,7 @@ export class RegistrationComponentComponent implements OnInit{
       password:this.reactiveForm.value.password,
       name:this.reactiveForm.value.name,
       company:this.reactiveForm.value.cName,
-      captcha:this.captcha
+      // captcha:this.captcha
     }
 
     this.httpService.createRegister(this.registerDataByUrl).subscribe({

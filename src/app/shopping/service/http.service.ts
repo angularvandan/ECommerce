@@ -23,10 +23,10 @@ export class HttpService {
     return this.http.get('https://shop-api.ngminds.com/shop/products/'+id);
   }
   register(user:{}){
-    return this.http.post('https://shop-api.ngminds.com/shop/auth/register',user)
+    return this.http.post('https://shop-api.ngminds.com/shop/auth/register?captcha=false',user)
   }
   login(user:{}){
-    return this.http.post('https://shop-api.ngminds.com/shop/auth/login',user)
+    return this.http.post('https://shop-api.ngminds.com/shop/auth/login?captcha=false',user)
   }
   self(){
     try{

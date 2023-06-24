@@ -19,7 +19,7 @@ export class RegisterComponent implements OnInit{
     email:'',
     password:'',
     address:'',
-    captcha:''
+    // captcha:''
   };
   constructor(private httpService:HttpService,
     private userService:UserService,private captchaService:CaptchaService,private router:Router){
@@ -64,7 +64,7 @@ export class RegisterComponent implements OnInit{
         email:this.reactiveForm.get('email')?.value,
         password:this.reactiveForm.get('password')?.value,
         address:this.reactiveForm.get('address')?.value,
-        captcha:this.captcha
+        // captcha:this.captcha
       }
       console.log(this.payLoad);
       this.httpService.register(this.payLoad).subscribe((response)=>{

@@ -44,7 +44,8 @@ export class LoginComponent implements OnInit{
       }
   }
   onLogin(){
-    this.httpService.login({...this.reactiveForm.value,captcha:this.captcha}).subscribe((response:any)=>{
+    // {...this.reactiveForm.value,captcha:this.captcha}
+    this.httpService.login({...this.reactiveForm.value}).subscribe((response:any)=>{
       console.log(response);
       localStorage.setItem('CustomerToken',JSON.stringify(response.token));
       this.executeCaptchaService();

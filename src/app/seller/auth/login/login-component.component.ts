@@ -61,7 +61,7 @@ export class LoginComponentComponent implements OnInit{
     this.loginUserByUrl={
       email:this.reactiveForm.get('email')?.value,
       password:this.reactiveForm.get('password')?.value,
-      captcha:this.captcha
+      // captcha:this.captcha
     }
     this.httpService.createLogin(this.loginUserByUrl).subscribe({
       next:(response:any)=>{
